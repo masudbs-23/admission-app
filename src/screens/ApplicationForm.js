@@ -12,6 +12,7 @@ import {
   ScrollView,
   TextInput,
 } from "react-native";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import DocumentPicker, { types as DocumentTypes } from 'react-native-document-picker';
 import { launchCamera as rnLaunchCamera, launchImageLibrary as rnLaunchImageLibrary } from 'react-native-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -19,6 +20,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const { width, height } = Dimensions.get("window");
 
 const ApplicationForm = ({ navigation }) => {
+  const insets = useSafeAreaInsets();
   const [formData, setFormData] = useState({
     name: "",
     address: "",
@@ -161,7 +163,7 @@ const ApplicationForm = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: insets.top }]}>
         <TouchableOpacity onPress={() => navigation?.goBack()}>
           <Ionicons name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
@@ -171,7 +173,7 @@ const ApplicationForm = ({ navigation }) => {
 
       <ScrollView
         style={{ width: "100%" }}
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={[styles.scrollContent, { paddingBottom: 100 + insets.bottom }]}
       >
         {/* Input Fields */}
         <View style={styles.card}>
@@ -236,7 +238,7 @@ const ApplicationForm = ({ navigation }) => {
 
       {/* Floating Submit Button */}
       <TouchableOpacity
-        style={styles.fab}
+        style={[styles.fab, { bottom: 30 + insets.bottom }]}
         onPress={() => Alert.alert("Form Submitted!")}
       >
         <Text style={styles.fabText}>Submit</Text>
