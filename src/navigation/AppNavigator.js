@@ -8,7 +8,7 @@ import MainScreen from '../screens/MainScreen';
 import InstituteDetailsScreen from '../screens/InstituteDetailsScreen';
 import NotificationsScreen from '../screens/NotificationsScreen';
 import ApplicationForm from '../screens/ApplicationForm';
-// import AdviserChat from '../screens/AdviserChat';
+import AdviserChat from '../screens/AdviserChat';
 
 const Stack = createStackNavigator();
 
@@ -40,11 +40,11 @@ const AppNavigator = () => {
           component={ApplicationForm}
           options={{ headerShown: false }}
         />
-         {/* <Stack.Screen
+         <Stack.Screen
           name="Chat"
           component={AdviserChat}
           options={{ headerShown: false }}
-        /> */}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

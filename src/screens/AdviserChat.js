@@ -23,7 +23,7 @@ const AdviserChat = ({ navigation }) => {
 
   const API_KEY = 'AIzaSyA3bnhZ18pP_arSLqPW-QinViUsb4N-Nh8';
   const API_URL =
-    'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+    'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
 
   // ✅ Auto welcome message when screen loads
   useEffect(() => {
@@ -48,7 +48,7 @@ const AdviserChat = ({ navigation }) => {
         {
           contents: [{ role: 'user', parts: [{ text: input }] }],
         },
-        { headers: { 'Content-Type': 'application/json' } }
+        { headers: { 'Content-Type': 'application/json' }, timeout: 20000 }
       );
 
       const reply =
@@ -58,11 +58,14 @@ const AdviserChat = ({ navigation }) => {
       const botMessage = { role: 'bot', text: reply };
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
-      console.error(error);
-      setMessages((prev) => [
-        ...prev,
-        { role: 'bot', text: '⚠️ Error fetching response!' },
-      ]);
+      const status = error?.response?.status;
+      const data = error?.response?.data;
+      console.log('Gemini API error status:', status);
+      console.log('Gemini API error data:', JSON.stringify(data));
+      let message = '⚠️ Server error. Please try again later.';
+      if (status === 401 || status === 403) message = '⚠️ Invalid or unauthorized API key.';
+      if (status === 429) message = '⚠️ Rate limit exceeded. Please wait a moment.';
+      setMessages((prev) => [...prev, { role: 'bot', text: message }]);
     } finally {
       setLoading(false);
     }
@@ -157,7 +160,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 14,
     justifyContent: 'space-between',
-    elevation: 4,
   },
   headerTitle: {
     color: '#000',

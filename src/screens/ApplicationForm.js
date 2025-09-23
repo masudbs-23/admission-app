@@ -12,8 +12,8 @@ import {
   ScrollView,
   TextInput,
 } from "react-native";
-import * as DocumentPicker from "expo-document-picker";
-import * as ImagePicker from "expo-image-picker";
+import DocumentPicker, { types as DocumentTypes } from 'react-native-document-picker';
+import { launchCamera as rnLaunchCamera, launchImageLibrary as rnLaunchImageLibrary } from 'react-native-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const { width, height } = Dimensions.get("window");
@@ -46,59 +46,72 @@ const ApplicationForm = ({ navigation }) => {
   };
 
   const launchCamera = async () => {
-    const { status } = await ImagePicker.requestCameraPermissionsAsync();
-    if (status !== "granted") {
-      Alert.alert("Permission required", "Camera permission is needed.");
+    const result = await rnLaunchCamera({ mediaType: 'photo', quality: 1 });
+    if (result?.didCancel || result?.errorCode) {
+      if (result?.errorCode === 'permission') {
+        Alert.alert('Permission required', 'Camera permission is needed.');
+      }
+      setOptionVisible(false);
       return;
     }
-    const result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      quality: 1,
-    });
-    if (!result.canceled && currentField) {
-      const asset = result.assets[0];
-      updateFile(currentField, {
-        uri: asset.uri,
-        name: asset.fileName || "camera-image.jpg",
-        mimeType: "image/jpeg",
-      });
+    if (currentField) {
+      const asset = result?.assets && result.assets[0];
+      if (asset?.uri) {
+        updateFile(currentField, {
+          uri: asset.uri,
+          name: asset.fileName || 'camera-image.jpg',
+          mimeType: asset.type || 'image/jpeg',
+        });
+      }
     }
     setOptionVisible(false);
   };
 
   const launchImagePicker = async () => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== "granted") {
-      Alert.alert("Permission required", "Gallery permission is needed.");
+    const result = await rnLaunchImageLibrary({ mediaType: 'photo', quality: 1, selectionLimit: 1 });
+    if (result?.didCancel || result?.errorCode) {
+      if (result?.errorCode === 'permission') {
+        Alert.alert('Permission required', 'Gallery permission is needed.');
+      }
+      setOptionVisible(false);
       return;
     }
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      quality: 1,
-    });
-    if (!result.canceled && currentField) {
-      const asset = result.assets[0];
-      updateFile(currentField, {
-        uri: asset.uri,
-        name: asset.fileName || "gallery-image.jpg",
-        mimeType: "image/jpeg",
-      });
+    if (currentField) {
+      const asset = result?.assets && result.assets[0];
+      if (asset?.uri) {
+        updateFile(currentField, {
+          uri: asset.uri,
+          name: asset.fileName || 'gallery-image.jpg',
+          mimeType: asset.type || 'image/jpeg',
+        });
+      }
     }
     setOptionVisible(false);
   };
 
   const pickPDF = async () => {
-    const res = await DocumentPicker.getDocumentAsync({
-      type: "application/pdf",
-    });
-    if (res.type === "success" && currentField) {
-      updateFile(currentField, {
-        uri: res.uri,
-        name: res.name,
-        mimeType: "application/pdf",
+    try {
+      const res = await DocumentPicker.pickSingle({
+        type: [DocumentTypes.pdf],
+        copyTo: 'cachesDirectory',
+        mode: 'import',
       });
+      if (currentField && res?.uri) {
+        updateFile(currentField, {
+          uri: res.fileCopyUri || res.uri,
+          name: res.name,
+          mimeType: res.type || 'application/pdf',
+        });
+      }
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        // user cancelled
+      } else {
+        Alert.alert('Error', 'Failed to pick document');
+      }
+    } finally {
+      setOptionVisible(false);
     }
-    setOptionVisible(false);
   };
 
   const isImage = (f) => f && f.mimeType && f.mimeType.startsWith("image/");
