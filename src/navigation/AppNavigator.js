@@ -6,6 +6,8 @@ import SignUpScreen from '../screens/SignUpScreen';
 import OTPVerificationScreen from '../screens/OTPVerificationScreen';
 import MainScreen from '../screens/MainScreen';
 import InstituteDetailsScreen from '../screens/InstituteDetailsScreen';
+import NotificationsScreen from '../screens/NotificationsScreen';
+import ApplicationForm from '../screens/ApplicationForm';
 // import AdviserChat from '../screens/AdviserChat';
 
 const Stack = createStackNavigator();
@@ -26,6 +28,16 @@ const AppNavigator = () => {
           <Stack.Screen
           name="InstitutionDetails"
           component={InstituteDetailsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Notifications"
+          component={NotificationsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Apply"
+          component={ApplicationForm}
           options={{ headerShown: false }}
         />
          {/* <Stack.Screen

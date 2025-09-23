@@ -21,7 +21,7 @@ const AdviserChat = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const scrollViewRef = useRef();
 
-  const API_KEY = 'YOUR_API_KEY';
+  const API_KEY = 'AIzaSyA3bnhZ18pP_arSLqPW-QinViUsb4N-Nh8';
   const API_URL =
     'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
