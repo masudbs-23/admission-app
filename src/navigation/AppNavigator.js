@@ -10,6 +10,7 @@ import InstituteDetailsScreen from '../screens/InstituteDetailsScreen';
 import NotificationsScreen from '../screens/NotificationsScreen';
 import ApplicationForm from '../screens/ApplicationForm';
 import AdviserChat from '../screens/AdviserChat';
+import EventsScreen from '../screens/EventsScreen';
 
 const Stack = createStackNavigator();
 
@@ -58,6 +59,11 @@ const AppNavigator = () => {
             <Stack.Screen
               name="Chat"
               component={AdviserChat}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Events"
+              component={EventsScreen}
               options={{ headerShown: false }}
             />
           </>

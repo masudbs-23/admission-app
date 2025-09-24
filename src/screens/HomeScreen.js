@@ -166,29 +166,48 @@ const HomeScreen = ({ navigation }) => {
             </View>
           </View>
 
-          {/* Events Section */}
-          <View style={styles.sectionWrapper}>
-            <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>Events</Text>
-              <TouchableOpacity>
-                <Text style={styles.seeAll}>See all</Text>
-              </TouchableOpacity>
-            </View>
+        {/* Events Section */}
+        <View style={styles.sectionWrapper}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Events</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Events')}>
+              <Text style={styles.seeAll}>See all</Text>
+            </TouchableOpacity>
+          </View>
 
-            <View style={styles.eventCard}>
+          {[
+            {
+              id: '1',
+              title: 'Global Education Fair',
+              time: '12th Oct, 2025 | 10:00 AM',
+              image: 'https://image.taiwantoday.tw/images/content/img20250624140916737_800.jpg',
+            },
+            {
+              id: '2',
+              title: 'Scholarship Info Session',
+              time: '15th Oct, 2025 | 2:00 PM',
+              image: 'https://images.unsplash.com/photo-1544006659-f0b21884ce1d?q=80&w=1470&auto=format&fit=crop',
+            },
+            {
+              id: '3',
+              title: 'University Meet & Greet',
+              time: '22nd Oct, 2025 | 11:30 AM',
+              image: 'https://images.unsplash.com/photo-1544531585-9847b68c8c86?q=80&w=1470&auto=format&fit=crop',
+            },
+          ].map((ev) => (
+            <View key={ev.id} style={[styles.eventCard, { marginBottom: 14 }]}>
               <Image
-                source={{
-                  uri: 'https://image.taiwantoday.tw/images/content/img20250624140916737_800.jpg',
-                }}
+                source={{ uri: ev.image }}
                 style={styles.eventImage}
                 resizeMode="cover"
               />
               <View style={styles.eventOverlay}>
-                <Text style={styles.eventTitle}>Global Education Fair</Text>
-                <Text style={styles.eventTime}>12th Oct, 2025 | 10:00 AM</Text>
+                <Text style={styles.eventTitle}>{ev.title}</Text>
+                <Text style={styles.eventTime}>{ev.time}</Text>
               </View>
             </View>
-          </View>
+          ))}
+        </View>
         </View>
       </ScrollView>
     </SafeAreaView>
