@@ -6,6 +6,7 @@ import EventsSection from '../components/home/EventsSection';
 import AdvisorCard from '../components/home/AdvisorCard';
 import WhyChooseUs from '../components/home/WhyChooseUs';
 import InstitutionsSection from '../components/home/InstitutionsSection';
+import ImageSlider from '../components/home/ImageSlider';
 import { useMe } from '../hooks/useMe';
 
 const HomeScreen = ({ navigation }) => {
@@ -31,6 +32,9 @@ const HomeScreen = ({ navigation }) => {
 
         {/* Advisor Card */}
         <AdvisorCard navigation={navigation} />
+
+        {/* Image Slider */}
+        <ImageSlider />
 
         {/* Body */}
         <View style={styles.body}>
