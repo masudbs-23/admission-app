@@ -2,10 +2,12 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import LanguageSwitch from '../../component/LanguageSwitch';
+import { useLanguage } from '../../context/LanguageContext';
 
 const { width } = Dimensions.get('window');
 
 const HomeHeader = ({ insets, navigation, profileName, profilePct }) => {
+  const { t } = useLanguage();
   return (
     <View style={[styles.header, { paddingTop: insets.top }]}> 
       <View style={styles.leftSection}>
@@ -15,7 +17,7 @@ const HomeHeader = ({ insets, navigation, profileName, profilePct }) => {
         />
         <View>
           <Text style={styles.greeting}>Hi, {profileName}</Text>
-          <Text style={styles.profileProgress}>{`${profilePct}% Profile Complete`}</Text>
+          <Text style={styles.profileProgress}>{`${profilePct}% ${t('profileComplete')}`}</Text>
         </View>
       </View>
 

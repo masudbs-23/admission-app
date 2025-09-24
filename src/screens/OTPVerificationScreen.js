@@ -16,6 +16,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { useAuth } from '../context/AuthContext';
 import CustomToast from '../components/CustomToast';
 import { useAuthMutations } from '../hooks/useAuthMutations';
+import { useLanguage } from '../context/LanguageContext';
 
 const OTPVerificationScreen = ({ navigation, route }) => {
   const insets = useSafeAreaInsets();
@@ -27,6 +28,7 @@ const OTPVerificationScreen = ({ navigation, route }) => {
   const [toastType, setToastType] = useState('error');
   const inputRefs = useRef([]);
   const { verifyOtpMutation } = useAuthMutations();
+  const { t } = useLanguage();
   const { verifyOTP } = useAuth();
   
   // Get email from route params
@@ -150,7 +152,7 @@ const OTPVerificationScreen = ({ navigation, route }) => {
 
         {/* Content */}
         <View style={styles.content}>
-          <Text style={styles.title}>Enter Verification Code</Text>
+          <Text style={styles.title}>{t('submit')}</Text>
           <Text style={styles.description}>
             Please enter the verification code shared to {'\n'}
             <Text style={{ fontWeight: '500', color: '#374151' }}> {email}</Text>
@@ -180,7 +182,7 @@ const OTPVerificationScreen = ({ navigation, route }) => {
               style={[styles.resendLink, (isResendActive || loading) && { color: '#c4c4c4' }]}
               onPress={() => !loading && setIsResendActive(true)}
             >
-              Resend OTP
+              {t('submit')}
             </Text>
           </Text>
 
@@ -194,7 +196,7 @@ const OTPVerificationScreen = ({ navigation, route }) => {
             disabled={!otp.every((digit) => digit !== '') || loading}
             onPress={handleVerifyOTP}
           >
-            <Text style={styles.submitText}>Verify</Text>
+            <Text style={styles.submitText}>{t('submit')}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

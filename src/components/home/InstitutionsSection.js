@@ -1,15 +1,17 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { useLanguage } from '../../context/LanguageContext';
 
 const { width } = Dimensions.get('window');
 
 const InstitutionsSection = ({ navigation }) => {
+  const { t } = useLanguage();
   return (
     <View style={styles.sectionWrapper}>
       <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>Institutions</Text>
+        <Text style={styles.sectionTitle}>{t('institutions')}</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Institutions')}>
-          <Text style={styles.seeAll}>See all</Text>
+          <Text style={styles.seeAll}>{t('seeAll')}</Text>
         </TouchableOpacity>
       </View>
 

@@ -11,6 +11,7 @@ import { StatusBar, useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from './src/context/AuthContext';
+import { LanguageProvider } from './src/context/LanguageContext';
 import AppNavigator from './src/navigation/AppNavigator';
 
 enableScreens(true);
@@ -30,15 +31,17 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <SafeAreaProvider>
+      <LanguageProvider>
+        <AuthProvider>
+          <SafeAreaProvider>
           <StatusBar
             barStyle={isDarkMode ? 'light-content' : 'dark-content'}
             backgroundColor={isDarkMode ? '#000' : '#fff'}
           />
           <AppNavigator />
-        </SafeAreaProvider>
-      </AuthProvider>
+          </SafeAreaProvider>
+        </AuthProvider>
+      </LanguageProvider>
     </QueryClientProvider>
   );
 }

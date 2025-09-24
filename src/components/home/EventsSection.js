@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import EventCard from './EventCard';
+import { useLanguage } from '../../context/LanguageContext';
 
 const EventsSection = ({ navigation }) => {
   const events = [
@@ -30,12 +31,13 @@ const EventsSection = ({ navigation }) => {
     },
   ];
 
+  const { t } = useLanguage();
   return (
     <View style={styles.sectionWrapper}>
       <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>Events</Text>
+        <Text style={styles.sectionTitle}>{t('events')}</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Events')}>
-          <Text style={styles.seeAll}>See all</Text>
+          <Text style={styles.seeAll}>{t('seeAll')}</Text>
         </TouchableOpacity>
       </View>
 

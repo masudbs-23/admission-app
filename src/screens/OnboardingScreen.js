@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { SafeAreaView, View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useLanguage } from '../context/LanguageContext';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const OnboardingScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
+  const { t } = useLanguage();
 
   const handleGetStarted = async () => {
     try {
@@ -42,10 +44,9 @@ const OnboardingScreen = ({ navigation }) => {
           </View>
 
           {/* Headline & Subtitle */}
-          <Text style={styles.title}>Find your dream university</Text>
+          <Text style={styles.title}>{t('getStarted')}</Text>
           <Text style={styles.subtitle}>
-            Explore institutions, track your application, and chat with advisors —
-            all in one place.
+            {t('signInTitle')}
           </Text>
 
           {/* Illustration */}
@@ -60,7 +61,7 @@ const OnboardingScreen = ({ navigation }) => {
       {/* Get Started Button (sticky bottom) */}
       <View style={[styles.bottomBar, { paddingBottom: 12 + insets.bottom }]}>
         <TouchableOpacity style={styles.primaryBtn} onPress={handleGetStarted} activeOpacity={0.8}>
-          <Text style={styles.primaryText}>Get Started</Text>
+          <Text style={styles.primaryText}>{t('getStarted')}</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

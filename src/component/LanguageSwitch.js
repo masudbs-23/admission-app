@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useLanguage } from '../context/LanguageContext';
 
 const LanguageSwitch = () => {
-  const [language, setLanguage] = useState('en'); // local state only
+  const { language, toggleLanguage } = useLanguage();
   const slideAnim = useRef(new Animated.Value(0)).current;
   const { width: screenWidth } = Dimensions.get('window');
 
@@ -26,14 +27,12 @@ const LanguageSwitch = () => {
     }).start();
   }, [language, switchWidth, thumbSize, thumbOffset]);
 
-  const toggleLanguage = () => {
-    setLanguage(prev => (prev === 'en' ? 'bn' : 'en'));
-  };
+  const onToggle = () => toggleLanguage();
 
   return (
     <View style={[styles.container, { padding: switchHeight * 0.1 }]}>
       <Pressable
-        onPress={toggleLanguage}
+        onPress={onToggle}
         style={[
           styles.track,
           {

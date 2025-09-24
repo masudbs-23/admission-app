@@ -19,6 +19,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '../context/AuthContext';
 import CustomToast from '../components/CustomToast';
 import { useAuthMutations } from '../hooks/useAuthMutations';
+import { useLanguage } from '../context/LanguageContext';
 
 const SignUpScreen = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -30,6 +31,7 @@ const SignUpScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
   const { register } = useAuth();
   const loading = registerMutation.isPending;
+  const { t } = useLanguage();
   const [toastVisible, setToastVisible] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState('error');
@@ -166,13 +168,13 @@ const SignUpScreen = ({ navigation }) => {
           </View>
 
           {/* Title */}
-          <Text style={styles.title}>Create an account</Text>
+          <Text style={styles.title}>{t('signUp')}</Text>
 
           {/* Email */}
           <View style={styles.inputWrapper}>
             <TextInput
               style={styles.input}
-              placeholder="Email"
+              placeholder={t('email')}
               placeholderTextColor="#9ca3af"
               value={formData.email}
               onChangeText={(v) => handleInputChange('email', v)}
@@ -183,7 +185,7 @@ const SignUpScreen = ({ navigation }) => {
           <View style={styles.inputWrapper}>
             <TextInput
               style={styles.input}
-              placeholder="Password"
+              placeholder={t('password')}
               placeholderTextColor="#9ca3af"
               secureTextEntry={!showPassword}
               value={formData.password}
@@ -207,14 +209,14 @@ const SignUpScreen = ({ navigation }) => {
             disabled={loading}
             activeOpacity={0.8}
           >
-            <Text style={styles.signUpText}>Sign up</Text>
+            <Text style={styles.signUpText}>{t('signUp')}</Text>
           </TouchableOpacity>
 
           {/* Already Member */}
           <View style={styles.signInRow}>
-            <Text style={styles.signInHint}>Already member ? </Text>
+            <Text style={styles.signInHint}>{t('alreadyMember')}</Text>
             <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
-              <Text style={styles.signInLink}>Signin</Text>
+              <Text style={styles.signInLink}>{t('signIn')}</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
