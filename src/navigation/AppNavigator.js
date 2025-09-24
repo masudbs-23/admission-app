@@ -12,6 +12,8 @@ import ApplicationForm from '../screens/ApplicationForm';
 import AdviserChat from '../screens/AdviserChat';
 import EventsScreen from '../screens/EventsScreen';
 import OnboardingScreen from '../screens/OnboardingScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import SplashScreen from '../screens/SplashScreen';
 
 const Stack = createStackNavigator();
 
@@ -22,7 +24,7 @@ const AppNavigator = () => {
   React.useEffect(() => {
     (async () => {
       try {
-        const v = await require('@react-native-async-storage/async-storage').default.getItem('hasSeenOnboarding');
+        const v = await AsyncStorage.getItem('hasSeenOnboarding');
         setShowOnboarding(!v);
       } catch {
         setShowOnboarding(true);
@@ -32,18 +34,18 @@ const AppNavigator = () => {
 
   // Show loading screen while checking authentication
   if (isLoading) {
-    return null; // You can add a loading screen here
+    return <SplashScreen />;
   }
 
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={showOnboarding ? "Onboarding" : (isAuthenticated ? "Main" : "SignIn")}
+        initialRouteName={isAuthenticated ? "Main" : (showOnboarding ? "Onboarding" : "SignIn")}
         screenOptions={{
           headerShown: false,
         }}
       >
-        {showOnboarding && (
+        {!isAuthenticated && showOnboarding && (
           <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         )}
         {!isAuthenticated ? (

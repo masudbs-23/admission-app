@@ -19,40 +19,42 @@ const OnboardingScreen = ({ navigation }) => {
         contentContainerStyle={[styles.container, { paddingBottom: 40 + insets.bottom, paddingTop: insets.top }]}
         showsVerticalScrollIndicator={false}
       >
-        {/* Top Logo Image (from SignIn) */}
-        <Image
-          source={{ uri: 'https://i.ibb.co.com/KzhXCxTr/Chat-GPT-Image-Sep-9-2025-05-36-43-PM.png' }}
-          style={styles.topLogo}
-          resizeMode="cover"
-        />
+        <View style={styles.centerArea}>
+          {/* Top Logo Image (from SignIn) */}
+          <Image
+            source={{ uri: 'https://i.ibb.co.com/KzhXCxTr/Chat-GPT-Image-Sep-9-2025-05-36-43-PM.png' }}
+            style={styles.topLogo}
+            resizeMode="cover"
+          />
 
-        {/* Logo Row (from SignIn) */}
-        <View style={styles.logoRow}>
-          <Text style={styles.logoText}>Admission</Text>
-          <View style={styles.dotWrapper}>
-            <View style={[styles.dot, { backgroundColor: '#09BD71', top: 0, left: 0, transform: [{ rotate: '20deg' }] }]} />
-            <View style={[styles.dot, { width: 10, height: 6, backgroundColor: '#fb923c', top: -2, left: 8, transform: [{ rotate: '45deg' }] }]} />
-            <View style={[styles.dot, { width: 8, height: 6, backgroundColor: '#dc2626', top: -4, left: 14, transform: [{ rotate: '70deg' }] }]} />
+          {/* Logo Row (from SignIn) */}
+          <View style={styles.logoRow}>
+            <Text style={styles.logoText}>Admission</Text>
+            <View style={styles.dotWrapper}>
+              <View style={[styles.dot, { backgroundColor: '#09BD71', top: 0, left: 0, transform: [{ rotate: '20deg' }] }]} />
+              <View style={[styles.dot, { width: 10, height: 6, backgroundColor: '#fb923c', top: -2, left: 8, transform: [{ rotate: '45deg' }] }]} />
+              <View style={[styles.dot, { width: 8, height: 6, backgroundColor: '#dc2626', top: -4, left: 14, transform: [{ rotate: '70deg' }] }]} />
+            </View>
+            <Text style={[styles.logoText, { marginLeft: 12 }]}>
+              <Text style={{ color: '#09BD71' }}>.</Text>
+              ac
+            </Text>
           </View>
-          <Text style={[styles.logoText, { marginLeft: 12 }]}>
-            <Text style={{ color: '#09BD71' }}>.</Text>
-            ac
+
+          {/* Headline & Subtitle */}
+          <Text style={styles.title}>Find your dream university</Text>
+          <Text style={styles.subtitle}>
+            Explore institutions, track your application, and chat with advisors —
+            all in one place.
           </Text>
+
+          {/* Illustration */}
+          <Image
+            source={{ uri: 'https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?q=80&w=1470&auto=format&fit=crop' }}
+            style={styles.illustration}
+            resizeMode="cover"
+          />
         </View>
-
-        {/* Headline & Subtitle */}
-        <Text style={styles.title}>Find your dream university</Text>
-        <Text style={styles.subtitle}>
-          Explore institutions, track your application, and chat with advisors —
-          all in one place.
-        </Text>
-
-        {/* Illustration */}
-        <Image
-          source={{ uri: 'https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?q=80&w=1470&auto=format&fit=crop' }}
-          style={styles.illustration}
-          resizeMode="cover"
-        />
       </ScrollView>
 
       {/* Get Started Button (sticky bottom) */}
@@ -75,7 +77,10 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     paddingHorizontal: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
+  centerArea: { width: '100%', maxWidth: 520, alignItems: 'center' },
   topLogo: {
     width: 72,
     height: 72,
@@ -132,8 +137,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 20,
     paddingTop: 12,
-    borderTopWidth: 1,
-    borderTopColor: '#F1F5F9',
   },
   primaryBtn: {
     height: 56,
