@@ -7,15 +7,28 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'; // For back arrow
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Spinner from 'react-native-loading-spinner-overlay';
+import { useAuth } from '../context/AuthContext';
+import CustomToast from '../components/CustomToast';
 
-const OTPVerificationScreen = ({ navigation }) => {
+const OTPVerificationScreen = ({ navigation, route }) => {
   const insets = useSafeAreaInsets();
   const [otp, setOtp] = useState(['', '', '', '']);
   const [isResendActive, setIsResendActive] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState('error');
   const inputRefs = useRef([]);
+  const { verifyOTP } = useAuth();
+  
+  // Get email from route params
+  const email = route?.params?.email || '***@gmail.com';
 
   useEffect(() => {
     inputRefs.current = inputRefs.current.slice(0, 4);
@@ -40,8 +53,67 @@ const OTPVerificationScreen = ({ navigation }) => {
     }
   };
 
+  const showToast = (message, type = 'error') => {
+    setToastMessage(message);
+    setToastType(type);
+    setToastVisible(true);
+  };
+
+  const hideToast = () => {
+    setToastVisible(false);
+  };
+
+  const handleVerifyOTP = async () => {
+    const otpCode = otp.join('');
+    
+    if (otpCode.length !== 4) {
+      showToast('Please enter a valid 4-digit OTP', 'error');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const result = await verifyOTP(email, otpCode);
+      
+      if (result.success) {
+        showToast('OTP verified successfully!', 'success');
+        setTimeout(() => {
+          navigation.replace('Main');
+        }, 1000);
+      } else {
+        // Show error message from backend
+        const errorMessage = result.error || 'Invalid OTP. Please try again.';
+        showToast(errorMessage, 'error');
+        // Clear OTP fields on failure
+        setOtp(['', '', '', '']);
+        inputRefs.current[0]?.focus();
+      }
+    } catch (error) {
+      showToast('Network error. Please try again.', 'error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
+      {/* Spinner Overlay */}
+      <Spinner
+        visible={loading}
+        textStyle={{ color: '#09BD71' }}
+        overlayColor="rgba(255,255,255,0.7)"
+        customIndicator={<ActivityIndicator size="large" color="#09BD71" />}
+      />
+      
+      {/* Custom Toast */}
+      <CustomToast
+        visible={toastVisible}
+        message={toastMessage}
+        type={toastType}
+        duration={2000}
+        onHide={hideToast}
+      />
+      
       <ScrollView contentContainerStyle={[styles.container, { paddingBottom: 20 + insets.bottom }] }>
         {/* Header */}
         <View style={[styles.header, { paddingTop: insets.top }]}>
@@ -73,7 +145,7 @@ const OTPVerificationScreen = ({ navigation }) => {
           <Text style={styles.title}>Enter Verification Code</Text>
           <Text style={styles.description}>
             Please enter the verification code shared to {'\n'}
-            <Text style={{ fontWeight: '500', color: '#374151' }}> ***@gmail.com</Text>
+            <Text style={{ fontWeight: '500', color: '#374151' }}> {email}</Text>
           </Text>
 
           {/* OTP Input Fields */}
@@ -109,8 +181,8 @@ const OTPVerificationScreen = ({ navigation }) => {
               styles.submitBtn,
               otp.every((digit) => digit !== '') && { backgroundColor: '#09BD71' },
             ]}
-            disabled={!otp.every((digit) => digit !== '')}
-            onPress={() => navigation.navigate('Main')}
+            disabled={!otp.every((digit) => digit !== '') || loading}
+            onPress={handleVerifyOTP}
           >
             <Text style={styles.submitText}>Submit</Text>
           </TouchableOpacity>

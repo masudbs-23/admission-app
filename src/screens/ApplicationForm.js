@@ -13,7 +13,6 @@ import {
   TextInput,
 } from "react-native";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import DocumentPicker, { types as DocumentTypes } from 'react-native-document-picker';
 import { launchCamera as rnLaunchCamera, launchImageLibrary as rnLaunchImageLibrary } from 'react-native-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -92,28 +91,9 @@ const ApplicationForm = ({ navigation }) => {
   };
 
   const pickPDF = async () => {
-    try {
-      const res = await DocumentPicker.pickSingle({
-        type: [DocumentTypes.pdf],
-        copyTo: 'cachesDirectory',
-        mode: 'import',
-      });
-      if (currentField && res?.uri) {
-        updateFile(currentField, {
-          uri: res.fileCopyUri || res.uri,
-          name: res.name,
-          mimeType: res.type || 'application/pdf',
-        });
-      }
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        // user cancelled
-      } else {
-        Alert.alert('Error', 'Failed to pick document');
-      }
-    } finally {
-      setOptionVisible(false);
-    }
+    // PDF picker functionality removed due to compatibility issues
+    Alert.alert('Info', 'PDF picker temporarily disabled. Please use camera or gallery for now.');
+    setOptionVisible(false);
   };
 
   const isImage = (f) => f && f.mimeType && f.mimeType.startsWith("image/");

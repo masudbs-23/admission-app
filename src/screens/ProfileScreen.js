@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import DocumentPicker, { types as DocumentTypes } from 'react-native-document-picker';
 import {
   launchCamera as rnLaunchCamera,
   launchImageLibrary as rnLaunchImageLibrary,
@@ -48,10 +47,6 @@ const DocumentUploadScreen = ({ onSave }) => {
           {
             text: 'Choose from Gallery',
             onPress: () => launchImagePicker(type),
-          },
-          {
-            text: 'Choose PDF File',
-            onPress: () => launchDocumentPicker(type),
           },
           {
             text: 'Cancel',
@@ -121,29 +116,8 @@ const DocumentUploadScreen = ({ onSave }) => {
   };
 
   const launchDocumentPicker = async (type) => {
-    try {
-      const res = await DocumentPicker.pickSingle({
-        type: [DocumentTypes.images, DocumentTypes.pdf],
-        copyTo: 'cachesDirectory',
-        mode: 'import',
-      });
-      if (res?.uri) {
-        setFiles((prev) => ({
-          ...prev,
-          [type]: {
-            name: res.name,
-            uri: res.fileCopyUri || res.uri,
-            type: res.type,
-            mimeType: res.type,
-            size: res.size,
-          },
-        }));
-      }
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) return;
-      console.log('Error picking document: ', err);
-      Alert.alert('Error', 'Failed to pick document');
-    }
+    // PDF picker functionality removed due to compatibility issues
+    Alert.alert('Info', 'PDF picker temporarily disabled. Please use camera or gallery for now.');
   };
 
   const removeFile = (type) => {

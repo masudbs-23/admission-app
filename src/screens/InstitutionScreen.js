@@ -8,9 +8,12 @@ import {
   SafeAreaView,
   TextInput,
   Dimensions,
+  ActivityIndicator,
+  RefreshControl,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useInstitutions } from '../hooks/useInstitutions';
 
 const { width } = Dimensions.get('window');
 
@@ -65,7 +68,19 @@ const InstitutionScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [bookmarks, setBookmarks] = useState({}); // keep track of bookmarked institutes
 
-  const filteredInstitutes = institutes.filter((item) =>
+  // Use React Query to fetch institutions
+  const {
+    data: institutionsData,
+    isLoading,
+    error,
+    refetch,
+    isRefetching,
+  } = useInstitutions({ search: searchQuery });
+
+  // Fallback to mock data if API fails or returns empty
+  const institutions = institutionsData?.institutions || institutes;
+  
+  const filteredInstitutes = institutions.filter((item) =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -111,8 +126,36 @@ const InstitutionScreen = ({ navigation }) => {
       </View>
 
       {/* Institutes List */}
-      <ScrollView contentContainerStyle={[styles.list, { paddingBottom: 20 + insets.bottom }]}>
-        {filteredInstitutes.map((item) => (
+      <ScrollView 
+        contentContainerStyle={[styles.list, { paddingBottom: 20 + insets.bottom }]}
+        refreshControl={
+          <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+        }
+      >
+        {/* Loading State */}
+        {isLoading && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#09BD71" />
+            <Text style={styles.loadingText}>Loading institutions...</Text>
+          </View>
+        )}
+
+        {/* Error State */}
+        {error && !isLoading && (
+          <View style={styles.errorContainer}>
+            <Ionicons name="alert-circle-outline" size={64} color="#ff6b6b" />
+            <Text style={styles.errorTitle}>Failed to Load Institutions</Text>
+            <Text style={styles.errorSubtitle}>
+              {error.message || 'Something went wrong. Please try again.'}
+            </Text>
+            <TouchableOpacity style={styles.retryButton} onPress={() => refetch()}>
+              <Text style={styles.retryButtonText}>Retry</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {/* Success State */}
+        {!isLoading && !error && filteredInstitutes.map((item) => (
           <TouchableOpacity
             key={item.id}
             style={styles.card}
@@ -156,15 +199,16 @@ const InstitutionScreen = ({ navigation }) => {
             </View>
           </TouchableOpacity>
         ))}
-       {filteredInstitutes.length === 0 && (
-  <View style={styles.noResultsContainer}>
-    <Ionicons name="search-outline" size={64} color="#ccc" />
-    <Text style={styles.noResultsTitle}>No Institutes Found</Text>
-    <Text style={styles.noResultsSubtitle}>
-      Try adjusting your search or filters to find what you're looking for.
-    </Text>
-  </View>
-)}
+        {/* No Results */}
+        {!isLoading && !error && filteredInstitutes.length === 0 && (
+          <View style={styles.noResultsContainer}>
+            <Ionicons name="search-outline" size={64} color="#ccc" />
+            <Text style={styles.noResultsTitle}>No Institutes Found</Text>
+            <Text style={styles.noResultsSubtitle}>
+              Try adjusting your search or filters to find what you're looking for.
+            </Text>
+          </View>
+        )}
 
       </ScrollView>
     </SafeAreaView>
@@ -301,25 +345,68 @@ const styles = StyleSheet.create({
     fontSize: width * 0.035,
     color: '#666',
   },
- noResultsContainer: {
-  flex: 1,
-  justifyContent: 'center',
-  alignItems: 'center',
-  marginTop: 80,
-},
-noResultsTitle: {
-  fontSize: width * 0.05,
-  fontWeight: '600',
-  color: '#444',
-  marginTop: 12,
-},
-noResultsSubtitle: {
-  fontSize: width * 0.035,
-  color: '#888',
-  textAlign: 'center',
-  marginTop: 6,
-  paddingHorizontal: 20,
-  lineHeight: 20,
-},
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 80,
+  },
+  loadingText: {
+    fontSize: width * 0.04,
+    color: '#666',
+    marginTop: 12,
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 80,
+    paddingHorizontal: 20,
+  },
+  errorTitle: {
+    fontSize: width * 0.05,
+    fontWeight: '600',
+    color: '#444',
+    marginTop: 12,
+  },
+  errorSubtitle: {
+    fontSize: width * 0.035,
+    color: '#888',
+    textAlign: 'center',
+    marginTop: 6,
+    lineHeight: 20,
+  },
+  retryButton: {
+    backgroundColor: '#09BD71',
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginTop: 16,
+  },
+  retryButtonText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: width * 0.04,
+  },
+  noResultsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 80,
+  },
+  noResultsTitle: {
+    fontSize: width * 0.05,
+    fontWeight: '600',
+    color: '#444',
+    marginTop: 12,
+  },
+  noResultsSubtitle: {
+    fontSize: width * 0.035,
+    color: '#888',
+    textAlign: 'center',
+    marginTop: 6,
+    paddingHorizontal: 20,
+    lineHeight: 20,
+  },
 
 });

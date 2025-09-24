@@ -10,11 +10,13 @@ import {
   Platform,
   ScrollView,
   Image,
-  ActivityIndicator 
+  ActivityIndicator,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useAuth } from '../context/AuthContext';
 
 const SignUpScreen = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,17 +26,38 @@ const SignUpScreen = ({ navigation }) => {
   });
   const [loading, setLoading] = useState(false);
   const insets = useSafeAreaInsets();
+  const { register } = useAuth();
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSignin = () => {
+  const handleSignup = async () => {
+    if (!formData.email || !formData.password) {
+      Alert.alert('Error', 'Please fill in all fields');
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      Alert.alert('Error', 'Password must be at least 6 characters long');
+      return;
+    }
+
     setLoading(true);
-    setTimeout(() => {
+    try {
+      const result = await register(formData.email, formData.password);
+      
+      if (result.success) {
+        // Navigate to OTP verification with email
+        navigation.navigate('OTPVerification', { email: formData.email });
+      } else {
+        Alert.alert('Registration Failed', result.error || 'Something went wrong');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Network error. Please try again.');
+    } finally {
       setLoading(false);
-      navigation.navigate('OTPVerification');
-    }, 2000);
+    }
   };
 
   return (
@@ -150,7 +173,7 @@ const SignUpScreen = ({ navigation }) => {
           </View>
 
           {/* Sign In Button */}
-          <TouchableOpacity style={styles.signUpBtn} onPress={handleSignin}>
+          <TouchableOpacity style={styles.signUpBtn} onPress={handleSignup}>
             <Text style={styles.signUpText}>Sign up</Text>
           </TouchableOpacity>
 

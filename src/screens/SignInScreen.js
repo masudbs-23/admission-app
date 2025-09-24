@@ -11,10 +11,12 @@ import {
   ScrollView,
   Image,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useAuth } from '../context/AuthContext';
 
 const SignInScreen = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,18 +26,32 @@ const SignInScreen = ({ navigation }) => {
   });
   const [loading, setLoading] = useState(false);
   const insets = useSafeAreaInsets();
+  const { login } = useAuth();
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSignin = () => {
+  const handleSignin = async () => {
+    if (!formData.email || !formData.password) {
+      Alert.alert('Error', 'Please fill in all fields');
+      return;
+    }
+
     setLoading(true);
-    setTimeout(() => {
+    try {
+      const result = await login(formData.email, formData.password);
+      
+      if (result.success) {
+        navigation.replace('Main');
+      } else {
+        Alert.alert('Login Failed', result.error || 'Something went wrong');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Network error. Please try again.');
+    } finally {
       setLoading(false);
-      // এখানে Signin successful হলে Main tab এ যাবে
-      navigation.replace('Main');
-    }, 2000);
+    }
   };
 
   return (
