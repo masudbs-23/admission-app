@@ -104,6 +104,12 @@ const OTPVerificationScreen = ({ navigation, route }) => {
         overlayColor="rgba(255,255,255,0.7)"
         customIndicator={<ActivityIndicator size="large" color="#09BD71" />}
       />
+      {/* Fallback Fullscreen Overlay to ensure visibility on all devices */}
+      {loading && (
+        <View style={styles.fullscreenOverlay} pointerEvents="auto">
+          <ActivityIndicator size="large" color="#09BD71" />
+        </View>
+      )}
       
       {/* Custom Toast */}
       <CustomToast
@@ -118,7 +124,7 @@ const OTPVerificationScreen = ({ navigation, route }) => {
         {/* Header */}
         <View style={[styles.header, { paddingTop: insets.top }]}>
           {/* Back Button */}
-          <TouchableOpacity style={styles.backBtn}>
+          <TouchableOpacity style={styles.backBtn} disabled={loading}>
             <Icon name="chevron-back-outline" size={24} color="#000000" />
           </TouchableOpacity>
 
@@ -158,8 +164,9 @@ const OTPVerificationScreen = ({ navigation, route }) => {
                 value={digit}
                 keyboardType="numeric"
                 maxLength={1}
-                onChangeText={(val) => handleInputChange(index, val)}
-                onKeyPress={(e) => handleKeyPress(index, e)}
+                editable={!loading}
+                onChangeText={(val) => !loading && handleInputChange(index, val)}
+                onKeyPress={(e) => !loading && handleKeyPress(index, e)}
               />
             ))}
           </View>
@@ -168,8 +175,8 @@ const OTPVerificationScreen = ({ navigation, route }) => {
           <Text style={styles.resendText}>
             Still not received OTP?{' '}
             <Text
-              style={[styles.resendLink, isResendActive && { color: '#dc2626' }]}
-              onPress={() => setIsResendActive(true)}
+              style={[styles.resendLink, (isResendActive || loading) && { color: '#c4c4c4' }]}
+              onPress={() => !loading && setIsResendActive(true)}
             >
               Resend OTP
             </Text>
@@ -180,11 +187,12 @@ const OTPVerificationScreen = ({ navigation, route }) => {
             style={[
               styles.submitBtn,
               otp.every((digit) => digit !== '') && { backgroundColor: '#09BD71' },
+              loading && { opacity: 0.7 },
             ]}
             disabled={!otp.every((digit) => digit !== '') || loading}
             onPress={handleVerifyOTP}
           >
-            <Text style={styles.submitText}>Submit</Text>
+            <Text style={styles.submitText}>Verify</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -290,5 +298,16 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
+  },
+  fullscreenOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(255,255,255,0.7)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 9999,
   },
 });

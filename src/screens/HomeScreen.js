@@ -14,12 +14,29 @@ import Icon from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LanguageSwitch from '../component/LanguageSwitch';
+import { useQuery } from '@tanstack/react-query';
+import api from '../services/api';
 
 const { width } = Dimensions.get('window');
 
 const HomeScreen = ({ navigation }) => {
   const [searchData, setSearchData] = useState({ query: '' });
   const insets = useSafeAreaInsets();
+
+  // Fetch logged-in user profile (includes profileCompletion.percentage)
+  const { data: me, isLoading: isMeLoading } = useQuery({
+    queryKey: ['me'],
+    queryFn: async () => {
+      const res = await api.get('https://admission-back.onrender.com/api/users/me');
+      return res.data;
+    },
+    staleTime: 60 * 1000,
+  });
+
+  const profileName = me?.name || me?.user?.name || 'User';
+  const profilePct = typeof me?.profileCompletion?.percentage === 'number'
+    ? me.profileCompletion.percentage
+    : 0;
 
   const handleSearch = () => {
     alert(`Searching for: ${searchData.query}`);
@@ -35,8 +52,10 @@ const HomeScreen = ({ navigation }) => {
             style={styles.profileImage}
           />
           <View>
-            <Text style={styles.greeting}>Hi, Masud Rana</Text>
-            <Text style={styles.profileProgress}>75% Profile Complete</Text>
+            <Text style={styles.greeting}>Hi, {profileName}</Text>
+            <Text style={styles.profileProgress}>
+              {isMeLoading ? 'Loading…' : `${profilePct}% Profile Complete`}
+            </Text>
           </View>
         </View>
 

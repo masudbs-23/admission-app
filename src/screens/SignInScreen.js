@@ -17,6 +17,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '../context/AuthContext';
+import CustomToast from '../components/CustomToast';
 
 const SignInScreen = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,6 +28,9 @@ const SignInScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const insets = useSafeAreaInsets();
   const { login } = useAuth();
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState('error');
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -34,7 +38,9 @@ const SignInScreen = ({ navigation }) => {
 
   const handleSignin = async () => {
     if (!formData.email || !formData.password) {
-      Alert.alert('Error', 'Please fill in all fields');
+      setToastMessage('Please fill in all fields');
+      setToastType('error');
+      setToastVisible(true);
       return;
     }
 
@@ -45,10 +51,15 @@ const SignInScreen = ({ navigation }) => {
       if (result.success) {
         navigation.replace('Main');
       } else {
-        Alert.alert('Login Failed', result.error || 'Something went wrong');
+        // Show backend error like "Invalid credentials"
+        setToastMessage(result.error || 'Something went wrong');
+        setToastType('error');
+        setToastVisible(true);
       }
     } catch (error) {
-      Alert.alert('Error', 'Network error. Please try again.');
+      setToastMessage('Network error. Please try again.');
+      setToastType('error');
+      setToastVisible(true);
     } finally {
       setLoading(false);
     }
@@ -63,6 +74,19 @@ const SignInScreen = ({ navigation }) => {
         overlayColor="rgba(255,255,255,0.7)"
         customIndicator={<ActivityIndicator size="large" color="#09BD71" />}
       />
+      {/* Custom Toast */}
+      <CustomToast
+        visible={toastVisible}
+        message={toastMessage}
+        type={toastType}
+        duration={2000}
+        onHide={() => setToastVisible(false)}
+      />
+      {loading && (
+        <View style={styles.fullscreenOverlay} pointerEvents="auto">
+          <ActivityIndicator size="large" color="#09BD71" />
+        </View>
+      )}
 
       <KeyboardAvoidingView
         style={{ flex: 1 }}
@@ -166,7 +190,12 @@ const SignInScreen = ({ navigation }) => {
           </View>
 
           {/* Sign In Button */}
-          <TouchableOpacity style={styles.signUpBtn} onPress={handleSignin}>
+          <TouchableOpacity
+            style={[styles.signUpBtn, loading && { opacity: 0.7 }]}
+            onPress={handleSignin}
+            disabled={loading}
+            activeOpacity={0.8}
+          >
             <Text style={styles.signUpText}>Sign in</Text>
           </TouchableOpacity>
 
@@ -280,5 +309,16 @@ const styles = StyleSheet.create({
     color: '#000080',
     fontSize: 14,
     fontWeight: '600',
+  },
+  fullscreenOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(255,255,255,0.5)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 9999,
   },
 });

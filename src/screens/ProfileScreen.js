@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useAuth } from '../context/AuthContext';
 import {
   launchCamera as rnLaunchCamera,
   launchImageLibrary as rnLaunchImageLibrary,
@@ -221,6 +222,7 @@ const DocumentUploadScreen = ({ onSave }) => {
 const ProfileScreen = () => {
   const insets = useSafeAreaInsets();
   const [activeTab, setActiveTab] = useState('primary');
+  const { logout } = useAuth();
 
   const onSave = () => {
     Alert.alert('Saved', 'Your information has been saved successfully!');
@@ -395,7 +397,9 @@ const ProfileScreen = () => {
           <Ionicons name="arrow-back" size={24} color="#111" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Profile</Text>
-        <View style={{ width: 24 }} />
+        <TouchableOpacity onPress={logout}>
+          <Ionicons name="log-out-outline" size={24} color="#111" />
+        </TouchableOpacity>
       </View>
 
       <View style={styles.tabContainer}>

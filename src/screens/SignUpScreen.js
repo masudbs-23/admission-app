@@ -17,6 +17,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '../context/AuthContext';
+import CustomToast from '../components/CustomToast';
 
 const SignUpScreen = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,6 +28,9 @@ const SignUpScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const insets = useSafeAreaInsets();
   const { register } = useAuth();
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState('error');
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -34,12 +38,16 @@ const SignUpScreen = ({ navigation }) => {
 
   const handleSignup = async () => {
     if (!formData.email || !formData.password) {
-      Alert.alert('Error', 'Please fill in all fields');
+      setToastMessage('Please fill in all fields');
+      setToastType('error');
+      setToastVisible(true);
       return;
     }
 
     if (formData.password.length < 6) {
-      Alert.alert('Error', 'Password must be at least 6 characters long');
+      setToastMessage('Password must be at least 6 characters long');
+      setToastType('error');
+      setToastVisible(true);
       return;
     }
 
@@ -51,10 +59,15 @@ const SignUpScreen = ({ navigation }) => {
         // Navigate to OTP verification with email
         navigation.navigate('OTPVerification', { email: formData.email });
       } else {
-        Alert.alert('Registration Failed', result.error || 'Something went wrong');
+        // Show backend error like "User already exists"
+        setToastMessage(result.error || 'Something went wrong');
+        setToastType('error');
+        setToastVisible(true);
       }
     } catch (error) {
-      Alert.alert('Error', 'Network error. Please try again.');
+      setToastMessage('Network error. Please try again.');
+      setToastType('error');
+      setToastVisible(true);
     } finally {
       setLoading(false);
     }
@@ -68,6 +81,19 @@ const SignUpScreen = ({ navigation }) => {
         textStyle={{ color: '#09BD71' }}
         overlayColor="rgba(255,255,255,0.7)"
         customIndicator={<ActivityIndicator size="large" color="#09BD71" />}
+      />
+      {loading && (
+        <View style={styles.fullscreenOverlay} pointerEvents="auto">
+          <ActivityIndicator size="large" color="#09BD71" />
+        </View>
+      )}
+      {/* Custom Toast */}
+      <CustomToast
+        visible={toastVisible}
+        message={toastMessage}
+        type={toastType}
+        duration={2000}
+        onHide={() => setToastVisible(false)}
       />
 
       <KeyboardAvoidingView
@@ -172,8 +198,13 @@ const SignUpScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
 
-          {/* Sign In Button */}
-          <TouchableOpacity style={styles.signUpBtn} onPress={handleSignup}>
+          {/* Sign Up Button */}
+          <TouchableOpacity
+            style={[styles.signUpBtn, loading && { opacity: 0.7 }]}
+            onPress={handleSignup}
+            disabled={loading}
+            activeOpacity={0.8}
+          >
             <Text style={styles.signUpText}>Sign up</Text>
           </TouchableOpacity>
 
@@ -287,5 +318,16 @@ const styles = StyleSheet.create({
     color: '#000080',
     fontSize: 14,
     fontWeight: '600',
+  },
+  fullscreenOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(255,255,255,0.5)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 9999,
   },
 });
