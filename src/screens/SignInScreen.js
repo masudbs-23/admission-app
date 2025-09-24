@@ -18,6 +18,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '../context/AuthContext';
 import CustomToast from '../components/CustomToast';
+import { useAuthMutations } from '../hooks/useAuthMutations';
 
 const SignInScreen = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -25,9 +26,10 @@ const SignInScreen = ({ navigation }) => {
     email: '',
     password: '',
   });
-  const [loading, setLoading] = useState(false);
+  const { loginMutation } = useAuthMutations();
   const insets = useSafeAreaInsets();
   const { login } = useAuth();
+  const loading = loginMutation.isPending;
   const [toastVisible, setToastVisible] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState('error');
@@ -44,9 +46,8 @@ const SignInScreen = ({ navigation }) => {
       return;
     }
 
-    setLoading(true);
     try {
-      const result = await login(formData.email, formData.password);
+      const result = await loginMutation.mutateAsync({ email: formData.email, password: formData.password });
       
       if (result.success) {
         navigation.replace('Main');
@@ -60,8 +61,6 @@ const SignInScreen = ({ navigation }) => {
       setToastMessage('Network error. Please try again.');
       setToastType('error');
       setToastVisible(true);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -90,10 +89,13 @@ const SignInScreen = ({ navigation }) => {
 
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={insets.top}
+      >
         <ScrollView
-          contentContainerStyle={[styles.container, { paddingBottom: 40 + insets.bottom }]}
+          contentContainerStyle={[styles.container, { paddingBottom: 40 + insets.bottom, paddingTop: insets.top }]}
           keyboardShouldPersistTaps="handled"
+          contentInsetAdjustmentBehavior="always"
           showsVerticalScrollIndicator={false}>
           
           {/* Top Logo Image */}

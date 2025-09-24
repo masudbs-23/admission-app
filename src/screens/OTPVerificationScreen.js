@@ -15,6 +15,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useAuth } from '../context/AuthContext';
 import CustomToast from '../components/CustomToast';
+import { useAuthMutations } from '../hooks/useAuthMutations';
 
 const OTPVerificationScreen = ({ navigation, route }) => {
   const insets = useSafeAreaInsets();
@@ -25,6 +26,7 @@ const OTPVerificationScreen = ({ navigation, route }) => {
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState('error');
   const inputRefs = useRef([]);
+  const { verifyOtpMutation } = useAuthMutations();
   const { verifyOTP } = useAuth();
   
   // Get email from route params
@@ -71,9 +73,9 @@ const OTPVerificationScreen = ({ navigation, route }) => {
       return;
     }
 
-    setLoading(true);
     try {
-      const result = await verifyOTP(email, otpCode);
+      setLoading(true);
+      const result = await verifyOtpMutation.mutateAsync({ email, otp: otpCode });
       
       if (result.success) {
         showToast('OTP verified successfully!', 'success');

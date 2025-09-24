@@ -1,10 +1,14 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+// Resolve base URL once
+const DEFAULT_BASE_URL = 'https://admission-back.onrender.com';
+const API_BASE_URL = process.env.API_BASE_URL || DEFAULT_BASE_URL;
+
 // Create axios instance
 const api = axios.create({
-  baseURL: 'http://localhost:5000',
-  timeout: 10000,
+  baseURL: API_BASE_URL,
+  timeout: 15000,
 });
 
 // Request interceptor to add auth token

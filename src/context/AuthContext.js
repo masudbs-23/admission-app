@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import api from '../services/api';
 
 const AuthContext = createContext();
 
@@ -38,90 +39,41 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch('https://admission-back.onrender.com/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        const { token: authToken, user: userData } = data;
-        
-        // Store token and user data
-        await AsyncStorage.setItem('authToken', authToken);
-        await AsyncStorage.setItem('userData', JSON.stringify(userData));
-        
-        setToken(authToken);
-        setUser(userData);
-        
-        return { success: true, data };
-      } else {
-        return { success: false, error: data.message || 'Login failed' };
-      }
+      const { data } = await api.post('/api/auth/login', { email, password });
+      const { token: authToken, user: userData } = data;
+      await AsyncStorage.setItem('authToken', authToken);
+      await AsyncStorage.setItem('userData', JSON.stringify(userData));
+      setToken(authToken);
+      setUser(userData);
+      return { success: true, data };
     } catch (error) {
-      console.error('Login error:', error);
-      return { success: false, error: 'Network error' };
+      const message = error?.response?.data?.message || 'Login failed';
+      return { success: false, error: message };
     }
   };
 
   const register = async (email, password) => {
     try {
-      const response = await fetch('https://admission-back.onrender.com/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        return { success: true, data };
-      } else {
-        return { success: false, error: data.message || 'Registration failed' };
-      }
+      const { data } = await api.post('/api/auth/register', { email, password });
+      return { success: true, data };
     } catch (error) {
-      console.error('Registration error:', error);
-      return { success: false, error: 'Network error' };
+      const message = error?.response?.data?.message || 'Registration failed';
+      return { success: false, error: message };
     }
   };
 
   const verifyOTP = async (email, otp) => {
     try {
-      const response = await fetch('https://admission-back.onrender.com/api/auth/verify-otp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, otp }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        const { token: authToken, user: userData } = data;
-        
-        // Store token and user data after successful OTP verification
-        await AsyncStorage.setItem('authToken', authToken);
-        await AsyncStorage.setItem('userData', JSON.stringify(userData));
-        
-        setToken(authToken);
-        setUser(userData);
-        
-        return { success: true, data };
-      } else {
-        // Extract error message from backend response
-        const errorMessage = data.message || data.error || 'OTP verification failed';
-        return { success: false, error: errorMessage };
-      }
+      const { data } = await api.post('/api/auth/verify-otp', { email, otp });
+      const { token: authToken, user: userData } = data;
+      await AsyncStorage.setItem('authToken', authToken);
+      await AsyncStorage.setItem('userData', JSON.stringify(userData));
+      setToken(authToken);
+      setUser(userData);
+      return { success: true, data };
     } catch (error) {
-      console.error('OTP verification error:', error);
-      return { success: false, error: 'Network error' };
+      const message = error?.response?.data?.message || 'OTP verification failed';
+      return { success: false, error: message };
     }
   };
 
