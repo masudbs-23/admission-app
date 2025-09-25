@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import FloatingLabelInput from '../components/FloatingLabelInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useLanguage } from '../context/LanguageContext';
@@ -20,6 +21,7 @@ const ForgotPasswordResetScreen = ({ navigation, route }) => {
     Alert.alert(t('fpResetTitle'), t('passwordUpdated'));
     navigation.navigate('SignIn');
   };
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -47,23 +49,17 @@ const ForgotPasswordResetScreen = ({ navigation, route }) => {
           </View>
         </View>
         <Text style={styles.pageTitle}>{t('fpResetTitle')}</Text>
-        <Text style={styles.label}>{t('fpNewPassword')}</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="••••••••"
-          placeholderTextColor="#9CA3AF"
-          secureTextEntry
+        <FloatingLabelInput
+          label={t('fpNewPassword')}
           value={p1}
           onChangeText={setP1}
-        />
-        <Text style={[styles.label, { marginTop: 12 }]}>{t('fpConfirmNewPassword')}</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="••••••••"
-          placeholderTextColor="#9CA3AF"
           secureTextEntry
+        />
+        <FloatingLabelInput
+          label={t('fpConfirmNewPassword')}
           value={p2}
           onChangeText={setP2}
+          secureTextEntry
         />
         <TouchableOpacity style={styles.submitBtn} onPress={onUpdate}>
           <Text style={styles.submitText}>{t('fpUpdatePassword')}</Text>
@@ -98,6 +94,7 @@ const styles = StyleSheet.create({
     width: '100%', height: 50, backgroundColor: '#F9FAFB', borderRadius: 10,
     paddingHorizontal: 14, borderWidth: 1, borderColor: '#E5E7EB', color: '#111827', fontSize: 15,
   },
+  // Floating styles live in component
   submitBtn: { marginTop: 16, backgroundColor: '#09BD71', paddingVertical: 14, borderRadius: 10, alignItems: 'center' },
   submitText: { color: '#fff', fontSize: 16, fontWeight: '700' },
 });

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import FloatingLabelInput from '../components/FloatingLabelInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useLanguage } from '../context/LanguageContext';
@@ -8,6 +9,7 @@ const ForgotPasswordEmailScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
   const { t } = useLanguage();
   const [email, setEmail] = useState('');
+
 
   const onSend = () => {
     if (!email) {
@@ -47,14 +49,11 @@ const ForgotPasswordEmailScreen = ({ navigation }) => {
         <Text style={styles.pageTitle}>{t('forgotPassword')}</Text>
         <Text style={styles.pageSubtitle}>{t('fpEmailSubtitle')}</Text>
         {/* <Text style={styles.label}>{t('fpEmailLabel')}</Text> */}
-        <TextInput
-          style={styles.input}
-          placeholder={t('fpEmailPlaceholder')}
-          placeholderTextColor="#9CA3AF"
+        <FloatingLabelInput
+          label={t('fpEmailLabel')}
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
-          autoCapitalize="none"
         />
         <TouchableOpacity style={styles.submitBtn} onPress={onSend}>
           <Text style={styles.submitText}>{t('fpSendCode')}</Text>
@@ -80,6 +79,7 @@ const styles = StyleSheet.create({
   body: { padding: 16 },
   pageTitle: { fontSize: 18, fontWeight: '500', color: '#2B2A29', textAlign: 'left', marginBottom: 12 },
   pageSubtitle: { fontSize: 13, color: '#727271', marginTop: -4, marginBottom: 10 },
+  // Floating label styles are now inside component
   logoContainer: { alignItems: 'center', marginBottom: 12 },
   logoRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 16 },
   logoText: { fontSize: 28, fontWeight: '400', color: '#1f2937' },
