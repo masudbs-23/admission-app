@@ -25,6 +25,9 @@ const institutes = [
     programs: '2 matching programs',
     acceptance: '74%',
     cost: '$12k',
+    price: 12000,
+    ielts: 6.5,
+    country: 'Canada',
     logoType: 'algoma',
   },
   {
@@ -33,7 +36,10 @@ const institutes = [
     location: 'Nova Scotia, Canada',
     programs: '2 matching programs',
     acceptance: '74%',
-    cost: '$12k',
+    cost: '$14k',
+    price: 14000,
+    ielts: 6.0,
+    country: 'Canada',
     logoType: 'acadia',
   },
   {
@@ -42,8 +48,35 @@ const institutes = [
     location: 'Nova Scotia, Canada',
     programs: '2 matching programs',
     acceptance: '74%',
-    cost: '$12k',
+    cost: '$10k',
+    price: 10000,
+    ielts: 5.5,
+    country: 'Canada',
     logoType: 'calArts',
+  },
+  {
+    id: 4,
+    name: 'University of Westminster',
+    location: 'London, UK',
+    programs: '3 matching programs',
+    acceptance: '68%',
+    cost: '£11k',
+    price: 11000,
+    ielts: 6.5,
+    country: 'UK',
+    logoType: 'acadia',
+  },
+  {
+    id: 5,
+    name: 'Victoria University',
+    location: 'Melbourne, Australia',
+    programs: '4 matching programs',
+    acceptance: '72%',
+    cost: 'A$15k',
+    price: 15000,
+    ielts: 6.0,
+    country: 'Australia',
+    logoType: 'algoma',
   },
 ];
 
@@ -67,6 +100,10 @@ const InstitutionScreen = ({ navigation }) => {
   const [searchActive, setSearchActive] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [bookmarks, setBookmarks] = useState({}); // keep track of bookmarked institutes
+  const [showFilters, setShowFilters] = useState(false);
+  const [sortBy, setSortBy] = useState('priceAsc'); // priceAsc | priceDesc | null
+  const [minIelts, setMinIelts] = useState(null); // e.g., 5.5, 6.0, 6.5, 7.0
+  const [country, setCountry] = useState('All');
 
   // Use React Query to fetch institutions
   const {
@@ -79,10 +116,20 @@ const InstitutionScreen = ({ navigation }) => {
 
   // Fallback to mock data if API fails or returns empty
   const institutions = institutionsData?.institutions || institutes;
-  
-  const filteredInstitutes = institutions.filter((item) =>
-    item.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+
+  // Build country options from data
+  const countries = ['All', ...Array.from(new Set(institutions.map(i => i.country).filter(Boolean)))];
+
+  // Filter + sort
+  const filteredInstitutes = institutions
+    .filter((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    .filter((item) => (minIelts ? (item.ielts || 0) >= minIelts : true))
+    .filter((item) => (country && country !== 'All' ? item.country === country : true))
+    .sort((a, b) => {
+      if (sortBy === 'priceAsc') return (a.price || 0) - (b.price || 0);
+      if (sortBy === 'priceDesc') return (b.price || 0) - (a.price || 0);
+      return 0;
+    });
 
   const toggleBookmark = (id) => {
     setBookmarks((prev) => ({
@@ -125,6 +172,56 @@ const InstitutionScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
+      {/* Sort & Filter Bar */}
+      <View style={styles.filterBar}>
+        <TouchableOpacity style={styles.filterChip} onPress={() => setShowFilters(!showFilters)}>
+          <Ionicons name="options-outline" size={16} color="#323232" />
+          <Text style={styles.filterChipText}>Filter</Text>
+        </TouchableOpacity>
+        <View style={{ flexDirection: 'row', gap: 8 }}>
+          <TouchableOpacity
+            style={[styles.sortChip, sortBy === 'priceAsc' && styles.sortChipActive]}
+            onPress={() => setSortBy('priceAsc')}
+          >
+            <Ionicons name="cash-outline" size={16} color={sortBy === 'priceAsc' ? '#fff' : '#323232'} />
+            <Text style={[styles.sortChipText, sortBy === 'priceAsc' && styles.sortChipTextActive]}>Tuition Low–High</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.sortChip, sortBy === 'priceDesc' && styles.sortChipActive]}
+            onPress={() => setSortBy('priceDesc')}
+          >
+            <Ionicons name="cash-outline" size={16} color={sortBy === 'priceDesc' ? '#fff' : '#323232'} />
+            <Text style={[styles.sortChipText, sortBy === 'priceDesc' && styles.sortChipTextActive]}>Tuition High–Low</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      {/* Filters Panel */}
+      {showFilters && (
+        <View style={styles.filtersPanel}>
+          <View style={styles.filterRow}>
+            <Text style={styles.filterLabel}>IELTS</Text>
+            <View style={styles.pillRow}>
+              {[5.5, 6.0, 6.5, 7.0].map((v) => (
+                <TouchableOpacity key={v} style={[styles.pill, minIelts === v && styles.pillActive]} onPress={() => setMinIelts(minIelts === v ? null : v)}>
+                  <Text style={[styles.pillText, minIelts === v && styles.pillTextActive]}>{v}+</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+          <View style={styles.filterRow}>
+            <Text style={styles.filterLabel}>Country</Text>
+            <View style={styles.pillRow}>
+              {countries.map((c) => (
+                <TouchableOpacity key={c} style={[styles.pill, country === c && styles.pillActive]} onPress={() => setCountry(c)}>
+                  <Text style={[styles.pillText, country === c && styles.pillTextActive]}>{c}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+        </View>
+      )}
+
       {/* Institutes List */}
       <ScrollView 
         contentContainerStyle={[styles.list, { paddingBottom: 20 + insets.bottom }]}
@@ -133,15 +230,15 @@ const InstitutionScreen = ({ navigation }) => {
         }
       >
         {/* Loading State */}
-        {isLoading && (
+        {/* {isLoading && (
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" color="#09BD71" />
             <Text style={styles.loadingText}>Loading institutions...</Text>
           </View>
-        )}
+        )} */}
 
         {/* Error State */}
-        {error && !isLoading && (
+        {/* {error && !isLoading && (
           <View style={styles.errorContainer}>
             <Ionicons name="alert-circle-outline" size={64} color="#ff6b6b" />
             <Text style={styles.errorTitle}>Failed to Load Institutions</Text>
@@ -152,10 +249,10 @@ const InstitutionScreen = ({ navigation }) => {
               <Text style={styles.retryButtonText}>Retry</Text>
             </TouchableOpacity>
           </View>
-        )}
+        )} */}
 
         {/* Success State */}
-        {!isLoading && !error && filteredInstitutes.map((item) => (
+        { filteredInstitutes.map((item) => (
           <TouchableOpacity
             key={item.id}
             style={styles.card}
@@ -194,13 +291,24 @@ const InstitutionScreen = ({ navigation }) => {
               </View>
               <View style={styles.stat}>
                 <Text style={styles.statValue}>{item.cost}</Text>
-                <Text style={styles.statLabel}>Average Cost</Text>
+                <Text style={styles.statLabel}>Tuition Fees</Text>
+              </View>
+            </View>
+            {/* Tags */}
+            <View style={styles.tagRow}>
+              <View style={styles.tag}>
+                <Ionicons name="ribbon-outline" size={14} color="#323232" style={styles.tagIcon} />
+                <Text style={styles.tagText}>IELTS {item.ielts || '-'}</Text>
+              </View>
+              <View style={styles.tag}>
+                <Ionicons name="earth-outline" size={14} color="#323232" style={styles.tagIcon} />
+                <Text style={styles.tagText}>{item.country || '—'}</Text>
               </View>
             </View>
           </TouchableOpacity>
         ))}
         {/* No Results */}
-        {!isLoading && !error && filteredInstitutes.length === 0 && (
+        {/* {!isLoading && !error && filteredInstitutes.length === 0 && (
           <View style={styles.noResultsContainer}>
             <Ionicons name="search-outline" size={64} color="#ccc" />
             <Text style={styles.noResultsTitle}>No Institutes Found</Text>
@@ -208,7 +316,7 @@ const InstitutionScreen = ({ navigation }) => {
               Try adjusting your search or filters to find what you're looking for.
             </Text>
           </View>
-        )}
+        )} */}
 
       </ScrollView>
     </SafeAreaView>
@@ -242,6 +350,64 @@ const styles = StyleSheet.create({
     color: '#333',
     marginLeft: 12,
   },
+  filterBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingBottom: 8,
+  },
+  filterChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    borderRadius: 999,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    gap: 6,
+  },
+  filterChipText: { color: '#323232', fontWeight: '600', fontSize: 12 },
+  sortChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    borderRadius: 999,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    gap: 6,
+  },
+  sortChipActive: { backgroundColor: '#09BD71', borderColor: '#09BD71' },
+  sortChipText: { color: '#323232', fontWeight: '600', fontSize: 12 },
+  sortChipTextActive: { color: '#fff' },
+  filtersPanel: { paddingHorizontal: 16, paddingBottom: 8 },
+  filterRow: { marginBottom: 8 },
+  filterLabel: { fontSize: 13, color: '#374151', fontWeight: '700', marginBottom: 6 },
+  pillRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  pill: {
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    borderRadius: 999,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+  },
+  pillActive: { backgroundColor: '#111827', borderColor: '#111827' },
+  pillText: { color: '#323232', fontWeight: '600', fontSize: 12 },
+  pillTextActive: { color: '#fff' },
+  tagRow: { flexDirection: 'row', gap: 8, marginTop: 10 },
+  tag: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    backgroundColor: '#F9FAFB',
+    borderRadius: 999,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+  },
+  tagIcon: { marginRight: 4 },
+  tagText: { color: '#323232', fontWeight: '600', fontSize: 12 },
   searchInput: {
     flex: 1,
     marginLeft: 12,
