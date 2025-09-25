@@ -24,25 +24,28 @@ const AdvisorCard = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   advisorCard: {
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 20,
+    padding: 16,
     alignItems: 'center',
-    margin: 10,
-    borderRadius: 16,
+    marginHorizontal: 10,
+    marginTop: 10,
+    borderRadius: 14,
     borderWidth: 1,
-    borderColor: '#E2E8F0',
+    borderColor: '#E5E7EB',
   },
   advisorInfo: { flexDirection: 'row', alignItems: 'center', flex: 1, marginRight: 12 },
   advisorAvatar: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: 'rgba(255,255,255,0.2)',
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: '#F3F4F6',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
   },
   advisorAvatarText: { color: '#2B2A29', fontWeight: '600', fontSize: 18 },
   advisorDetails: { flex: 1 },
@@ -50,12 +53,12 @@ const styles = StyleSheet.create({
   advisorSub: { color: '#2B2A29', opacity: 0.9, fontSize: 14, flexShrink: 1 },
   chatButton: {
     backgroundColor: '#09BD71',
-    paddingHorizontal: 16,
+    paddingHorizontal: 14,
     paddingVertical: 8,
-    borderRadius: 8,
+    borderRadius: 999,
     alignSelf: 'center',
   },
-  chatButtonText: { color: '#fff', fontWeight: '600', fontSize: 14 },
+  chatButtonText: { color: '#fff', fontWeight: '700', fontSize: 13 },
 });
 
 export default AdvisorCard;

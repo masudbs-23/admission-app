@@ -6,26 +6,24 @@ const WhyChooseUs = () => {
   return (
     <View style={{ marginTop: 22 }}>
       <Text style={styles.sectionLabel}>Why choose us</Text>
-      <View style={styles.impactRow}>
+      <View style={styles.grid}>
         <View style={styles.impactCard}>
-          <MaterialIcons name="verified" size={28} color="#09BD71" />
+          <MaterialIcons name="verified" size={24} color="#09BD71" />
           <Text style={styles.impactTitle}>1,500+ programs</Text>
           <Text style={styles.impactSub}>Top global programs</Text>
         </View>
         <View style={styles.impactCard}>
-          <MaterialIcons name="support-agent" size={28} color="#09BD71" />
+          <MaterialIcons name="support-agent" size={24} color="#09BD71" />
           <Text style={styles.impactTitle}>Local advisors</Text>
           <Text style={styles.impactSub}>Visa & application help</Text>
         </View>
-      </View>
-      <View style={styles.impactRow}>
         <View style={styles.impactCard}>
-          <MaterialIcons name="school" size={28} color="#09BD71" />
+          <MaterialIcons name="school" size={24} color="#09BD71" />
           <Text style={styles.impactTitle}>Scholarships</Text>
           <Text style={styles.impactSub}>Find funding options</Text>
         </View>
         <View style={styles.impactCard}>
-          <MaterialIcons name="bolt" size={28} color="#09BD71" />
+          <MaterialIcons name="bolt" size={24} color="#09BD71" />
           <Text style={styles.impactTitle}>Fast matching</Text>
           <Text style={styles.impactSub}>Personalized results</Text>
         </View>
@@ -41,27 +39,27 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginBottom: 10,
   },
-  impactRow: { flexDirection: 'row', marginTop: 12 },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginTop: 12 },
   impactCard: {
-    flex: 1,
+    width: '48%',
     backgroundColor: '#fff',
-    borderRadius: 16,
-    padding: 16,
-    marginRight: 12,
+    borderRadius: 14,
+    paddingVertical: 14,
+    paddingHorizontal: 12,
     borderWidth: 1,
-    borderColor: '#E2E8F0',
+    borderColor: '#E5E7EB',
     alignItems: 'center',
   },
   impactTitle: {
     marginTop: 8,
     fontWeight: '700',
-    fontSize: 14,
+    fontSize: 13,
     color: '#1E293B',
   },
   impactSub: {
-    marginTop: 6,
+    marginTop: 4,
     color: '#64748B',
-    fontSize: 12,
+    fontSize: 11,
     textAlign: 'center',
   },
 });
