@@ -12,6 +12,11 @@ import ApplicationForm from '../screens/ApplicationForm';
 import AdviserChat from '../screens/AdviserChat';
 import EventsScreen from '../screens/EventsScreen';
 import OnboardingScreen from '../screens/OnboardingScreen';
+import SupportScreen from '../screens/SupportScreen';
+import ChangePasswordScreen from '../screens/ChangePasswordScreen';
+import ForgotPasswordEmailScreen from '../screens/ForgotPasswordEmailScreen';
+import ForgotPasswordOTPScreen from '../screens/ForgotPasswordOTPScreen';
+import ForgotPasswordResetScreen from '../screens/ForgotPasswordResetScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SplashScreen from '../screens/SplashScreen';
 
@@ -54,6 +59,9 @@ const AppNavigator = () => {
             <Stack.Screen name="SignIn" component={SignInScreen} />
             <Stack.Screen name="SignUp" component={SignUpScreen} />
             <Stack.Screen name="OTPVerification" component={OTPVerificationScreen} />
+            <Stack.Screen name="ForgotPasswordEmail" component={ForgotPasswordEmailScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="ForgotPasswordOTP" component={ForgotPasswordOTPScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="ForgotPasswordReset" component={ForgotPasswordResetScreen} options={{ headerShown: false }} />
           </>
         ) : (
           // Main App Stack
@@ -82,6 +90,16 @@ const AppNavigator = () => {
             <Stack.Screen
               name="Events"
               component={EventsScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Support"
+              component={SupportScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="ChangePassword"
+              component={ChangePasswordScreen}
               options={{ headerShown: false }}
             />
           </>

@@ -193,6 +193,11 @@ const SignInScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
 
+          {/* Forgot Password (above sign in, right aligned) */}
+          <TouchableOpacity style={styles.forgotRow} onPress={() => navigation.navigate('ForgotPasswordEmail')}>
+            <Text style={styles.forgotText}>{t('forgotPassword')}</Text>
+          </TouchableOpacity>
+
           {/* Sign In Button */}
           <TouchableOpacity
             style={[styles.signUpBtn, loading && { opacity: 0.7 }]}
@@ -305,6 +310,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 28,
   },
+  forgotRow: { alignItems: 'flex-end', width: '100%' },
+  forgotText: { color: '#323232', fontSize: 14, fontWeight: '600' },
   signInHint: {
     color: '#6b7280',
     fontSize: 14,

@@ -14,6 +14,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import {
   launchCamera as rnLaunchCamera,
   launchImageLibrary as rnLaunchImageLibrary,
@@ -28,6 +29,7 @@ const PROFILE_COMPLETION = 75;
 
 // Document Upload Screen
 const DocumentUploadScreen = ({ onSave }) => {
+  const { t } = useLanguage();
   const [files, setFiles] = useState({
     bsc: null,
     msc: null,
@@ -39,8 +41,8 @@ const DocumentUploadScreen = ({ onSave }) => {
   const pickFile = async (type) => {
     try {
       Alert.alert(
-        'Select Option',
-        'Choose how you want to upload your document',
+        t('submit'),
+        t('tapHint'),
         [
           {
             text: 'Take Photo',
@@ -193,27 +195,27 @@ const DocumentUploadScreen = ({ onSave }) => {
   return (
     <View style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.uploadContainer}>
-        <Text style={styles.sectionTitle}>Upload Your Documents</Text>
+        <Text style={styles.sectionTitle}>{t('uploadYourDocuments')}</Text>
         <Text style={styles.sectionSubtitle}>
-          Tap on a card to upload, long press to remove
+          {t('tapHint')}
         </Text>
 
         <View style={styles.row}>
-          <UploadCard title="BSc Certificate" type="bsc" file={files.bsc} />
-          <UploadCard title="MSc Certificate" type="msc" file={files.msc} />
+          <UploadCard title={t('bscCertificate')} type="bsc" file={files.bsc} />
+          <UploadCard title={t('mscCertificate')} type="msc" file={files.msc} />
         </View>
         <View style={styles.row}>
-          <UploadCard title="Passport" type="passport" file={files.passport} />
-          <UploadCard title="HSC Certificate" type="hsc" file={files.hsc} />
+          <UploadCard title={t('passport')} type="passport" file={files.passport} />
+          <UploadCard title={t('hscCertificate')} type="hsc" file={files.hsc} />
         </View>
         <View style={styles.row}>
-          <UploadCard title="SSC Certificate" type="ssc" file={files.ssc} />
+          <UploadCard title={t('sscCertificate')} type="ssc" file={files.ssc} />
           <View style={{ width: CARD_WIDTH }} /> {/* Empty placeholder */}
         </View>
       </ScrollView>
 
       <TouchableOpacity style={styles.floatingButton} onPress={onSave}>
-        <Text style={styles.submitText}>Save Changes</Text>
+        <Text style={styles.submitText}>{t('saveChanges')}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -224,6 +226,7 @@ const ProfileScreen = () => {
   const insets = useSafeAreaInsets();
   const [activeTab, setActiveTab] = useState('primary');
   const { logout } = useAuth();
+  const { t } = useLanguage();
 
   const onSave = () => {
     Alert.alert('Saved', 'Your information has been saved successfully!');
@@ -268,7 +271,7 @@ const ProfileScreen = () => {
 
     return (
       <ScrollView contentContainerStyle={styles.formContainer}>
-       <Text style={styles.formTitle}>Update Your Primary Info </Text>
+       <Text style={styles.formTitle}>{t('updatePrimaryInfo')} </Text>
         <View style={styles.avatarWrapper}>
           <Image
             source={
@@ -284,33 +287,33 @@ const ProfileScreen = () => {
         </View>
 
         <Input
-          label="Full Name"
-          placeholder="Enter your full name"
+          label={t('fullName')}
+          placeholder={t('fullNamePlaceholder')}
           value={formData.fullName}
           onChangeText={(text) => handleChange('fullName', text)}
         />
         <Input
-          label="Father's Name"
-          placeholder="Enter your father's name"
+          label={t('fathersName')}
+          placeholder={t('fathersNamePlaceholder')}
           value={formData.fatherName}
           onChangeText={(text) => handleChange('fatherName', text)}
         />
         <Input
-          label="Email"
-          placeholder="Enter your email"
+          label={t('email')}
+          placeholder={t('emailPlaceholder')}
           keyboardType="email-address"
           value={formData.email}
           onChangeText={(text) => handleChange('email', text)}
         />
         <Input
-          label="Date of Birth"
-          placeholder="YYYY-MM-DD"
+          label={t('dob')}
+          placeholder={t('dobPlaceholder')}
           value={formData.dob}
           onChangeText={(text) => handleChange('dob', text)}
         />
         <Input
-          label="Address"
-          placeholder="Enter your address"
+          label={t('address')}
+          placeholder={t('addressPlaceholder')}
           multiline
           value={formData.address}
           onChangeText={(text) => handleChange('address', text)}
@@ -335,41 +338,41 @@ const ProfileScreen = () => {
 
     return (
       <ScrollView contentContainerStyle={styles.formContainer}>
-       <Text style={styles.formTitle}>Update Your Academic Info </Text>
+       <Text style={styles.formTitle}>{t('updateAcademicInfo')} </Text>
         <Input
-          label="BSc University"
-          placeholder="Enter BSc university name"
+          label={t('bscUniversity')}
+          placeholder={t('bscUniversityPlaceholder')}
           value={academicData.bscVarsity}
           onChangeText={(text) => handleChange('bscVarsity', text)}
         />
         <Input
-          label="MSc University (Optional)"
-          placeholder="Enter MSc university name"
+          label={t('mscUniversityOptional')}
+          placeholder={t('mscUniversityPlaceholder')}
           value={academicData.mscVarsity}
           onChangeText={(text) => handleChange('mscVarsity', text)}
         />
         <Input
-          label="SSC Institution"
-          placeholder="Enter SSC institution name"
+          label={t('sscInstitution')}
+          placeholder={t('sscInstitutionPlaceholder')}
           value={academicData.sscInstitution}
           onChangeText={(text) => handleChange('sscInstitution', text)}
         />
         <Input
-          label="SSC CGPA"
-          placeholder="e.g. 5.00"
+          label={t('sscCgpa')}
+          placeholder={t('sscCgpaPlaceholder')}
           keyboardType="decimal-pad"
           value={academicData.sscCgpa}
           onChangeText={(text) => handleChange('sscCgpa', text)}
         />
         <Input
-          label="HSC Institution"
-          placeholder="Enter HSC institution name"
+          label={t('hscInstitution')}
+          placeholder={t('hscInstitutionPlaceholder')}
           value={academicData.hscInstitution}
           onChangeText={(text) => handleChange('hscInstitution', text)}
         />
         <Input
-          label="HSC CGPA"
-          placeholder="e.g. 4.90"
+          label={t('hscCgpa')}
+          placeholder={t('hscCgpaPlaceholder')}
           keyboardType="decimal-pad"
           value={academicData.hscCgpa}
           onChangeText={(text) => handleChange('hscCgpa', text)}
@@ -408,10 +411,10 @@ const ProfileScreen = () => {
     <SafeAreaView style={styles.container}>
       <View style={[styles.header, { paddingTop: insets.top }]}>
         <View style={styles.headerLeft}>
-          <Text style={styles.headerTitle}>Profile</Text>
+          <Text style={styles.headerTitle}>{t('profile')}</Text>
         </View>
         <View style={styles.headerRight}>
-          <Text style={styles.progressText}>{`${PROFILE_COMPLETION}% Profile Complete`}</Text>
+          <Text style={styles.progressText}>{`${PROFILE_COMPLETION}% ${t('profileComplete')}`}</Text>
           <View style={styles.progressTrack}>
             <View style={[styles.progressFill, { width: `${PROFILE_COMPLETION}%` }]} />
           </View>
@@ -420,17 +423,17 @@ const ProfileScreen = () => {
 
       <View style={styles.tabContainer}>
         <TabButton
-          title="Primary Info"
+          title={t('primaryInfo')}
           active={activeTab === 'primary'}
           onPress={() => setActiveTab('primary')}
         />
         <TabButton
-          title="Academic Info"
+          title={t('academicInfo')}
           active={activeTab === 'academic'}
           onPress={() => setActiveTab('academic')}
         />
         <TabButton
-          title="Upload Docs"
+          title={t('documents')}
           active={activeTab === 'documents'}
           onPress={() => setActiveTab('documents')}
         />

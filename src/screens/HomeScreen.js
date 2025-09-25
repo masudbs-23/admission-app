@@ -89,8 +89,8 @@ const HomeScreen = ({ navigation }) => {
         onNavigateDocuments={() => { closeMenu(); navigation.navigate('Profile'); }}
         onNavigateMySession={() => { closeMenu(); navigation.navigate('Chat'); }}
         onNavigateApplication={() => { closeMenu(); navigation.navigate('Apply'); }}
-        onNavigateChangePassword={() => { closeMenu(); navigation.navigate('Profile'); }}
-        onNavigateSupport={() => { closeMenu(); navigation.navigate('Chat'); }}
+        onNavigateChangePassword={() => { closeMenu(); navigation.navigate('ChangePassword'); }}
+        onNavigateSupport={() => { closeMenu(); navigation.navigate('Support'); }}
         onLogout={handleLogout}
       />
     </SafeAreaView>
