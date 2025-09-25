@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, ScrollView, StyleSheet } from 'react-native';
+import { SafeAreaView, View, ScrollView, StyleSheet, TouchableOpacity, Text, Image, Dimensions, Animated, Easing } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HomeHeader from '../components/home/HomeHeader';
+import HomeDrawer from '../components/home/HomeDrawer';
 import EventsSection from '../components/home/EventsSection';
 import AdvisorCard from '../components/home/AdvisorCard';
 import WhyChooseUs from '../components/home/WhyChooseUs';
 import InstitutionsSection from '../components/home/InstitutionsSection';
 import ImageSlider from '../components/home/ImageSlider';
 import { useMe } from '../hooks/useMe';
+import { useAuth } from '../context/AuthContext';
+
+const { width } = Dimensions.get('window');
 
 const HomeScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
+  const { logout } = useAuth();
 
   // Fetch logged-in user profile (includes profileCompletion.percentage)
   const { data: me, isLoading: isMeLoading } = useMe();
@@ -20,10 +26,33 @@ const HomeScreen = ({ navigation }) => {
     ? me.profileCompletion.percentage
     : 0;
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const slideX = useState(new Animated.Value(-width))[0];
+
+  const openMenu = () => {
+    setIsMenuOpen(true);
+    Animated.timing(slideX, { toValue: 0, duration: 220, easing: Easing.out(Easing.cubic), useNativeDriver: true }).start();
+    // Hide bottom tab bar while drawer is open
+    navigation.getParent()?.setOptions({ tabBarStyle: { display: 'none' } });
+  };
+
+  const closeMenu = () => {
+    Animated.timing(slideX, { toValue: -width, duration: 200, easing: Easing.in(Easing.cubic), useNativeDriver: true }).start(({ finished }) => {
+      if (finished) setIsMenuOpen(false);
+    });
+    // Restore bottom tab bar styling when drawer closes
+    navigation.getParent()?.setOptions({ tabBarStyle: { paddingBottom: Math.max(insets.bottom, 8), height: 60 + insets.bottom } });
+  };
+
+  const handleLogout = () => {
+    closeMenu();
+    logout();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       {/* 🔹 Sticky Header */}
-      <HomeHeader insets={insets} navigation={navigation} profileName={isMeLoading ? '...' : profileName} profilePct={isMeLoading ? 0 : profilePct} />
+      <HomeHeader insets={insets} navigation={navigation} profileName={isMeLoading ? '...' : profileName} profilePct={isMeLoading ? 0 : profilePct} onMenuPress={openMenu} />
 
       {/* 🔹 Scrollable Content */}
       <ScrollView
@@ -48,6 +77,22 @@ const HomeScreen = ({ navigation }) => {
         <EventsSection navigation={navigation} />
         </View>
       </ScrollView>
+
+      {/* 🔹 Slide-in Left Menu (Component) */}
+      <HomeDrawer
+        insets={insets}
+        isOpen={isMenuOpen}
+        slideX={slideX}
+        profileName={isMeLoading ? '...' : profileName}
+        profilePct={isMeLoading ? 0 : profilePct}
+        onClose={closeMenu}
+        onNavigateDocuments={() => { closeMenu(); navigation.navigate('Profile'); }}
+        onNavigateMySession={() => { closeMenu(); navigation.navigate('Chat'); }}
+        onNavigateApplication={() => { closeMenu(); navigation.navigate('Apply'); }}
+        onNavigateChangePassword={() => { closeMenu(); navigation.navigate('Profile'); }}
+        onNavigateSupport={() => { closeMenu(); navigation.navigate('Chat'); }}
+        onLogout={handleLogout}
+      />
     </SafeAreaView>
   );
 };
@@ -55,6 +100,59 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
   body: { flex: 1, padding: 16 },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0,0,0,0.35)',
+    flexDirection: 'row',
+    zIndex: 9999,
+    elevation: 9999,
+  },
+  overlayTouchable: { flex: 1 },
+  drawer: {
+    width: Math.min(360, width * 0.75),
+    backgroundColor: '#fff',
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+    shadowColor: '#000',
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
+    height: '100%',
+  },
+  closeBtn: {
+    position: 'absolute',
+    right: 10,
+    top: 6,
+    zIndex: 10,
+    width: 36,
+    height: 36,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  closeIcon: { fontSize: 26, color: '#111' },
+  drawerHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingTop: 28,
+    paddingBottom: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F3F4F6',
+    gap: 12,
+  },
+  drawerAvatar: { width: 56, height: 56, borderRadius: 28, marginRight: 12 },
+  drawerName: { fontSize: 16, fontWeight: '700', color: '#323232' },
+  drawerProgressText: { fontSize: 12, color: '#6B7280', marginTop: 6, marginBottom: 6 },
+  drawerProgressTrack: { width: '100%', height: 6, backgroundColor: '#E5E7EB', borderRadius: 999, overflow: 'hidden' },
+  drawerProgressFill: { height: '100%', backgroundColor: '#09BD71', borderRadius: 999 },
+  drawerMenu: { paddingHorizontal: 16, paddingVertical: 16 },
+  drawerSectionTitle: { fontSize: 14, fontWeight: '700', color: '#323232', marginBottom: 12 },
+  menuItem: { paddingVertical: 12 },
+  menuItemText: { fontSize: 15, color: '#323232', fontWeight: '400' },
 });
 
 export default HomeScreen;

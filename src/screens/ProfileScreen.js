@@ -24,6 +24,7 @@ import {
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = (width - 48) / 2; // 2 cards per row with spacing
+const PROFILE_COMPLETION = 75;
 
 // Document Upload Screen
 const DocumentUploadScreen = ({ onSave }) => {
@@ -164,13 +165,13 @@ const DocumentUploadScreen = ({ onSave }) => {
                 <Ionicons
                   name="document-text-outline"
                   size={38}
-                  color="#e53935"
+                  color="#9CA3AF"
                 />
                 <Text style={styles.uploadTitle}>{title}</Text>
               </View>
             ) : (
               <View style={styles.fileWrapper}>
-                <Ionicons name="document-outline" size={38} color="#09BD71" />
+                <Ionicons name="document-outline" size={38} color="#9CA3AF" />
                 <Text style={styles.uploadTitle}>{title}</Text>
               </View>
             )}
@@ -180,7 +181,7 @@ const DocumentUploadScreen = ({ onSave }) => {
             style={styles.emptyCard}
             onPress={() => pickFile(type)}
             activeOpacity={0.8}>
-            <Ionicons name="cloud-upload-outline" size={38} color="#09BD71" />
+            <Ionicons name="document-text-outline" size={38} color="#9CA3AF" />
             <Text style={styles.uploadTitle}>{title}</Text>
             <Text style={styles.uploadHint}>Tap to upload</Text>
           </TouchableOpacity>
@@ -283,28 +284,33 @@ const ProfileScreen = () => {
         </View>
 
         <Input
-          placeholder="Full Name"
+          label="Full Name"
+          placeholder="Enter your full name"
           value={formData.fullName}
           onChangeText={(text) => handleChange('fullName', text)}
         />
         <Input
-          placeholder="Father's Name"
+          label="Father's Name"
+          placeholder="Enter your father's name"
           value={formData.fatherName}
           onChangeText={(text) => handleChange('fatherName', text)}
         />
         <Input
-          placeholder="Email"
+          label="Email"
+          placeholder="Enter your email"
           keyboardType="email-address"
           value={formData.email}
           onChangeText={(text) => handleChange('email', text)}
         />
         <Input
-          placeholder="Date of Birth"
+          label="Date of Birth"
+          placeholder="YYYY-MM-DD"
           value={formData.dob}
           onChangeText={(text) => handleChange('dob', text)}
         />
         <Input
-          placeholder="Address"
+          label="Address"
+          placeholder="Enter your address"
           multiline
           value={formData.address}
           onChangeText={(text) => handleChange('address', text)}
@@ -331,33 +337,39 @@ const ProfileScreen = () => {
       <ScrollView contentContainerStyle={styles.formContainer}>
        <Text style={styles.formTitle}>Update Your Academic Info </Text>
         <Input
-          placeholder="BSc Varsity Name"
+          label="BSc University"
+          placeholder="Enter BSc university name"
           value={academicData.bscVarsity}
           onChangeText={(text) => handleChange('bscVarsity', text)}
         />
         <Input
-          placeholder="MSc Varsity Name (Optional)"
+          label="MSc University (Optional)"
+          placeholder="Enter MSc university name"
           value={academicData.mscVarsity}
           onChangeText={(text) => handleChange('mscVarsity', text)}
         />
         <Input
-          placeholder="SSC Institution Name"
+          label="SSC Institution"
+          placeholder="Enter SSC institution name"
           value={academicData.sscInstitution}
           onChangeText={(text) => handleChange('sscInstitution', text)}
         />
         <Input
-          placeholder="SSC CGPA"
+          label="SSC CGPA"
+          placeholder="e.g. 5.00"
           keyboardType="decimal-pad"
           value={academicData.sscCgpa}
           onChangeText={(text) => handleChange('sscCgpa', text)}
         />
         <Input
-          placeholder="HSC Institution Name"
+          label="HSC Institution"
+          placeholder="Enter HSC institution name"
           value={academicData.hscInstitution}
           onChangeText={(text) => handleChange('hscInstitution', text)}
         />
         <Input
-          placeholder="HSC CGPA"
+          label="HSC CGPA"
+          placeholder="e.g. 4.90"
           keyboardType="decimal-pad"
           value={academicData.hscCgpa}
           onChangeText={(text) => handleChange('hscCgpa', text)}
@@ -368,6 +380,7 @@ const ProfileScreen = () => {
 
   /* Update Input Component to accept `value` and `onChangeText` */
   const Input = ({
+    label,
     placeholder,
     value,
     onChangeText,
@@ -375,13 +388,14 @@ const ProfileScreen = () => {
     multiline = false,
   }) => (
     <View style={styles.inputWrapper}>
+      {label ? <Text style={styles.inputLabel}>{label}</Text> : null}
       <TextInput
         style={[
           styles.input,
-          multiline && { height: 80, textAlignVertical: 'top' },
+          multiline && { height: 90, textAlignVertical: 'top', paddingTop: 12 },
         ]}
         placeholder={placeholder}
-        placeholderTextColor="#888"
+        placeholderTextColor="#9CA3AF"
         keyboardType={keyboardType}
         multiline={multiline}
         value={value}
@@ -393,13 +407,15 @@ const ProfileScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={[styles.header, { paddingTop: insets.top }]}>
-        <TouchableOpacity>
-          <Ionicons name="arrow-back" size={24} color="#111" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Profile</Text>
-        <TouchableOpacity onPress={logout}>
-          <Ionicons name="log-out-outline" size={24} color="#111" />
-        </TouchableOpacity>
+        <View style={styles.headerLeft}>
+          <Text style={styles.headerTitle}>Profile</Text>
+        </View>
+        <View style={styles.headerRight}>
+          <Text style={styles.progressText}>{`${PROFILE_COMPLETION}% Profile Complete`}</Text>
+          <View style={styles.progressTrack}>
+            <View style={[styles.progressFill, { width: `${PROFILE_COMPLETION}%` }]} />
+          </View>
+        </View>
       </View>
 
       <View style={styles.tabContainer}>
@@ -438,24 +454,6 @@ const ProfileScreen = () => {
 /* -------------------
    Reusable Components
 ---------------------*/
-const Input = ({
-  placeholder,
-  keyboardType = 'default',
-  multiline = false,
-}) => (
-  <View style={styles.inputWrapper}>
-    <TextInput
-      style={[
-        styles.input,
-        multiline && { height: 80, textAlignVertical: 'top' },
-      ]}
-      placeholder={placeholder}
-      placeholderTextColor="#888"
-      keyboardType={keyboardType}
-      multiline={multiline}
-    />
-  </View>
-);
 
 const TabButton = ({ title, active, onPress }) => (
   <TouchableOpacity
@@ -481,7 +479,34 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: '#fff',
   },
+  headerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
   headerTitle: { fontSize: 18, fontWeight: '700', color: '#111' },
+  headerRight: {
+    flex: 1,
+    alignItems: 'flex-end',
+  },
+  progressText: {
+    fontSize: 12,
+    color: '#6B7280',
+    marginBottom: 6,
+    fontWeight: '600',
+  },
+  progressTrack: {
+    width: 140,
+    height: 6,
+    backgroundColor: '#E5E7EB',
+    borderRadius: 999,
+    overflow: 'hidden',
+  },
+  progressFill: {
+    height: '100%',
+    backgroundColor: '#09BD71',
+    borderRadius: 999,
+  },
 
   tabContainer: {
     flexDirection: 'row',
@@ -502,21 +527,28 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 10,
     width: '90%',
-    marginTop: 10,
+    marginTop: 12,
     marginLeft: 'auto',
     marginRight: 'auto',
+  },
+  inputLabel: {
+    fontSize: 13,
+    color: '#374151',
+    fontWeight: '600',
+    marginBottom: 6,
+    marginLeft: 2,
   },
   input: {
     width: '100%',
     height: 45,
-    backgroundColor: '#F8FAFC',
-    borderRadius: 12,
-    paddingLeft: 16,
-    paddingRight: 48,
-    fontSize: 16,
-    color: '#1f2937',
+    backgroundColor: '#F9FAFB',
+    borderRadius: 10,
+    paddingLeft: 14,
+    paddingRight: 14,
+    fontSize: 15,
+    color: '#111827',
     borderWidth: 1,
-    borderColor: '#F8FAFC',
+    borderColor: '#E5E7EB',
   },
 
   floatingButton: {
@@ -558,7 +590,8 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     shadowOffset: { width: 0, height: 3 },
     borderWidth: 1,
-    borderColor: '#E2E8F0',
+    borderColor: '#E5E7EB',
+    borderStyle: 'dashed',
   },
   fullImage: {
     width: '100%',

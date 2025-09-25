@@ -6,18 +6,16 @@ import { useLanguage } from '../../context/LanguageContext';
 
 const { width } = Dimensions.get('window');
 
-const HomeHeader = ({ insets, navigation, profileName, profilePct }) => {
+const HomeHeader = ({ insets, navigation, profileName, onMenuPress }) => {
   const { t } = useLanguage();
   return (
     <View style={[styles.header, { paddingTop: insets.top }]}> 
       <View style={styles.leftSection}>
-        <Image
-          source={{ uri: 'https://i.pravatar.cc/100?img=12' }}
-          style={styles.profileImage}
-        />
+        <TouchableOpacity style={styles.menuButton} onPress={onMenuPress}>
+          <Icon name="menu" size={26} color="#fff" />
+        </TouchableOpacity>
         <View>
           <Text style={styles.greeting}>Hi, {profileName}</Text>
-          <Text style={styles.profileProgress}>{`${profilePct}% ${t('profileComplete')}`}</Text>
         </View>
       </View>
 
@@ -64,14 +62,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 25,
   },
   leftSection: { flexDirection: 'row', alignItems: 'center' },
-  profileImage: {
-    width: width * 0.1,
-    height: width * 0.1,
-    borderRadius: (width * 0.1) / 2,
-    borderWidth: 2,
-    borderColor: '#ffd700',
-    marginRight: 12,
-  },
+  menuButton: { marginRight: 4 },
   greeting: { fontSize: 18, fontWeight: '600', color: '#fff' },
   profileProgress: {
     fontSize: 12,

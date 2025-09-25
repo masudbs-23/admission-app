@@ -33,10 +33,6 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
     borderColor: '#E2E8F0',
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
   },
   advisorInfo: { flexDirection: 'row', alignItems: 'center', flex: 1, marginRight: 12 },
   advisorAvatar: {

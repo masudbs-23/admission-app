@@ -21,7 +21,13 @@ const translations = {
     chatNow: 'Chat Now',
     consultAdvisor: 'Consult your Advisor',
     scholarshipHeadline: 'Find your dream university',
-    scholarshipSub: 'Explore institutions, track your application, and chat with advisors — all in one place.'
+    scholarshipSub: 'Explore institutions, track your application, and chat with advisors — all in one place.',
+    documents: 'Documents',
+    changePassword: 'Change Password',
+    helpSupport: 'Help & Support',
+    logout: 'Logout',
+    mySession: 'My Session',
+    application: 'Application',
   },
   bn: {
     signInTitle: 'আপনার অ্যাকাউন্টে সাইন ইন করুন',
@@ -40,7 +46,13 @@ const translations = {
     chatNow: 'চ্যাট করুন',
     consultAdvisor: 'আপনার অ্যাডভাইসরের সাথে কথা বলুন',
     scholarshipHeadline: 'আপনার স্বপ্নের বিশ্ববিদ্যালয় খুঁজুন',
-    scholarshipSub: 'ইনস্টিটিউশন অনুসন্ধান, অ্যাপ্লিকেশন ট্র্যাকিং ও অ্যাডভাইজরের সাথে চ্যাট — সব এক জায়গায়।'
+    scholarshipSub: 'ইনস্টিটিউশন অনুসন্ধান, অ্যাপ্লিকেশন ট্র্যাকিং ও অ্যাডভাইজরের সাথে চ্যাট — সব এক জায়গায়।',
+    documents: 'ডকুমেন্টস',
+    changePassword: 'পাসওয়ার্ড পরিবর্তন',
+    helpSupport: 'হেল্প ও সাপোর্ট',
+    logout: 'লগআউট',
+    mySession: 'আমার সেশন',
+    application: 'অ্যাপ্লিকেশন',
   },
 };
 
