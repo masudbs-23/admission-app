@@ -12,7 +12,7 @@ const HomeHeader = ({ insets, navigation, profileName, onMenuPress }) => {
       <View style={styles.row}>
         <View style={styles.leftSection}>
           <TouchableOpacity style={styles.roundIconBtn} onPress={onMenuPress}>
-            <Icon name="menu" size={20} color="#ffffff" />
+            <Icon name="menu" size={20} color="#1E293B" />
           </TouchableOpacity>
           <View>
             <Text style={styles.greeting}>Hi, {profileName}</Text>
@@ -23,7 +23,7 @@ const HomeHeader = ({ insets, navigation, profileName, onMenuPress }) => {
           <TouchableOpacity
             style={styles.roundIconBtn}
             onPress={() => navigation.navigate('Notifications')}>
-            <Icon name="bell" size={18} color="#ffffff" />
+            <Icon name="bell" size={18} color="#1E293B" />
             <View style={styles.badge}>
               <Text style={styles.badgeText}>3</Text>
             </View>
@@ -32,7 +32,7 @@ const HomeHeader = ({ insets, navigation, profileName, onMenuPress }) => {
           <TouchableOpacity
             style={[styles.roundIconBtn, { marginLeft: 10 }]}
             onPress={() => navigation.navigate('Chat')}>
-            <Icon name="message-circle" size={18} color="#ffffff" />
+            <Icon name="message-circle" size={18} color="#1E293B" />
             <View style={styles.badge}>
               <Text style={styles.badgeText}>5</Text>
             </View>
@@ -53,14 +53,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 24,
     height: 140,
-    backgroundColor: '#2B2A29',
     borderBottomLeftRadius: 28,
     borderBottomRightRadius: 28,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 12,
-    elevation: 8,
   },
   row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: '100%' },
   leftSection: { flexDirection: 'row', alignItems: 'center', gap: 12 },
@@ -68,29 +62,21 @@ const styles = StyleSheet.create({
     width: 42,
     height: 42,
     borderRadius: 21,
-    backgroundColor: 'rgba(255,255,255,0.15)',
+    backgroundColor: '#F8FAFC',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.1)',
+    borderColor: '#E2E8F0',
   },
   greeting: { 
     fontSize: 20, 
     fontWeight: '700', 
-    color: '#fff',
-    textShadowColor: 'rgba(0,0,0,0.3)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
+    color: '#1E293B',
   },
   profileProgress: {
     fontSize: 12,
-    color: '#f0f0f0',
+    color: '#64748B',
     marginTop: 2,
     fontWeight: '500',
   },
