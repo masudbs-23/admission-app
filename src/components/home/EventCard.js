@@ -3,59 +3,76 @@ import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
-const EventCard = ({ image, title, time, tag, mode }) => {
+const EventCard = ({ image, title, time, location, type }) => {
   return (
-    <View style={[styles.card, { marginBottom: 16 }]}> 
+    <View style={styles.card}> 
       <Image source={{ uri: image }} style={styles.image} resizeMode="cover" />
-      <View style={styles.topRow}>
-        <View style={styles.tag}><Text style={styles.tagText}>{tag}</Text></View>
-        <View style={styles.pill}><Text style={styles.pillText}>{mode}</Text></View>
-      </View>
-      <View style={styles.overlay}>
+      <View style={styles.content}>
+        <View style={styles.headerRow}>
+          <Text style={styles.type}>{type}</Text>
+          <Text style={styles.time}>{time}</Text>
+        </View>
         <Text style={styles.title}>{title}</Text>
-        <Text style={styles.time}>{time}</Text>
+        <View style={styles.locationRow}>
+          <Text style={styles.location}>{location}</Text>
+        </View>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  card: { borderRadius: 16, overflow: 'hidden', position: 'relative' },
-  image: { width: '100%', height: width * 0.45 },
-  topRow: {
-    position: 'absolute',
-    top: 10,
-    left: 10,
-    right: 10,
+  card: { 
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    overflow: 'hidden',
+  },
+  image: { 
+    width: '100%', 
+    height: 160,
+  },
+  content: {
+    padding: 16,
+  },
+  headerRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    zIndex: 2,
+    alignItems: 'center',
+    marginBottom: 8,
   },
-  tag: {
-    backgroundColor: 'rgba(9,189,113,0.95)',
-    paddingHorizontal: 10,
+  type: {
+    fontSize: 12,
+    color: '#1BB161',
+    fontWeight: '600',
+    backgroundColor: '#f0f9f0',
+    paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: 12,
+    borderRadius: 6,
   },
-  tagText: { color: '#fff', fontWeight: '700', fontSize: 12 },
-  pill: {
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
+  time: {
+    fontSize: 12,
+    color: '#666',
+    fontWeight: '500',
   },
-  pillText: { color: '#fff', fontWeight: '600', fontSize: 12 },
-  overlay: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    paddingHorizontal: 12,
-    paddingVertical: 12,
-    backgroundColor: 'rgba(0,0,0,0.35)',
+  title: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#333',
+    marginBottom: 8,
+    lineHeight: 22,
   },
-  title: { color: '#fff', fontSize: 16, fontWeight: '700' },
-  time: { color: '#ddd', fontSize: 12, marginTop: 4 },
+  locationRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  location: {
+    fontSize: 13,
+    color: '#666',
+    fontWeight: '500',
+  },
 });
 
 export default EventCard;
