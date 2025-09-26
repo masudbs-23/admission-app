@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   drawerName: { fontSize: 16, fontWeight: '700', color: '#323232' },
   drawerProgressText: { fontSize: 12, color: '#6B7280', marginTop: 6, marginBottom: 6 },
   drawerProgressTrack: { width: '100%', height: 6, backgroundColor: '#E5E7EB', borderRadius: 999, overflow: 'hidden' },
-  drawerProgressFill: { height: '100%', backgroundColor: '#09BD71', borderRadius: 999 },
+  drawerProgressFill: { height: '100%', backgroundColor: '#2B2A29', borderRadius: 999 },
   drawerMenu: { paddingHorizontal: 16, paddingVertical: 16 },
   drawerSectionTitle: { fontSize: 14, fontWeight: '700', color: '#323232', marginBottom: 12 },
   menuItem: { paddingVertical: 12 },

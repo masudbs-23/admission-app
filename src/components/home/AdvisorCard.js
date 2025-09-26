@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   advisorName: { color: '#2B2A29', fontWeight: '600', fontSize: 16, flexShrink: 1 },
   advisorSub: { color: '#2B2A29', opacity: 0.9, fontSize: 14, flexShrink: 1 },
   chatButton: {
-    backgroundColor: '#09BD71',
+    backgroundColor: '#2B2A29',
     paddingHorizontal: 14,
     paddingVertical: 8,
     borderRadius: 999,

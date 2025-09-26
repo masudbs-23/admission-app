@@ -232,7 +232,7 @@ const InstitutionScreen = ({ navigation }) => {
         {/* Loading State */}
         {/* {isLoading && (
           <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="#09BD71" />
+            <ActivityIndicator size="large" color="#2B2A29" />
             <Text style={styles.loadingText}>Loading institutions...</Text>
           </View>
         )} */}
@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     gap: 6,
   },
-  sortChipActive: { backgroundColor: '#09BD71', borderColor: '#09BD71' },
+  sortChipActive: { backgroundColor: '#2B2A29', borderColor: '#2B2A29' },
   sortChipText: { color: '#323232', fontWeight: '600', fontSize: 12 },
   sortChipTextActive: { color: '#fff' },
   filtersPanel: { paddingHorizontal: 16, paddingBottom: 8 },
@@ -543,7 +543,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   retryButton: {
-    backgroundColor: '#09BD71',
+    backgroundColor: '#2B2A29',
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 8,

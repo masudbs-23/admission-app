@@ -38,12 +38,12 @@ const ForgotPasswordResetScreen = ({ navigation, route }) => {
           <View style={styles.logoRow}>
             <Text style={styles.logoText}>Admission</Text>
             <View style={styles.dotWrapper}>
-              <View style={[styles.dot, { backgroundColor: '#09BD71', top: 0, left: 0, transform: [{ rotate: '20deg' }] }]} />
+              <View style={[styles.dot, { backgroundColor: '#2B2A29', top: 0, left: 0, transform: [{ rotate: '20deg' }] }]} />
               <View style={[styles.dot, { width: 10, height: 6, backgroundColor: '#fb923c', top: -2, left: 8, transform: [{ rotate: '45deg' }] }]} />
               <View style={[styles.dot, { width: 8, height: 6, backgroundColor: '#dc2626', top: -4, left: 14, transform: [{ rotate: '70deg' }] }]} />
             </View>
             <Text style={[styles.logoText, { marginLeft: 12 }]}>
-              <Text style={{ color: '#09BD71' }}>.</Text>
+              <Text style={{ color: '#2B2A29' }}>.</Text>
               ac
             </Text>
           </View>
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14, borderWidth: 1, borderColor: '#E5E7EB', color: '#111827', fontSize: 15,
   },
   // Floating styles live in component
-  submitBtn: { marginTop: 16, backgroundColor: '#09BD71', paddingVertical: 14, borderRadius: 10, alignItems: 'center' },
+  submitBtn: { marginTop: 16, backgroundColor: '#2B2A29', paddingVertical: 14, borderRadius: 10, alignItems: 'center' },
   submitText: { color: '#fff', fontSize: 16, fontWeight: '700' },
 });
 

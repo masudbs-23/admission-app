@@ -104,14 +104,14 @@ const OTPVerificationScreen = ({ navigation, route }) => {
       {/* Spinner Overlay */}
       <Spinner
         visible={loading}
-        textStyle={{ color: '#09BD71' }}
+        textStyle={{ color: '#2B2A29' }}
         overlayColor="rgba(255,255,255,0.7)"
-        customIndicator={<ActivityIndicator size="large" color="#09BD71" />}
+        customIndicator={<ActivityIndicator size="large" color="#2B2A29" />}
       />
       {/* Fallback Fullscreen Overlay to ensure visibility on all devices */}
       {loading && (
         <View style={styles.fullscreenOverlay} pointerEvents="auto">
-          <ActivityIndicator size="large" color="#09BD71" />
+          <ActivityIndicator size="large" color="#2B2A29" />
         </View>
       )}
       
@@ -190,7 +190,7 @@ const OTPVerificationScreen = ({ navigation, route }) => {
           <TouchableOpacity
             style={[
               styles.submitBtn,
-              otp.every((digit) => digit !== '') && { backgroundColor: '#09BD71' },
+              otp.every((digit) => digit !== '') && { backgroundColor: '#2B2A29' },
               loading && { opacity: 0.7 },
             ]}
             disabled={!otp.every((digit) => digit !== '') || loading}
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
   submitBtn: {
     height: 56,
     borderRadius: 24,
-    backgroundColor: '#09BD71',
+    backgroundColor: '#2B2A29',
     justifyContent: 'center',
     alignItems: 'center',
   },

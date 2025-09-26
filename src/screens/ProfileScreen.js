@@ -507,7 +507,7 @@ const styles = StyleSheet.create({
   },
   progressFill: {
     height: '100%',
-    backgroundColor: '#09BD71',
+    backgroundColor: '#1BB161',
     borderRadius: 999,
   },
 
@@ -522,9 +522,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: 'transparent',
   },
-  activeTab: { borderBottomColor: '#09BD71' },
+  activeTab: { borderBottomColor: '#1BB161' },
   tabText: { fontSize: 14, color: '#777', fontWeight: '500' },
-  activeTabText: { color: '#09BD71', fontWeight: '600' },
+  activeTabText: { color: '#1BB161', fontWeight: '600' },
 
   inputWrapper: {
     backgroundColor: '#fff',
@@ -558,7 +558,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     right: 20,
-    backgroundColor: '#09BD71',
+    backgroundColor: '#2B2A29',
     paddingVertical: 14,
     paddingHorizontal: 24,
     borderRadius: 30,
@@ -682,7 +682,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     right: 0,
-    backgroundColor: '#09BD71',
+    backgroundColor: '#2B2A29',
     borderRadius: 16,
     padding: 6,
     borderWidth: 2,

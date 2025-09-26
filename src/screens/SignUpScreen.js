@@ -79,13 +79,13 @@ const SignUpScreen = ({ navigation }) => {
       {/* Spinner Overlay */}
       <Spinner
         visible={loading}
-        textStyle={{ color: '#09BD71' }}
+        textStyle={{ color: '#2B2A29' }}
         overlayColor="rgba(255,255,255,0.7)"
-        customIndicator={<ActivityIndicator size="large" color="#09BD71" />}
+        customIndicator={<ActivityIndicator size="large" color="#2B2A29" />}
       />
       {loading && (
         <View style={styles.fullscreenOverlay} pointerEvents="auto">
-          <ActivityIndicator size="large" color="#09BD71" />
+          <ActivityIndicator size="large" color="#2B2A29" />
         </View>
       )}
       {/* Custom Toast */}
@@ -125,7 +125,7 @@ const SignUpScreen = ({ navigation }) => {
                 style={[
                   styles.dot,
                   {
-                    backgroundColor: '#09BD71',
+                    backgroundColor: '#2B2A29',
                     top: 0,
                     left: 0,
                     transform: [{ rotate: '20deg' }],
@@ -162,7 +162,7 @@ const SignUpScreen = ({ navigation }) => {
 
             {/* .ac with green dot */}
             <Text style={[styles.logoText, { marginLeft: 12 }]}>
-              <Text style={{ color: '#09BD71' }}>.</Text>
+              <Text style={{ color: '#2B2A29' }}>.</Text>
               ac
             </Text>
           </View>
@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 56,
     borderRadius: 24,
-    backgroundColor: '#09BD71',
+    backgroundColor: '#2B2A29',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 24,

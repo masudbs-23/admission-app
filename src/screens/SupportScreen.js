@@ -18,7 +18,7 @@ const SupportScreen = ({ navigation }) => {
 
       <ScrollView contentContainerStyle={styles.body}>
         <View style={styles.hero}>
-          <Ionicons name="help-buoy-outline" size={48} color="#09BD71" />
+          <Ionicons name="help-buoy-outline" size={48} color="#2B2A29" />
           <Text style={styles.heroTitle}>How this app helps</Text>
           <Text style={styles.heroSub}>We are an education agency helping students apply for higher studies abroad.</Text>
         </View>

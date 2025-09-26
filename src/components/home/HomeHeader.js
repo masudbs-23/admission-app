@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import LanguageSwitch from '../../component/LanguageSwitch';
 import { useLanguage } from '../../context/LanguageContext';
 
 const { width } = Dimensions.get('window');
@@ -38,10 +37,6 @@ const HomeHeader = ({ insets, navigation, profileName, onMenuPress }) => {
               <Text style={styles.badgeText}>5</Text>
             </View>
           </TouchableOpacity>
-
-          <View style={{ marginLeft: 10 }}>
-            <LanguageSwitch />
-          </View>
         </View>
       </View>
     </View>
@@ -57,7 +52,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
     paddingHorizontal: 16,
     height: 120,
-    backgroundColor: '#09BD71',
+    backgroundColor: '#2B2A29',
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
   },

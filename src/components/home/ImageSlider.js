@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#cbd5e1',
   },
   dotActive: {
-    backgroundColor: '#09BD71',
+    backgroundColor: '#2B2A29',
     width: 10,
   },
 });

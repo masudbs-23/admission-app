@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, Animated, StyleSheet, Dimensions } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import LanguageSwitch from '../../component/LanguageSwitch';
 import { useLanguage } from '../../context/LanguageContext';
 
 const { width } = Dimensions.get('window');
@@ -26,6 +27,11 @@ const HomeDrawer = ({
   return (
     <View style={styles.overlay}>
       <Animated.View style={[styles.drawer, { paddingTop: insets.top + 12, transform: [{ translateX: slideX }] }]}>
+        {/* Language Switch */}
+        <View style={styles.languageSwitchContainer}>
+          <LanguageSwitch />
+        </View>
+        
         {/* Avatar + name + progress */}
         <View style={styles.drawerHeader}>
           <Image source={{ uri: 'https://i.pravatar.cc/100?img=12' }} style={styles.drawerAvatar} />
@@ -36,9 +42,9 @@ const HomeDrawer = ({
               <View style={[styles.drawerProgressFill, { width: `${profilePct}%` }]} />
             </View>
           </View>
-          <TouchableOpacity style={styles.closeBtn} onPress={onClose}>
+          {/* <TouchableOpacity style={styles.closeBtn} onPress={onClose}>
             <Ionicons name="close-outline" size={26} color="#2B2A29" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
         {/* Menu Items */}
@@ -98,6 +104,13 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     height: '100%',
   },
+  languageSwitchContainer: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    alignItems: 'flex-start',
+    borderBottomWidth: 1,
+    borderBottomColor: '#F3F4F6',
+  },
   closeBtn: {
     position: 'absolute',
     right: 10,
@@ -123,7 +136,7 @@ const styles = StyleSheet.create({
   drawerName: { fontSize: 16, fontWeight: '700', color: '#323232' },
   drawerProgressText: { fontSize: 12, color: '#6B7280', marginTop: 6, marginBottom: 6 },
   drawerProgressTrack: { width: '100%', height: 6, backgroundColor: '#E5E7EB', borderRadius: 999, overflow: 'hidden' },
-  drawerProgressFill: { height: '100%', backgroundColor: '#09BD71', borderRadius: 999 },
+  drawerProgressFill: { height: '100%', backgroundColor: '#1BB161', borderRadius: 999 },
   drawerMenu: { paddingHorizontal: 16, paddingVertical: 16 },
   menuItem: { paddingVertical: 12 },
   menuRow: { flexDirection: 'row', alignItems: 'center' },

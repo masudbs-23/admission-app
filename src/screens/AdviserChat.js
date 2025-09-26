@@ -134,7 +134,7 @@ const AdviserChat = ({ navigation }) => {
           <TouchableOpacity
             style={[
               styles.sendButton,
-              { backgroundColor: loading ? '#A9A9A9' : '#09BD71' },
+              { backgroundColor: loading ? '#A9A9A9' : '#2B2A29' },
             ]}
             onPress={sendMessage}
             disabled={loading}>
