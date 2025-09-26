@@ -6,27 +6,48 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const EVENTS = [
   {
     id: '1',
-    title: 'Global Education Fair',
-    time: '12th Oct, 2025 | 10:00 AM',
-    image: 'https://image.taiwantoday.tw/images/content/img20250624140916737_800.jpg',
+    title: 'Dhaka University Admission Fair',
+    time: '15th Dec, 2024 | 9:00 AM',
+    location: 'Dhaka University Campus',
+    description: 'Direct admission guidance for undergraduate programs',
+    image: 'https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1470&auto=format&fit=crop',
+    type: 'University Fair',
   },
   {
     id: '2',
-    title: 'Scholarship Info Session',
-    time: '15th Oct, 2025 | 2:00 PM',
-    image: 'https://images.unsplash.com/photo-1544006659-f0b21884ce1d?q=80&w=1470&auto=format&fit=crop',
+    title: 'BUET Engineering Admission',
+    time: '20th Dec, 2024 | 2:00 PM',
+    location: 'BUET Campus, Dhaka',
+    description: 'Information session for engineering programs',
+    image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1470&auto=format&fit=crop',
+    type: 'Admission Info',
   },
   {
     id: '3',
-    title: 'University Meet & Greet',
-    time: '22nd Oct, 2025 | 11:30 AM',
-    image: 'https://images.unsplash.com/photo-1544531585-9847b68c8c86?q=80&w=1470&auto=format&fit=crop',
+    title: 'Medical College Admission',
+    time: '25th Dec, 2024 | 10:00 AM',
+    location: 'Dhaka Medical College',
+    description: 'Guidance for medical and dental programs',
+    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?q=80&w=1470&auto=format&fit=crop',
+    type: 'Medical Admission',
   },
   {
     id: '4',
-    title: 'Visa Guidance Webinar',
-    time: '28th Oct, 2025 | 4:00 PM',
-    image: 'https://images.unsplash.com/photo-1514511547117-f9c3d2df0f36?q=80&w=1470&auto=format&fit=crop',
+    title: 'Scholarship Information Session',
+    time: '30th Dec, 2024 | 3:00 PM',
+    location: 'Online Webinar',
+    description: 'Available scholarships and financial aid options',
+    image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1471&auto=format&fit=crop',
+    type: 'Scholarship',
+  },
+  {
+    id: '5',
+    title: 'Private University Expo',
+    time: '5th Jan, 2025 | 11:00 AM',
+    location: 'Bangabandhu International Conference Center',
+    description: 'Explore private university options in Bangladesh',
+    image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1470&auto=format&fit=crop',
+    type: 'University Expo',
   },
 ];
 
@@ -43,15 +64,29 @@ const EventsScreen = ({ navigation }) => {
         <View style={{ width: 24 }} />
       </View>
 
-      <ScrollView contentContainerStyle={styles.list}>
+      <ScrollView 
+        contentContainerStyle={styles.list}
+        showsVerticalScrollIndicator={false}
+      >
         {EVENTS.map((ev) => (
-          <View key={ev.id} style={styles.card}>
+          <TouchableOpacity key={ev.id} style={styles.card} activeOpacity={0.8}>
             <Image source={{ uri: ev.image }} style={styles.image} resizeMode="cover" />
-            <View style={styles.overlay}>
+            
+            <View style={styles.content}>
+              <View style={styles.headerRow}>
+                <Text style={styles.type}>{ev.type}</Text>
+                <Text style={styles.time}>{ev.time}</Text>
+              </View>
+              
               <Text style={styles.title}>{ev.title}</Text>
-              <Text style={styles.time}>{ev.time}</Text>
+              <Text style={styles.description}>{ev.description}</Text>
+              
+              <View style={styles.locationRow}>
+                <Ionicons name="location-outline" size={16} color="#666" />
+                <Text style={styles.location}>{ev.location}</Text>
+              </View>
             </View>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
     </SafeAreaView>
@@ -59,35 +94,86 @@ const EventsScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
+  container: { 
+    flex: 1, 
+    backgroundColor: '#fff',
+  },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
     backgroundColor: '#fff',
+
   },
-  headerTitle: { fontSize: 18, fontWeight: '700', color: '#111' },
-  list: { padding: 16, paddingBottom: 24 },
+  headerTitle: { 
+    fontSize: 20, 
+    fontWeight: '700', 
+    color: '#333',
+  },
+  list: { 
+    padding: 16, 
+    paddingBottom: 20,
+  },
   card: {
-    borderRadius: 16,
-    overflow: 'hidden',
-    position: 'relative',
+    backgroundColor: '#fff',
+    borderRadius: 12,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: '#E2E8F0',
+    borderColor: '#e0e0e0',
+    overflow: 'hidden',
   },
-  image: { width: '100%', height: 190 },
-  overlay: {
-    position: 'absolute',
-    bottom: 10,
-    left: 10,
-    // backgroundColor: 'rgba(0,0,0,0.0)',
-    padding: 10,
-    borderRadius: 8,
+  image: { 
+    width: '100%', 
+    height: 180,
   },
-  title: { color: '#fff', fontSize: 16, fontWeight: '700' },
-  time: { color: '#ddd', fontSize: 12, marginTop: 4 },
+  content: {
+    padding: 16,
+  },
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  type: {
+    fontSize: 12,
+    color: '#1BB161',
+    fontWeight: '600',
+    backgroundColor: '#f0f9f0',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
+  },
+  time: {
+    fontSize: 12,
+    color: '#666',
+    fontWeight: '500',
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#333',
+    marginBottom: 6,
+    lineHeight: 22,
+  },
+  description: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 12,
+    lineHeight: 20,
+  },
+  locationRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  location: {
+    fontSize: 13,
+    color: '#666',
+    marginLeft: 6,
+    fontWeight: '500',
+  },
 });
 
 export default EventsScreen;
