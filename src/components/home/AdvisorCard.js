@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 10,
     borderRadius: 14,
-    borderWidth: 1,
-    borderColor: '#E5E7EB',
+    // borderWidth: 1,
+    // borderColor: '#E5E7EB',
   },
   advisorInfo: { flexDirection: 'row', alignItems: 'center', flex: 1, marginRight: 12 },
   advisorAvatar: {
