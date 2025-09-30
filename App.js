@@ -26,16 +26,14 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
   return (
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>
         <AuthProvider>
           <SafeAreaProvider>
           <StatusBar
-            barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-            backgroundColor={isDarkMode ? '#000' : '#fff'}
+            barStyle="dark-content"
+            backgroundColor="#fff"
           />
           <AppNavigator />
           </SafeAreaProvider>

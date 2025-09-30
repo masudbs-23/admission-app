@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { SafeAreaView, View, ScrollView, StyleSheet, TouchableOpacity, Text, Image, Dimensions, Animated, Easing } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { SafeAreaView, View, ScrollView, StyleSheet, TouchableOpacity, Text, Image, Dimensions, Animated, Easing, StatusBar } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useFocusEffect } from '@react-navigation/native';
 import HomeHeader from '../components/home/HomeHeader';
 import HomeDrawer from '../components/home/HomeDrawer';
 import EventsSection from '../components/home/EventsSection';
@@ -18,6 +19,20 @@ const { width } = Dimensions.get('window');
 const HomeScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
   const { logout } = useAuth();
+
+  // Set status bar for home screen
+  useFocusEffect(
+    React.useCallback(() => {
+      StatusBar.setBarStyle('light-content');
+      StatusBar.setBackgroundColor('#000');
+      
+      return () => {
+        // Reset to default when leaving home screen
+        StatusBar.setBarStyle('dark-content');
+        StatusBar.setBackgroundColor('#fff');
+      };
+    }, [])
+  );
 
   // Fetch logged-in user profile (includes profileCompletion.percentage)
   const { data: me, isLoading: isMeLoading } = useMe();

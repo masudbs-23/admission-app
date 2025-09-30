@@ -25,7 +25,7 @@ const AdvisorCard = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   advisorCard: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#E4E7E9',
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 16,

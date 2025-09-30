@@ -13,7 +13,7 @@ const HomeHeader = ({ insets, navigation, profileName, onMenuPress }) => {
       <View style={styles.row}>
         <View style={styles.leftSection}>
           <TouchableOpacity style={styles.roundIconBtn} onPress={onMenuPress}>
-            <Icon name="menu" size={20} color="#1E293B" />
+            <Icon name="menu" size={20} color="#fff" />
           </TouchableOpacity>
           <View>
             <Text style={styles.greeting}>Hi, {profileName}</Text>
@@ -24,7 +24,7 @@ const HomeHeader = ({ insets, navigation, profileName, onMenuPress }) => {
           <TouchableOpacity
             style={styles.roundIconBtn}
             onPress={() => navigation.navigate(ROUTES.MAIN.NOTIFICATIONS)}>
-            <Icon name="bell" size={18} color="#1E293B" />
+            <Icon name="bell" size={18} color="#fff" />
             <View style={styles.badge}>
               <Text style={styles.badgeText}>3</Text>
             </View>
@@ -33,7 +33,7 @@ const HomeHeader = ({ insets, navigation, profileName, onMenuPress }) => {
           <TouchableOpacity
             style={[styles.roundIconBtn, { marginLeft: 10 }]}
             onPress={() => navigation.navigate(ROUTES.MAIN.ADVISER_CHAT)}>
-            <Icon name="message-circle" size={18} color="#1E293B" />
+            <Icon name="message-circle" size={18} color="#fff" />
             <View style={styles.badge}>
               <Text style={styles.badgeText}>5</Text>
             </View>
@@ -46,6 +46,7 @@ const HomeHeader = ({ insets, navigation, profileName, onMenuPress }) => {
 
 const styles = StyleSheet.create({
   header: {
+    backgroundColor: '#000',
     position: 'absolute',
     top: 0,
     left: 0,
@@ -63,21 +64,21 @@ const styles = StyleSheet.create({
     width: 42,
     height: 42,
     borderRadius: 21,
-    backgroundColor: '#F8FAFC',
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
     borderWidth: 1,
-    borderColor: '#E2E8F0',
+    borderColor: 'rgba(255, 255, 255, 0.3)',
   },
   greeting: { 
     fontSize: 20, 
     fontWeight: '700', 
-    color: '#1E293B',
+    color: '#fff',
   },
   profileProgress: {
     fontSize: 12,
-    color: '#64748B',
+    color: '#E4E7E9',
     marginTop: 2,
     fontWeight: '500',
   },
