@@ -17,7 +17,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '../shared';
-import { CustomToast } from '../shared';
+import { CustomToast, FloatingLabelInput } from '../shared';
 import { ROUTES } from '../config/routes';
 import { useAuthMutations } from '../hooks/useAuthMutations';
 import { useLanguage } from '../shared';
@@ -163,36 +163,20 @@ const SignInScreen = ({ navigation }) => {
           <Text style={styles.title}>{t('signInTitle')}</Text>
 
           {/* Email */}
-          <View style={styles.inputWrapper}>
-            <TextInput
-              style={styles.input}
-              placeholder={t('email')}
-              placeholderTextColor="#9ca3af"
-              value={formData.email}
-              onChangeText={(v) => handleInputChange('email', v)}
-            />
-          </View>
+          <FloatingLabelInput
+            label={t('email')}
+            value={formData.email}
+            onChangeText={(v) => handleInputChange('email', v)}
+            keyboardType="email-address"
+          />
 
           {/* Password */}
-          <View style={styles.inputWrapper}>
-            <TextInput
-              style={styles.input}
-              placeholder={t('password')}
-              placeholderTextColor="#9ca3af"
-              secureTextEntry={!showPassword}
-              value={formData.password}
-              onChangeText={(v) => handleInputChange('password', v)}
-            />
-            <TouchableOpacity
-              style={styles.inputIcon}
-              onPress={() => setShowPassword(!showPassword)}>
-              <Icon
-                name={showPassword ? 'eye-off' : 'eye'}
-                size={20}
-                color="#9ca3af"
-              />
-            </TouchableOpacity>
-          </View>
+          <FloatingLabelInput
+            label={t('password')}
+            value={formData.password}
+            onChangeText={(v) => handleInputChange('password', v)}
+            secureTextEntry={true}
+          />
 
           {/* Forgot Password (above sign in, right aligned) */}
           <TouchableOpacity style={styles.forgotRow} onPress={() => navigation.navigate(ROUTES.AUTH.FORGOT_PASSWORD_EMAIL)}>
