@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import api from '../services/api';
+import api from '../../core/api';
+import { API_ENDPOINTS } from '../../config/endpoints';
 
 const AuthContext = createContext();
 
@@ -39,7 +40,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const { data } = await api.post('/api/auth/login', { email, password });
+      const { data } = await api.post(API_ENDPOINTS.AUTH.LOGIN, { email, password });
       const { token: authToken, user: userData } = data;
       await AsyncStorage.setItem('authToken', authToken);
       await AsyncStorage.setItem('userData', JSON.stringify(userData));
@@ -54,7 +55,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (email, password) => {
     try {
-      const { data } = await api.post('/api/auth/register', { email, password });
+      const { data } = await api.post(API_ENDPOINTS.AUTH.REGISTER, { email, password });
       return { success: true, data };
     } catch (error) {
       const message = error?.response?.data?.message || 'Registration failed';
@@ -64,7 +65,7 @@ export const AuthProvider = ({ children }) => {
 
   const verifyOTP = async (email, otp) => {
     try {
-      const { data } = await api.post('/api/auth/verify-otp', { email, otp });
+      const { data } = await api.post(API_ENDPOINTS.AUTH.VERIFY_OTP, { email, otp });
       const { token: authToken, user: userData } = data;
       await AsyncStorage.setItem('authToken', authToken);
       await AsyncStorage.setItem('userData', JSON.stringify(userData));

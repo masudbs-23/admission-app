@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../shared';
 
 const ChangePasswordScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();

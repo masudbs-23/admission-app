@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import FloatingLabelInput from '../components/FloatingLabelInput';
+import { FloatingLabelInput } from '../shared';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../shared';
+import { ROUTES } from '../config/routes';
 
 const ForgotPasswordEmailScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
@@ -18,7 +19,7 @@ const ForgotPasswordEmailScreen = ({ navigation }) => {
     }
     // TODO: call API to send OTP
     Alert.alert(t('fpEnterEmailTitle'), t('fpCodeSent'));
-    navigation.navigate('ForgotPasswordOTP', { email });
+    navigation.navigate(ROUTES.AUTH.FORGOT_PASSWORD_OTP, { email });
   };
 
   return (

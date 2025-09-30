@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, Animated, StyleSheet, Dimensions } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import LanguageSwitch from '../../component/LanguageSwitch';
-import { useLanguage } from '../../context/LanguageContext';
+import { LanguageSwitch } from '../../shared';
+import { useLanguage } from '../../shared';
 
 const { width } = Dimensions.get('window');
 

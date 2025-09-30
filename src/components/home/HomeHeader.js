@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import { useLanguage } from '../../context/LanguageContext';
+import { useLanguage } from '../../shared';
+import { ROUTES } from '../../config/routes';
 
 const { width } = Dimensions.get('window');
 
@@ -22,7 +23,7 @@ const HomeHeader = ({ insets, navigation, profileName, onMenuPress }) => {
         <View style={styles.rightSection}>
           <TouchableOpacity
             style={styles.roundIconBtn}
-            onPress={() => navigation.navigate('Notifications')}>
+            onPress={() => navigation.navigate(ROUTES.MAIN.NOTIFICATIONS)}>
             <Icon name="bell" size={18} color="#1E293B" />
             <View style={styles.badge}>
               <Text style={styles.badgeText}>3</Text>
@@ -31,7 +32,7 @@ const HomeHeader = ({ insets, navigation, profileName, onMenuPress }) => {
 
           <TouchableOpacity
             style={[styles.roundIconBtn, { marginLeft: 10 }]}
-            onPress={() => navigation.navigate('Chat')}>
+            onPress={() => navigation.navigate(ROUTES.MAIN.ADVISER_CHAT)}>
             <Icon name="message-circle" size={18} color="#1E293B" />
             <View style={styles.badge}>
               <Text style={styles.badgeText}>5</Text>

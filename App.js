@@ -10,8 +10,7 @@ import { enableScreens } from 'react-native-screens';
 import { StatusBar, useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AuthProvider } from './src/context/AuthContext';
-import { LanguageProvider } from './src/context/LanguageContext';
+import { AuthProvider, LanguageProvider } from './src/shared';
 import AppNavigator from './src/navigation/AppNavigator';
 
 enableScreens(true);

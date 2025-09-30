@@ -6,7 +6,7 @@ import {
   StyleSheet,
   SafeAreaView,
 } from 'react-native';
-import CustomToast from './CustomToast';
+import { CustomToast } from '../shared';
 
 const ToastDemo = () => {
   const [toastVisible, setToastVisible] = useState(false);

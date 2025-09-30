@@ -13,6 +13,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
+import { ROUTES } from '../config/routes';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width } = Dimensions.get("window");
@@ -207,7 +208,7 @@ const InstituteDetailsScreen = ({ route, navigation }) => {
       </ScrollView>
 
       {/* Floating Apply Now Button */}
-      <TouchableOpacity style={[styles.applyButton, { bottom: 30 + insets.bottom }]} onPress={() => navigation.navigate('Apply')}>
+      <TouchableOpacity style={[styles.applyButton, { bottom: 30 + insets.bottom }]} onPress={() => navigation.navigate(ROUTES.MAIN.APPLICATION_FORM)}>
         <Text style={styles.applyButtonText}>Apply Now</Text>
       </TouchableOpacity>
     </SafeAreaView>

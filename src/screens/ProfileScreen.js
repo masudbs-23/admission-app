@@ -13,8 +13,8 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useAuth } from '../context/AuthContext';
-import { useLanguage } from '../context/LanguageContext';
+import { useAuth } from '../shared';
+import { useLanguage } from '../shared';
 import {
   launchCamera as rnLaunchCamera,
   launchImageLibrary as rnLaunchImageLibrary,

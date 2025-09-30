@@ -10,7 +10,8 @@ import WhyChooseUs from '../components/home/WhyChooseUs';
 import InstitutionsSection from '../components/home/InstitutionsSection';
 import ImageSlider from '../components/home/ImageSlider';
 import { useMe } from '../hooks/useMe';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../shared';
+import { ROUTES } from '../config/routes';
 
 const { width } = Dimensions.get('window');
 
@@ -86,11 +87,11 @@ const HomeScreen = ({ navigation }) => {
         profileName={isMeLoading ? '...' : profileName}
         profilePct={isMeLoading ? 0 : profilePct}
         onClose={closeMenu}
-        onNavigateDocuments={() => { closeMenu(); navigation.navigate('Profile'); }}
-        onNavigateMySession={() => { closeMenu(); navigation.navigate('Chat'); }}
-        onNavigateApplication={() => { closeMenu(); navigation.navigate('Apply'); }}
-        onNavigateChangePassword={() => { closeMenu(); navigation.navigate('ChangePassword'); }}
-        onNavigateSupport={() => { closeMenu(); navigation.navigate('Support'); }}
+        onNavigateDocuments={() => { closeMenu(); navigation.navigate(ROUTES.MAIN.PROFILE); }}
+        onNavigateMySession={() => { closeMenu(); navigation.navigate(ROUTES.MAIN.ADVISER_CHAT); }}
+        onNavigateApplication={() => { closeMenu(); navigation.navigate(ROUTES.MAIN.APPLICATION_FORM); }}
+        onNavigateChangePassword={() => { closeMenu(); navigation.navigate(ROUTES.MAIN.CHANGE_PASSWORD); }}
+        onNavigateSupport={() => { closeMenu(); navigation.navigate(ROUTES.MAIN.SUPPORT); }}
         onLogout={handleLogout}
       />
     </SafeAreaView>

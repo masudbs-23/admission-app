@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../services/api';
+import { API_ENDPOINTS, buildEndpoint } from '../config/endpoints';
 
 // Query key factory
 export const institutionKeys = {
@@ -15,7 +16,7 @@ export const useInstitutions = (filters = {}) => {
   return useQuery({
     queryKey: institutionKeys.list(filters),
     queryFn: async () => {
-      const response = await api.get('/institutions', { params: filters });
+      const response = await api.get(API_ENDPOINTS.INSTITUTIONS.LIST, { params: filters });
       return response.data;
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
@@ -28,7 +29,7 @@ export const useInstitution = (id) => {
   return useQuery({
     queryKey: institutionKeys.detail(id),
     queryFn: async () => {
-      const response = await api.get(`/institutions/${id}`);
+      const response = await api.get(buildEndpoint(API_ENDPOINTS.INSTITUTIONS.DETAILS, id));
       return response.data;
     },
     enabled: !!id,
@@ -43,7 +44,7 @@ export const useCreateInstitution = () => {
   
   return useMutation({
     mutationFn: async (institutionData) => {
-      const response = await api.post('/institutions', institutionData);
+      const response = await api.post(API_ENDPOINTS.INSTITUTIONS.CREATE, institutionData);
       return response.data;
     },
     onSuccess: () => {
@@ -59,7 +60,7 @@ export const useUpdateInstitution = () => {
   
   return useMutation({
     mutationFn: async ({ id, data }) => {
-      const response = await api.put(`/institutions/${id}`, data);
+      const response = await api.put(buildEndpoint(API_ENDPOINTS.INSTITUTIONS.UPDATE, id), data);
       return response.data;
     },
     onSuccess: (data, variables) => {
@@ -80,7 +81,7 @@ export const useDeleteInstitution = () => {
   
   return useMutation({
     mutationFn: async (id) => {
-      const response = await api.delete(`/institutions/${id}`);
+      const response = await api.delete(buildEndpoint(API_ENDPOINTS.INSTITUTIONS.DELETE, id));
       return response.data;
     },
     onSuccess: (data, id) => {

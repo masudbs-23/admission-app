@@ -1,7 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../shared';
+import { ROUTES, SCREEN_OPTIONS } from '../config/routes';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import OTPVerificationScreen from '../screens/OTPVerificationScreen';
@@ -45,62 +46,60 @@ const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={isAuthenticated ? "Main" : (showOnboarding ? "Onboarding" : "SignIn")}
-        screenOptions={{
-          headerShown: false,
-        }}
+        initialRouteName={isAuthenticated ? ROUTES.MAIN.MAIN : (showOnboarding ? ROUTES.ONBOARDING.ONBOARDING : ROUTES.AUTH.SIGN_IN)}
+        screenOptions={SCREEN_OPTIONS.DEFAULT}
       >
         {!isAuthenticated && showOnboarding && (
-          <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+          <Stack.Screen name={ROUTES.ONBOARDING.ONBOARDING} component={OnboardingScreen} />
         )}
         {!isAuthenticated ? (
           // Auth Stack
           <>
-            <Stack.Screen name="SignIn" component={SignInScreen} />
-            <Stack.Screen name="SignUp" component={SignUpScreen} />
-            <Stack.Screen name="OTPVerification" component={OTPVerificationScreen} />
-            <Stack.Screen name="ForgotPasswordEmail" component={ForgotPasswordEmailScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="ForgotPasswordOTP" component={ForgotPasswordOTPScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="ForgotPasswordReset" component={ForgotPasswordResetScreen} options={{ headerShown: false }} />
+            <Stack.Screen name={ROUTES.AUTH.SIGN_IN} component={SignInScreen} />
+            <Stack.Screen name={ROUTES.AUTH.SIGN_UP} component={SignUpScreen} />
+            <Stack.Screen name={ROUTES.AUTH.OTP_VERIFICATION} component={OTPVerificationScreen} />
+            <Stack.Screen name={ROUTES.AUTH.FORGOT_PASSWORD_EMAIL} component={ForgotPasswordEmailScreen} options={SCREEN_OPTIONS.DEFAULT} />
+            <Stack.Screen name={ROUTES.AUTH.FORGOT_PASSWORD_OTP} component={ForgotPasswordOTPScreen} options={SCREEN_OPTIONS.DEFAULT} />
+            <Stack.Screen name={ROUTES.AUTH.FORGOT_PASSWORD_RESET} component={ForgotPasswordResetScreen} options={SCREEN_OPTIONS.DEFAULT} />
           </>
         ) : (
           // Main App Stack
           <>
-            <Stack.Screen name="Main" component={MainScreen} />
+            <Stack.Screen name={ROUTES.MAIN.MAIN} component={MainScreen} />
             <Stack.Screen
-              name="InstitutionDetails"
+              name={ROUTES.MAIN.INSTITUTION_DETAILS}
               component={InstituteDetailsScreen}
-              options={{ headerShown: false }}
+              options={SCREEN_OPTIONS.DEFAULT}
             />
             <Stack.Screen
-              name="Notifications"
+              name={ROUTES.MAIN.NOTIFICATIONS}
               component={NotificationsScreen}
-              options={{ headerShown: false }}
+              options={SCREEN_OPTIONS.DEFAULT}
             />
             <Stack.Screen
-              name="Apply"
+              name={ROUTES.MAIN.APPLICATION_FORM}
               component={ApplicationForm}
-              options={{ headerShown: false }}
+              options={SCREEN_OPTIONS.DEFAULT}
             />
             <Stack.Screen
-              name="Chat"
+              name={ROUTES.MAIN.ADVISER_CHAT}
               component={AdviserChat}
-              options={{ headerShown: false }}
+              options={SCREEN_OPTIONS.DEFAULT}
             />
             <Stack.Screen
-              name="Events"
+              name={ROUTES.MAIN.EVENTS}
               component={EventsScreen}
-              options={{ headerShown: false }}
+              options={SCREEN_OPTIONS.DEFAULT}
             />
             <Stack.Screen
-              name="Support"
+              name={ROUTES.MAIN.SUPPORT}
               component={SupportScreen}
-              options={{ headerShown: false }}
+              options={SCREEN_OPTIONS.DEFAULT}
             />
             <Stack.Screen
-              name="ChangePassword"
+              name={ROUTES.MAIN.CHANGE_PASSWORD}
               component={ChangePasswordScreen}
-              options={{ headerShown: false }}
+              options={SCREEN_OPTIONS.DEFAULT}
             />
           </>
         )}

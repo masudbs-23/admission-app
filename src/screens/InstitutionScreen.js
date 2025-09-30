@@ -14,6 +14,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useInstitutions } from '../hooks/useInstitutions';
+import { ROUTES } from '../config/routes';
 
 const { width } = Dimensions.get('window');
 
@@ -258,7 +259,7 @@ const InstitutionScreen = ({ navigation }) => {
             style={styles.card}
             activeOpacity={0.8}
             onPress={() =>
-              navigation.navigate('InstitutionDetails', { institute: item })
+              navigation.navigate(ROUTES.MAIN.INSTITUTION_DETAILS, { institute: item })
             }>
             <View style={styles.cardHeader}>
               <View style={styles.info}>
@@ -337,8 +338,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 16,
     backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
   },
   headerLeft: {
     flexDirection: 'row',

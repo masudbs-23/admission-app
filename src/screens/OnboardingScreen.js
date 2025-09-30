@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { SafeAreaView, View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../shared';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const OnboardingScreen = ({ navigation }) => {

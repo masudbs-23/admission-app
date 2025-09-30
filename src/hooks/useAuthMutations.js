@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../shared';
 
 export const useAuthMutations = () => {
   const { login, register, verifyOTP } = useAuth();

@@ -2,7 +2,8 @@ import React, { useRef, useState } from 'react';
 import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../shared';
+import { ROUTES } from '../config/routes';
 
 const ForgotPasswordOTPScreen = ({ navigation, route }) => {
   const insets = useSafeAreaInsets();
@@ -18,7 +19,7 @@ const ForgotPasswordOTPScreen = ({ navigation, route }) => {
       return;
     }
     // TODO: verify OTP via API
-    navigation.navigate('ForgotPasswordReset', { email });
+    navigation.navigate(ROUTES.AUTH.FORGOT_PASSWORD_RESET, { email });
   };
 
   return (

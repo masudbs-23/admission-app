@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions, FlatList } from 'react-native';
-import { useLanguage } from '../../context/LanguageContext';
+import { useLanguage } from '../../shared';
+import { ROUTES } from '../../config/routes';
 
 const { width } = Dimensions.get('window');
 
@@ -80,7 +81,7 @@ const InstitutionsSection = ({ navigation }) => {
     <View style={styles.sectionWrapper}>
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>{t('institutions')}</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Institutions')}>
+        <TouchableOpacity onPress={() => navigation.navigate(ROUTES.MAIN.INSTITUTION_DETAILS)}>
           <Text style={styles.seeAll}>{t('seeAll')}</Text>
         </TouchableOpacity>
       </View>

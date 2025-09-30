@@ -13,10 +13,10 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons'; // For back arrow
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { useAuth } from '../context/AuthContext';
-import CustomToast from '../components/CustomToast';
+import { useAuth } from '../shared';
+import { CustomToast } from '../shared';
 import { useAuthMutations } from '../hooks/useAuthMutations';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../shared';
 
 const OTPVerificationScreen = ({ navigation, route }) => {
   const insets = useSafeAreaInsets();

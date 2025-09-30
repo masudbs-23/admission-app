@@ -16,10 +16,11 @@ import {
 import Icon from 'react-native-vector-icons/Feather';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useAuth } from '../context/AuthContext';
-import CustomToast from '../components/CustomToast';
+import { useAuth } from '../shared';
+import { ROUTES } from '../config/routes';
+import { CustomToast } from '../shared';
 import { useAuthMutations } from '../hooks/useAuthMutations';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../shared';
 
 const SignUpScreen = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -60,7 +61,7 @@ const SignUpScreen = ({ navigation }) => {
       
       if (result.success) {
         // Navigate to OTP verification with email
-        navigation.navigate('OTPVerification', { email: formData.email });
+        navigation.navigate(ROUTES.AUTH.OTP_VERIFICATION, { email: formData.email });
       } else {
         // Show backend error like "User already exists"
         setToastMessage(result.error || 'Something went wrong');
@@ -215,7 +216,7 @@ const SignUpScreen = ({ navigation }) => {
           {/* Already Member */}
           <View style={styles.signInRow}>
             <Text style={styles.signInHint}>{t('alreadyMember')}</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
+            <TouchableOpacity onPress={() => navigation.navigate(ROUTES.AUTH.SIGN_IN)}>
               <Text style={styles.signInLink}>{t('signIn')}</Text>
             </TouchableOpacity>
           </View>

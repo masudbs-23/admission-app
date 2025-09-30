@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useLanguage } from '../../context/LanguageContext';
+import { useLanguage } from '../../shared';
+import { ROUTES } from '../../config/routes';
 
 const AdvisorCard = ({ navigation }) => {
   const { t } = useLanguage();
@@ -15,7 +16,7 @@ const AdvisorCard = ({ navigation }) => {
           <Text style={styles.advisorSub} numberOfLines={1} ellipsizeMode="tail">Shipra Mehra</Text>
         </View>
       </View>
-      <TouchableOpacity style={styles.chatButton} onPress={() => navigation.navigate('Chat')}>
+      <TouchableOpacity style={styles.chatButton} onPress={() => navigation.navigate(ROUTES.MAIN.ADVISER_CHAT)}>
         <Text style={styles.chatButtonText}>{t('chatNow')}</Text>
       </TouchableOpacity>
     </View>

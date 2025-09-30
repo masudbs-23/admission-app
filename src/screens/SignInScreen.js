@@ -16,10 +16,11 @@ import {
 import Icon from 'react-native-vector-icons/Feather';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useAuth } from '../context/AuthContext';
-import CustomToast from '../components/CustomToast';
+import { useAuth } from '../shared';
+import { CustomToast } from '../shared';
+import { ROUTES } from '../config/routes';
 import { useAuthMutations } from '../hooks/useAuthMutations';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../shared';
 
 const SignInScreen = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -194,7 +195,7 @@ const SignInScreen = ({ navigation }) => {
           </View>
 
           {/* Forgot Password (above sign in, right aligned) */}
-          <TouchableOpacity style={styles.forgotRow} onPress={() => navigation.navigate('ForgotPasswordEmail')}>
+          <TouchableOpacity style={styles.forgotRow} onPress={() => navigation.navigate(ROUTES.AUTH.FORGOT_PASSWORD_EMAIL)}>
             <Text style={styles.forgotText}>{t('forgotPassword')}</Text>
           </TouchableOpacity>
 
@@ -211,7 +212,7 @@ const SignInScreen = ({ navigation }) => {
           {/* Not a member */}
           <View style={styles.signInRow}>
             <Text style={styles.signInHint}>{t('dontHaveAccount')}</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+            <TouchableOpacity onPress={() => navigation.navigate(ROUTES.AUTH.SIGN_UP)}>
               <Text style={styles.signInLink}>{t('signUp')}</Text>
             </TouchableOpacity>
           </View>
