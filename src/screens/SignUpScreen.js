@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  SafeAreaView,
   View,
   Text,
   TextInput,
@@ -15,7 +14,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '../shared';
 import { ROUTES } from '../config/routes';
 import { CustomToast, FloatingLabelInput } from '../shared';
@@ -76,7 +75,7 @@ const SignUpScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
       {/* Spinner Overlay */}
       <Spinner
         visible={loading}
@@ -111,62 +110,12 @@ const SignUpScreen = ({ navigation }) => {
 
           {/* Top Logo Image */}
           <Image
-            source={{
-              uri: 'https://i.ibb.co.com/KzhXCxTr/Chat-GPT-Image-Sep-9-2025-05-36-43-PM.png',
-            }}
+            source={require('../assets/logo.png')}
             style={styles.topLogo}
             resizeMode="cover"
           />
 
-          {/* Logo Row */}
-          <View style={styles.logoRow}>
-            <Text style={styles.logoText}>Admission</Text>
-            <View style={styles.dotWrapper}>
-              <View
-                style={[
-                  styles.dot,
-                  {
-                    backgroundColor: '#2B2A29',
-                    top: 0,
-                    left: 0,
-                    transform: [{ rotate: '20deg' }],
-                  },
-                ]}
-              />
-              <View
-                style={[
-                  styles.dot,
-                  {
-                    width: 10,
-                    height: 6,
-                    backgroundColor: '#fb923c',
-                    top: -2,
-                    left: 8,
-                    transform: [{ rotate: '45deg' }],
-                  },
-                ]}
-              />
-              <View
-                style={[
-                  styles.dot,
-                  {
-                    width: 8,
-                    height: 6,
-                    backgroundColor: '#dc2626',
-                    top: -4,
-                    left: 14,
-                    transform: [{ rotate: '70deg' }],
-                  },
-                ]}
-              />
-            </View>
-
-            {/* .ac with green dot */}
-            <Text style={[styles.logoText, { marginLeft: 12 }]}>
-              <Text style={{ color: '#2B2A29' }}>.</Text>
-              ac
-            </Text>
-          </View>
+          
 
           {/* Title */}
           <Text style={styles.title}>{t('signUp')}</Text>
@@ -226,6 +175,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     alignSelf: 'center',
+    marginBottom: 24,
   },
   logoRow: {
     flexDirection: 'row',

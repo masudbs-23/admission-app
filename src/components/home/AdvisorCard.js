@@ -13,7 +13,7 @@ const AdvisorCard = ({ navigation }) => {
         </View>
         <View style={styles.advisorDetails}>
           <Text style={styles.advisorName} numberOfLines={1} ellipsizeMode="tail">{t('consultAdvisor')}</Text>
-          <Text style={styles.advisorSub} numberOfLines={1} ellipsizeMode="tail">Shipra Mehra</Text>
+          {/* <Text style={styles.advisorSub} numberOfLines={1} ellipsizeMode="tail">Shipra Mehra</Text> */}
         </View>
       </View>
       <TouchableOpacity style={styles.chatButton} onPress={() => navigation.navigate(ROUTES.MAIN.ADVISER_CHAT)}>
@@ -30,9 +30,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 16,
     alignItems: 'center',
-    marginHorizontal: 10,
-    marginTop: 10,
+    width: '100%',
     borderRadius: 14,
+    position: 'relative',
+    zIndex: 5,
     // borderWidth: 1,
     // borderColor: '#E5E7EB',
   },

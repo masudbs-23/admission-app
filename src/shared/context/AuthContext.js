@@ -40,22 +40,61 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const { data } = await api.post(API_ENDPOINTS.AUTH.LOGIN, { email, password });
-      const { token: authToken, user: userData } = data;
+      const normalizedEmail = (email || '').trim().toLowerCase();
+      const payload = { email: normalizedEmail, password };
+      const loginPath = API_ENDPOINTS.AUTH.LOGIN;
+      const { data } = await api.post(loginPath, payload, {
+        headers: { 'Content-Type': 'application/json', 'x-skip-auth': 'true' },
+      });
+      console.log('Login success response:', JSON.stringify(data));
+      const authToken = data?.token || data?.accessToken || data?.access_token;
+      const userData = data?.user || data?.data?.user || null;
       await AsyncStorage.setItem('authToken', authToken);
       await AsyncStorage.setItem('userData', JSON.stringify(userData));
       setToken(authToken);
       setUser(userData);
       return { success: true, data };
     } catch (error) {
-      const message = error?.response?.data?.message || 'Login failed';
+      console.log('Login error status:', error?.response?.status);
+      console.log('Login error data:', JSON.stringify(error?.response?.data));
+      // Fallback: try alternate path if 404/405
+      const status = error?.response?.status;
+      const data = error?.response?.data;
+      const isPathIssue = status === 404 || status === 405;
+      if (isPathIssue) {
+        try {
+          const current = API_ENDPOINTS.AUTH.LOGIN;
+          const alternate = current === '/api/login' ? '/api/auth/login' : '/api/login';
+          const normalizedEmail = (email || '').trim().toLowerCase();
+          const payload = { email: normalizedEmail, password };
+          const res2 = await api.post(alternate, payload, {
+            headers: { 'Content-Type': 'application/json', 'x-skip-auth': 'true' },
+          });
+          const d2 = res2?.data || {};
+          const authToken = d2?.token || d2?.accessToken || d2?.access_token;
+          const userData = d2?.user || d2?.data?.user || null;
+          await AsyncStorage.setItem('authToken', authToken);
+          await AsyncStorage.setItem('userData', JSON.stringify(userData));
+          setToken(authToken);
+          setUser(userData);
+          return { success: true, data: d2 };
+        } catch (e2) {
+          console.log('Alternate login error status:', e2?.response?.status);
+          console.log('Alternate login error data:', JSON.stringify(e2?.response?.data));
+        }
+      }
+      const message = data?.message || 'Login failed';
       return { success: false, error: message };
     }
   };
 
   const register = async (email, password) => {
     try {
-      const { data } = await api.post(API_ENDPOINTS.AUTH.REGISTER, { email, password });
+      const { data } = await api.post(
+        API_ENDPOINTS.AUTH.REGISTER,
+        { email, password },
+        { headers: { 'Content-Type': 'application/json', 'x-skip-auth': 'true' } }
+      );
       return { success: true, data };
     } catch (error) {
       const message = error?.response?.data?.message || 'Registration failed';
@@ -65,7 +104,11 @@ export const AuthProvider = ({ children }) => {
 
   const verifyOTP = async (email, otp) => {
     try {
-      const { data } = await api.post(API_ENDPOINTS.AUTH.VERIFY_OTP, { email, otp });
+      const { data } = await api.post(
+        API_ENDPOINTS.AUTH.VERIFY_OTP,
+        { email, otp },
+        { headers: { 'Content-Type': 'application/json', 'x-skip-auth': 'true' } }
+      );
       const { token: authToken, user: userData } = data;
       await AsyncStorage.setItem('authToken', authToken);
       await AsyncStorage.setItem('userData', JSON.stringify(userData));

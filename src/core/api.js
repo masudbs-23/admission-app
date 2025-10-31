@@ -4,7 +4,7 @@ import { API_CONFIG, STORAGE_KEYS } from '../constants';
 import { getErrorMessage } from '../utils';
 
 // Resolve base URL once
-const DEFAULT_BASE_URL = 'https://admission-back.onrender.com';
+const DEFAULT_BASE_URL = 'https://tr-cafe.onrender.com';
 const API_BASE_URL = process.env.API_BASE_URL || DEFAULT_BASE_URL;
 
 // Create axios instance
@@ -13,13 +13,16 @@ const api = axios.create({
   timeout: API_CONFIG.TIMEOUT,
 });
 
-// Request interceptor to add auth token
+// Request interceptor to add auth token (skips when x-skip-auth is true)
 api.interceptors.request.use(
   async (config) => {
     try {
-      const token = await AsyncStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+      const skipAuth = config?.headers && config.headers['x-skip-auth'] === 'true';
+      if (!skipAuth) {
+        const token = await AsyncStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
       }
     } catch (error) {
       console.error('Error getting token:', error);

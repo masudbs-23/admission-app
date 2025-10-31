@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "buildApk": "cd android && gradlew assembleRelease && cd .. && echo APK created at: android\\app\\build\\outputs\\apk\\release\\app-release.apk"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",

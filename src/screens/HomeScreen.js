@@ -70,13 +70,15 @@ const HomeScreen = ({ navigation }) => {
       {/* 🔹 Sticky Header */}
       <HomeHeader insets={insets} navigation={navigation} profileName={isMeLoading ? '...' : profileName} profilePct={isMeLoading ? 0 : profilePct} onMenuPress={openMenu} />
 
+      {/* Floating Advisor Card overlapping header */}
+      <View style={[styles.advisorContainer, { top: (140 + insets.top) - 45 }]} pointerEvents="box-none">
+        <AdvisorCard navigation={navigation} />
+      </View>
+
       {/* 🔹 Scrollable Content */}
       <ScrollView
-        style={{ flex: 1, marginTop: 100 + insets.top }}
+        style={{ flex: 1, marginTop: 140 + insets.top + 55, position: 'relative', zIndex: 2 }}
         contentContainerStyle={{ paddingBottom: 20 + insets.bottom }}>
-
-        {/* Advisor Card */}
-        <AdvisorCard navigation={navigation} />
 
         {/* Image Slider */}
         <ImageSlider />
@@ -116,6 +118,12 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
   body: { flex: 1, padding: 16 },
+  advisorContainer: {
+    position: 'absolute',
+    left: 16,
+    right: 16,
+    zIndex: 5,
+  },
   overlay: {
     position: 'absolute',
     top: 0,

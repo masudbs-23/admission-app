@@ -2,7 +2,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Resolve base URL once
-const DEFAULT_BASE_URL = 'https://admission-back.onrender.com';
+const DEFAULT_BASE_URL = 'https://tr-cafe.onrender.com';
 const API_BASE_URL = process.env.API_BASE_URL || DEFAULT_BASE_URL;
 
 // Create axios instance
@@ -11,13 +11,16 @@ const api = axios.create({
   timeout: 15000,
 });
 
-// Request interceptor to add auth token
+// Request interceptor to add auth token (skips when x-skip-auth is true)
 api.interceptors.request.use(
   async (config) => {
     try {
-      const token = await AsyncStorage.getItem('authToken');
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+      const skipAuth = config?.headers && config.headers['x-skip-auth'] === 'true';
+      if (!skipAuth) {
+        const token = await AsyncStorage.getItem('authToken');
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
       }
     } catch (error) {
       console.error('Error getting token:', error);
