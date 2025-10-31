@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
-  SafeAreaView,
   View,
   TextInput,
   TouchableOpacity,
@@ -12,7 +11,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const AdviserChat = ({ navigation }) => {
   const insets = useSafeAreaInsets();
@@ -79,9 +78,9 @@ const AdviserChat = ({ navigation }) => {
   }, [messages]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top','bottom']}>
       {/* Header */}
-      <View style={[styles.header, { paddingTop: insets.top }]}>
+      <View style={styles.header}>
         <TouchableOpacity
           onPress={() => {
             if (navigation && navigation.goBack) {
@@ -98,7 +97,7 @@ const AdviserChat = ({ navigation }) => {
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={70}>
+        keyboardVerticalOffset={insets.top + 60}>
         <ScrollView
           ref={scrollViewRef}
           contentContainerStyle={[styles.messageContainer, { paddingBottom: 10 + insets.bottom }]}

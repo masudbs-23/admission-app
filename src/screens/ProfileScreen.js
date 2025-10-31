@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
-  SafeAreaView,
   Dimensions,
   Image,
   Alert,
@@ -408,8 +407,8 @@ const ProfileScreen = () => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={[styles.header, { paddingTop: insets.top }]}>
+    <View style={[styles.container, { paddingTop: insets.top }]}>
+      <View style={styles.header}>
         <View style={styles.headerLeft}>
           <Text style={styles.headerTitle}>{t('profile')}</Text>
         </View>
@@ -450,7 +449,7 @@ const ProfileScreen = () => {
           <Text style={styles.submitText}>Save Changes</Text>
         </TouchableOpacity>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

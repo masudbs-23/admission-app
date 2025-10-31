@@ -65,20 +65,33 @@ const HomeScreen = ({ navigation }) => {
     logout();
   };
 
+  // Layout constants
+  const HEADER_BASE_HEIGHT = 160; // base header body height (excludes notch)
+  const CARD_HEIGHT = 100; // must match AdvisorCard height
+  const overlapAmount = Math.round(CARD_HEIGHT * 0.4); // 40% overlap with header
+
   return (
     <SafeAreaView style={styles.container}>
-      {/* 🔹 Sticky Header */}
-      <HomeHeader insets={insets} navigation={navigation} profileName={isMeLoading ? '...' : profileName} profilePct={isMeLoading ? 0 : profilePct} onMenuPress={openMenu} />
-
-      {/* Floating Advisor Card overlapping header */}
-      <View style={[styles.advisorContainer, { top: (140 + insets.top) - 45 }]} pointerEvents="box-none">
-        <AdvisorCard navigation={navigation} />
-      </View>
-
       {/* 🔹 Scrollable Content */}
       <ScrollView
-        style={{ flex: 1, marginTop: 140 + insets.top + 55, position: 'relative', zIndex: 2 }}
-        contentContainerStyle={{ paddingBottom: 20 + insets.bottom }}>
+        style={{ flex: 1 }}
+        contentContainerStyle={{ paddingBottom: 20 + insets.bottom }}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Header */}
+        <HomeHeader
+          insets={insets}
+          navigation={navigation}
+          profileName={isMeLoading ? '...' : profileName}
+          profilePct={isMeLoading ? 0 : profilePct}
+          onMenuPress={openMenu}
+          headerHeight={HEADER_BASE_HEIGHT}
+        />
+
+        {/* Advisor Card */}
+        <View style={[styles.advisorContainer, { marginTop: -overlapAmount }]}>
+          <AdvisorCard navigation={navigation} />
+        </View>
 
         {/* Image Slider */}
         <ImageSlider />
@@ -119,10 +132,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
   body: { flex: 1, padding: 16 },
   advisorContainer: {
-    position: 'absolute',
-    left: 16,
-    right: 16,
-    zIndex: 5,
+    paddingHorizontal: 16,
   },
   overlay: {
     position: 'absolute',

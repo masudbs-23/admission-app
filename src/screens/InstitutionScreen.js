@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  SafeAreaView,
   TextInput,
   Dimensions,
   ActivityIndicator,
@@ -140,9 +139,9 @@ const InstitutionScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={[styles.container, { paddingTop: insets.top }]}>
       {/* Header */}
-      <View style={[styles.header, { paddingTop: insets.top }]}>
+      <View style={styles.header}>
         <View style={styles.headerLeft}>
           {!searchActive ? (
             <Text style={styles.headerTitle}>Institutes</Text>
@@ -320,7 +319,7 @@ const InstitutionScreen = ({ navigation }) => {
         )} */}
 
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -349,7 +348,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: '700',
     color: '#333',
-    marginLeft: 12,
+    // marginLeft: 12,
   },
   filterBar: {
     flexDirection: 'row',
@@ -357,6 +356,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingBottom: 8,
+    marginBottom:10
   },
   filterChip: {
     flexDirection: 'row',
@@ -439,6 +439,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderWidth: 1,
     borderColor: '#e0e0e0',
+
   },
   cardHeader: {
     flexDirection: 'row',

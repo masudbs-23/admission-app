@@ -83,11 +83,11 @@ const SignInScreen = ({ navigation }) => {
         duration={2000}
         onHide={() => setToastVisible(false)}
       />
-      {loading && (
+      {/* {loading && (
         <View style={styles.fullscreenOverlay} pointerEvents="auto">
           <ActivityIndicator size="large" color="#2B2A29" />
         </View>
-      )}
+      )} */}
 
       <KeyboardAvoidingView
         style={{ flex: 1 }}
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     alignSelf: 'center',
-    marginBottom: 24,
+    marginBottom: 40,
   },
   logoRow: {
     flexDirection: 'row',

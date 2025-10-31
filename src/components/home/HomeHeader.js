@@ -6,10 +6,10 @@ import { ROUTES } from '../../config/routes';
 
 const { width } = Dimensions.get('window');
 
-const HomeHeader = ({ insets, navigation, profileName, onMenuPress }) => {
+const HomeHeader = ({ insets, navigation, profileName, onMenuPress, headerHeight = 160 }) => {
   const { t } = useLanguage();
   return (
-    <View style={[styles.header, { paddingTop: insets.top }]}> 
+    <View style={[styles.header, { paddingTop: insets.top, height: headerHeight + insets.top }]}> 
       <View style={styles.row}>
         <View style={styles.leftSection}>
           <TouchableOpacity style={styles.roundIconBtn} onPress={onMenuPress}>
@@ -47,12 +47,6 @@ const HomeHeader = ({ insets, navigation, profileName, onMenuPress }) => {
 const styles = StyleSheet.create({
   header: {
     backgroundColor: '#000',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 1,
-    elevation: 1,
     paddingHorizontal: 20,
     paddingBottom: 24,
     height: 170,
@@ -69,8 +63,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
+    // borderWidth: 1,
+    // borderColor: 'rgba(255, 255, 255, 0.3)',
   },
   greeting: { 
     fontSize: 20, 
@@ -95,13 +89,13 @@ const styles = StyleSheet.create({
     minWidth: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#EF4444',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 4,
-    borderWidth: 2,
-    borderColor: '#fff',
+    // shadowColor: '#EF4444',
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.3,
+    // shadowRadius: 4,
+    // elevation: 4,
+    // borderWidth: 2,
+    // borderColor: '#fff',
   },
   badgeText: { 
     color: '#fff', 

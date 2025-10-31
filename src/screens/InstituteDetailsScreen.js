@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -21,6 +21,7 @@ const { width } = Dimensions.get("window");
 const InstituteDetailsScreen = ({ route, navigation }) => {
   const insets = useSafeAreaInsets();
   const { institute } = route.params;
+  const [activeTab, setActiveTab] = useState('programs');
 
   // Dummy data
   const programs = [
@@ -75,9 +76,95 @@ const InstituteDetailsScreen = ({ route, navigation }) => {
     website: "https://www.exampleuniversity.com",
   };
 
+  // Render tab content
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'programs':
+        return (
+          <View style={styles.detailsContainer}>
+            {programs.map((program, index) => (
+              <View key={index} style={styles.programCard}>
+                <Text style={styles.programName}>{program.name}</Text>
+                <View style={styles.programInfoRow}>
+                  <Text style={styles.programInfoLabel}>Intake:</Text>
+                  <Text style={styles.programInfoValue}>{program.intake}</Text>
+                </View>
+                <View style={styles.programInfoRow}>
+                  <Text style={styles.programInfoLabel}>Deadline:</Text>
+                  <Text style={styles.programInfoValue}>{program.deadline}</Text>
+                </View>
+                <View style={styles.programInfoRow}>
+                  <Text style={styles.programInfoLabel}>Duration:</Text>
+                  <Text style={styles.programInfoValue}>{program.duration}</Text>
+                </View>
+                <View style={styles.programInfoRow}>
+                  <Text style={styles.programInfoLabel}>Degree:</Text>
+                  <Text style={styles.programInfoValue}>{program.degree}</Text>
+                </View>
+                <View>
+                  <Text style={[styles.programInfoLabel, { marginTop: 6 }]}>Subjects:</Text>
+                  <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 4 }}>
+                    {program.subjects.map((sub, idx) => (
+                      <View key={idx} style={styles.subjectTag}>
+                        <Text style={styles.subjectText}>{sub}</Text>
+                      </View>
+                    ))}
+                  </View>
+                </View>
+              </View>
+            ))}
+          </View>
+        );
+      case 'requirements':
+        return (
+          <View style={styles.detailsContainer}>
+            {requirements.map((req, idx) => (
+              <View key={idx} style={styles.requirementRow}>
+                <Ionicons name="checkmark-circle" size={18} color="#4CAF50" />
+                <Text style={styles.requirementText}>{req}</Text>
+              </View>
+            ))}
+          </View>
+        );
+      case 'scholarships':
+        return (
+          <View style={styles.detailsContainer}>
+            {scholarships.map((sch, idx) => (
+              <View key={idx} style={styles.scholarshipCard}>
+                <Text style={styles.programName}>{sch.name}</Text>
+                <Text style={styles.programInfoValue}>{sch.amount}</Text>
+              </View>
+            ))}
+          </View>
+        );
+      case 'contact':
+        return (
+          <View style={styles.detailsContainer}>
+            <View style={styles.infoRow}>
+              <Ionicons name="mail" size={20} color="#DF252A" />
+              <Text style={styles.infoText}>{contact.email}</Text>
+            </View>
+            <View style={styles.infoRow}>
+              <Ionicons name="call" size={20} color="#DF252A" />
+              <Text style={styles.infoText}>{contact.phone}</Text>
+            </View>
+            <View style={styles.infoRow}>
+              <Ionicons name="link" size={20} color="#DF252A" />
+              <Text style={[styles.infoText, { color: "#0077CC" }]}>{contact.website}</Text>
+            </View>
+          </View>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={[styles.scrollContent, { paddingBottom: 100 + insets.bottom }]}>
+      <ScrollView 
+        contentContainerStyle={[styles.scrollContent, { paddingBottom: 20 + insets.bottom }]}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Cover Image with Back Button */}
         <View style={[styles.imageContainer]}>
           <Image
@@ -119,92 +206,44 @@ const InstituteDetailsScreen = ({ route, navigation }) => {
           </View>
         </View>
 
-        {/* Programs Offered */}
-        <View style={styles.detailsContainer}>
-          <Text style={styles.sectionTitle}>Programs Offered</Text>
-          {programs.map((program, index) => (
-            <View key={index} style={styles.programCard}>
-              <Text style={styles.programName}>{program.name}</Text>
-              <View style={styles.programInfoRow}>
-                <Text style={styles.programInfoLabel}>Intake:</Text>
-                <Text style={styles.programInfoValue}>{program.intake}</Text>
-              </View>
-              <View style={styles.programInfoRow}>
-                <Text style={styles.programInfoLabel}>Deadline:</Text>
-                <Text style={styles.programInfoValue}>{program.deadline}</Text>
-              </View>
-              <View style={styles.programInfoRow}>
-                <Text style={styles.programInfoLabel}>Duration:</Text>
-                <Text style={styles.programInfoValue}>{program.duration}</Text>
-              </View>
-              <View style={styles.programInfoRow}>
-                <Text style={styles.programInfoLabel}>Degree:</Text>
-                <Text style={styles.programInfoValue}>{program.degree}</Text>
-              </View>
-              <View>
-                <Text style={[styles.programInfoLabel, { marginTop: 6 }]}>Subjects:</Text>
-                <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 4 }}>
-                  {program.subjects.map((sub, idx) => (
-                    <View key={idx} style={styles.subjectTag}>
-                      <Text style={styles.subjectText}>{sub}</Text>
-                    </View>
-                  ))}
-                </View>
-              </View>
-            </View>
-          ))}
+        {/* Tab Navigation */}
+        <View style={styles.tabContainer}>
+          <TouchableOpacity
+            style={[styles.tabButton, activeTab === 'programs' && styles.activeTabButton]}
+            onPress={() => setActiveTab('programs')}
+          >
+            <Text style={[styles.tabButtonText, activeTab === 'programs' && styles.activeTabButtonText]}>
+              Programs
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.tabButton, activeTab === 'requirements' && styles.activeTabButton]}
+            onPress={() => setActiveTab('requirements')}
+          >
+            <Text style={[styles.tabButtonText, activeTab === 'requirements' && styles.activeTabButtonText]}>
+              Requirements
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.tabButton, activeTab === 'scholarships' && styles.activeTabButton]}
+            onPress={() => setActiveTab('scholarships')}
+          >
+            <Text style={[styles.tabButtonText, activeTab === 'scholarships' && styles.activeTabButtonText]}>
+              Scholarships
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.tabButton, activeTab === 'contact' && styles.activeTabButton]}
+            onPress={() => setActiveTab('contact')}
+          >
+            <Text style={[styles.tabButtonText, activeTab === 'contact' && styles.activeTabButtonText]}>
+              Contact
+            </Text>
+          </TouchableOpacity>
         </View>
 
-        {/* Admission Requirements */}
-        <View style={styles.detailsContainer}>
-          <Text style={styles.sectionTitle}>Admission Requirements</Text>
-          {requirements.map((req, idx) => (
-            <View key={idx} style={styles.requirementRow}>
-              <Ionicons name="checkmark-circle" size={18} color="#4CAF50" />
-              <Text style={styles.requirementText}>{req}</Text>
-            </View>
-          ))}
-        </View>
-
-        {/* Scholarships */}
-        <View style={styles.detailsContainer}>
-          <Text style={styles.sectionTitle}>Scholarships</Text>
-          {scholarships.map((sch, idx) => (
-            <View key={idx} style={styles.scholarshipCard}>
-              <Text style={styles.programName}>{sch.name}</Text>
-              <Text style={styles.programInfoValue}>{sch.amount}</Text>
-            </View>
-          ))}
-        </View>
-
-        {/* Facilities */}
-        <View style={styles.detailsContainer}>
-          <Text style={styles.sectionTitle}>Facilities</Text>
-          <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-            {facilities.map((fac, idx) => (
-              <View key={idx} style={styles.facilityTag}>
-                <Text style={styles.facilityText}>{fac}</Text>
-              </View>
-            ))}
-          </View>
-        </View>
-
-        {/* Contact Info */}
-        <View style={styles.detailsContainer}>
-          <Text style={styles.sectionTitle}>Contact</Text>
-          <View style={styles.infoRow}>
-            <Ionicons name="mail" size={20} color="#DF252A" />
-            <Text style={styles.infoText}>{contact.email}</Text>
-          </View>
-          <View style={styles.infoRow}>
-            <Ionicons name="call" size={20} color="#DF252A" />
-            <Text style={styles.infoText}>{contact.phone}</Text>
-          </View>
-          <View style={styles.infoRow}>
-            <Ionicons name="link" size={20} color="#DF252A" />
-            <Text style={[styles.infoText, { color: "#0077CC" }]}>{contact.website}</Text>
-          </View>
-        </View>
+        {/* Tab Content */}
+        {renderTabContent()}
       </ScrollView>
 
       {/* Floating Apply Now Button */}
@@ -277,11 +316,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     borderRadius: 15,
     backgroundColor: "#fff",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
+    
   },
   programName: {
     fontSize: width * 0.04,
@@ -330,11 +365,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 12,
     backgroundColor: "#fff",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    
   },
   facilityTag: {
     backgroundColor: "#DF252A",
@@ -356,15 +387,38 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 24,
     borderRadius: 30,
-    elevation: 6,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
+   
   },
   applyButtonText: {
     color: "#fff",
     fontWeight: "700",
     fontSize: width * 0.045,
+  },
+  tabContainer: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    paddingHorizontal: 4,
+    paddingVertical: 8,
+    marginBottom: 16,
+  },
+  tabButton: {
+    flex: 1,
+    paddingVertical: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 4,
+  },
+  activeTabButton: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#DF252A',
+  },
+  tabButtonText: {
+    fontSize: 13,
+    color: '#6B7280',
+    fontWeight: '600',
+  },
+  activeTabButtonText: {
+    color: '#DF252A',
+    fontWeight: '700',
   },
 });
