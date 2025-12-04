@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 4,
-    backgroundColor: '#2B2A29',
+    backgroundColor: '#1BB161',
     shadowColor: '#000',
     shadowOpacity: 0.3,
   },

@@ -54,7 +54,7 @@ const TabNavigator = () => {
           );
         },
         tabBarLabelStyle: styles.tabBarLabel,
-        tabBarActiveTintColor: '#2B2A29',
+        tabBarActiveTintColor: '#1BB161',
         tabBarInactiveTintColor: '#8B8B8B',
         tabBarShowLabel: true,
       })}
@@ -129,8 +129,8 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   iconContainerFocused: {
-    backgroundColor: '#2B2A29',
-    shadowColor: '#2B2A29',
+    backgroundColor: '#1BB161',
+    shadowColor: '#1BB161',
     shadowOffset: {
       width: 0,
       height: 4,

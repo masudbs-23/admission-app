@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   eyeBtn: { paddingHorizontal: 12 },
   submitBtn: {
     marginTop: 10,
-    backgroundColor: '#2B2A29',
+    backgroundColor: '#1BB161',
     paddingVertical: 14,
     borderRadius: 10,
     alignItems: 'center',

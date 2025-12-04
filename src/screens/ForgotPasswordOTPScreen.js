@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, TextInput, Alert, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useLanguage } from '../shared';
@@ -32,20 +32,13 @@ const ForgotPasswordOTPScreen = ({ navigation, route }) => {
       </View>
 
       <View style={styles.body}>
-        {/* Logo Row */}
+        {/* Top logo image (same as SignIn) */}
         <View style={styles.logoContainer}>
-          <View style={styles.logoRow}>
-            <Text style={styles.logoText}>Admission</Text>
-            <View style={styles.dotWrapper}>
-              <View style={[styles.dot, { backgroundColor: '#2B2A29', top: 0, left: 0, transform: [{ rotate: '20deg' }] }]} />
-              <View style={[styles.dot, { width: 10, height: 6, backgroundColor: '#fb923c', top: -2, left: 8, transform: [{ rotate: '45deg' }] }]} />
-              <View style={[styles.dot, { width: 8, height: 6, backgroundColor: '#dc2626', top: -4, left: 14, transform: [{ rotate: '70deg' }] }]} />
-            </View>
-            <Text style={[styles.logoText, { marginLeft: 12 }]}>
-              <Text style={{ color: '#2B2A29' }}>.</Text>
-              ac
-            </Text>
-          </View>
+          <Image
+            source={require('../assets/logo.png')}
+            style={styles.topLogo}
+            resizeMode="cover"
+          />
         </View>
         <Text style={styles.pageTitle}>{t('fpOtpTitle')}</Text>
         <Text style={styles.description}>
@@ -101,16 +94,23 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     backgroundColor: '#fff',
   },
-  headerBtn: { padding: 8 },
+  headerBtn: { 
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#E5E7EB',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   headerTitle: { fontSize: 18, fontWeight: '700', color: '#111' },
   headerSpacer: { width: 32 },
   body: { padding: 16 },
   pageTitle: { fontSize: 18, fontWeight: '700', color: '#1f2937', textAlign: 'left', marginBottom: 6 },
   logoContainer: { alignItems: 'center', marginBottom: 12 },
-  logoRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 16 },
-  logoText: { fontSize: 28, fontWeight: '400', color: '#1f2937' },
-  dotWrapper: { position: 'relative', marginLeft: 4, marginTop: -4 },
-  dot: { position: 'absolute', width: 12, height: 8, borderRadius: 50 },
+  topLogo: {
+    width: 60,
+    height: 60,
+  },
   description: {
     fontSize: 14,
     color: '#6b7280',
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   },
   resendText: { fontSize: 14, color: '#6b7280', marginBottom: 10, textAlign: 'center',marginTop:10 },
   resendLink: { color: '#ef4444', fontWeight: '500' },
-  submitBtn: { marginTop: 6, backgroundColor: '#2B2A29', paddingVertical: 14, borderRadius: 10, alignItems: 'center' },
+  submitBtn: { marginTop: 6, backgroundColor: '#1BB161', paddingVertical: 14, borderRadius: 10, alignItems: 'center' },
   submitText: { color: '#fff', fontSize: 16, fontWeight: '700' },
 });
 

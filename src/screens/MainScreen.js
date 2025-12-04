@@ -29,7 +29,7 @@ const MainScreen = () => {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: '#2B2A29',
+        tabBarActiveTintColor: '#1BB161',
         tabBarInactiveTintColor: 'gray',
       })}
     >

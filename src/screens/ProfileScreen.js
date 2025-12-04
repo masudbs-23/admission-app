@@ -269,7 +269,7 @@ const ProfileScreen = () => {
     };
 
     return (
-      <ScrollView contentContainerStyle={styles.formContainer}>
+      <ScrollView contentContainerStyle={[styles.formContainer, styles.primaryFormContainer]}>
        <Text style={styles.formTitle}>{t('updatePrimaryInfo')} </Text>
         <View style={styles.avatarWrapper}>
           <Image
@@ -336,7 +336,7 @@ const ProfileScreen = () => {
     };
 
     return (
-      <ScrollView contentContainerStyle={styles.formContainer}>
+      <ScrollView contentContainerStyle={[styles.formContainer, styles.primaryFormContainer]}>
        <Text style={styles.formTitle}>{t('updateAcademicInfo')} </Text>
         <Input
           label={t('bscUniversity')}
@@ -388,23 +388,47 @@ const ProfileScreen = () => {
     onChangeText,
     keyboardType = 'default',
     multiline = false,
-  }) => (
-    <View style={styles.inputWrapper}>
-      {label ? <Text style={styles.inputLabel}>{label}</Text> : null}
-      <TextInput
-        style={[
-          styles.input,
-          multiline && { height: 90, textAlignVertical: 'top', paddingTop: 12 },
-        ]}
-        placeholder={placeholder}
-        placeholderTextColor="#9CA3AF"
-        keyboardType={keyboardType}
-        multiline={multiline}
-        value={value}
-        onChangeText={onChangeText}
-      />
-    </View>
-  );
+  }) => {
+    const [isFocused, setIsFocused] = useState(false);
+    const hasValue = !!value && String(value).length > 0;
+
+    return (
+      <View style={styles.inputWrapper}>
+        <View style={styles.floatingContainer}>
+          {label ? (
+            <Text
+              style={[
+                styles.floatingLabel,
+                (isFocused || hasValue) && styles.floatingLabelActive,
+              ]}
+            >
+              {label}
+            </Text>
+          ) : null}
+
+          <TextInput
+            style={[
+              styles.input,
+              multiline && {
+                height: 96,
+                textAlignVertical: 'top',
+                paddingTop: 20,
+              },
+              (isFocused || hasValue) && styles.inputFocused,
+            ]}
+            placeholder={placeholder}
+            placeholderTextColor="#9CA3AF"
+            keyboardType={keyboardType}
+            multiline={multiline}
+            value={value}
+            onChangeText={onChangeText}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+          />
+        </View>
+      </View>
+    );
+  };
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
@@ -528,12 +552,23 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingHorizontal: 20,
   },
-  inputLabel: {
-    fontSize: 16,
-    color: '#2c3e50',
-    fontWeight: '600',
-    marginBottom: 8,
-    marginLeft: 4,
+  floatingContainer: {
+    position: 'relative',
+  },
+  floatingLabel: {
+    position: 'absolute',
+    left: 24,
+    top: 18,
+    fontSize: 14,
+    color: '#000',
+    zIndex: 2,
+  },
+  floatingLabelActive: {
+    top: -8,
+    fontSize: 12,
+    color: '#000',
+    backgroundColor: '#fff',
+    paddingHorizontal: 4,
   },
   input: {
     width: '100%',
@@ -545,14 +580,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#2c3e50',
     borderWidth: 2,
-    borderColor: '#e8f4f8',
+    borderColor: '#F3F2F1',
+  },
+  inputFocused: {
+    borderColor: '#F3F2F1',
   },
 
   floatingButton: {
     position: 'absolute',
     bottom: 30,
     right: 30,
-    backgroundColor: '#2B2A29',
+    backgroundColor: '#1BB161',
     paddingVertical: 18,
     paddingHorizontal: 32,
     borderRadius: 30,
@@ -640,6 +678,9 @@ const styles = StyleSheet.create({
     paddingBottom: 140,
     paddingTop: 0,
     backgroundColor: '#f8fafc',
+  },
+  primaryFormContainer: {
+    backgroundColor: '#fff',
   },
   sectionTitle: {
     fontSize: 18,

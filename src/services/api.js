@@ -2,7 +2,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Resolve base URL once
-const DEFAULT_BASE_URL = 'https://tr-cafe.onrender.com';
+const DEFAULT_BASE_URL = 'https://admission-backend-1-xsai.onrender.com/api';
 const API_BASE_URL = process.env.API_BASE_URL || DEFAULT_BASE_URL;
 
 // Create axios instance

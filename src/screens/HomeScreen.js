@@ -23,8 +23,9 @@ const HomeScreen = ({ navigation }) => {
   // Set status bar for home screen
   useFocusEffect(
     React.useCallback(() => {
-      StatusBar.setBarStyle('light-content');
-      StatusBar.setBackgroundColor('#000');
+      // Header & app now use light theme on Home → use dark status bar content on white bg
+      StatusBar.setBarStyle('dark-content');
+      StatusBar.setBackgroundColor('#fff');
       
       return () => {
         // Reset to default when leaving home screen
@@ -67,8 +68,6 @@ const HomeScreen = ({ navigation }) => {
 
   // Layout constants
   const HEADER_BASE_HEIGHT = 160; // base header body height (excludes notch)
-  const CARD_HEIGHT = 100; // must match AdvisorCard height
-  const overlapAmount = Math.round(CARD_HEIGHT * 0.4); // 40% overlap with header
 
   return (
     <SafeAreaView style={styles.container}>
@@ -88,8 +87,8 @@ const HomeScreen = ({ navigation }) => {
           headerHeight={HEADER_BASE_HEIGHT}
         />
 
-        {/* Advisor Card */}
-        <View style={[styles.advisorContainer, { marginTop: -overlapAmount }]}>
+        {/* Advisor Card (simple, no overlap) */}
+        <View style={styles.advisorContainer}>
           <AdvisorCard navigation={navigation} />
         </View>
 
@@ -182,7 +181,7 @@ const styles = StyleSheet.create({
   drawerName: { fontSize: 16, fontWeight: '700', color: '#323232' },
   drawerProgressText: { fontSize: 12, color: '#6B7280', marginTop: 6, marginBottom: 6 },
   drawerProgressTrack: { width: '100%', height: 6, backgroundColor: '#E5E7EB', borderRadius: 999, overflow: 'hidden' },
-  drawerProgressFill: { height: '100%', backgroundColor: '#2B2A29', borderRadius: 999 },
+  drawerProgressFill: { height: '100%', backgroundColor: '#1BB161', borderRadius: 999 },
   drawerMenu: { paddingHorizontal: 16, paddingVertical: 16 },
   drawerSectionTitle: { fontSize: 14, fontWeight: '700', color: '#323232', marginBottom: 12 },
   menuItem: { paddingVertical: 12 },

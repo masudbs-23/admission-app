@@ -379,7 +379,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     gap: 6,
   },
-  sortChipActive: { backgroundColor: '#2B2A29', borderColor: '#2B2A29' },
+  sortChipActive: { backgroundColor: '#1BB161', borderColor: '#1BB161' },
   sortChipText: { color: '#323232', fontWeight: '600', fontSize: 12 },
   sortChipTextActive: { color: '#fff' },
   filtersPanel: { paddingHorizontal: 16, paddingBottom: 8 },
@@ -561,7 +561,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   retryButton: {
-    backgroundColor: '#2B2A29',
+    backgroundColor: '#1BB161',
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 8,

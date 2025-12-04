@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   advisorName: { color: '#2B2A29', fontWeight: '600', fontSize: 16, flexShrink: 1 },
   advisorSub: { color: '#2B2A29', opacity: 0.9, fontSize: 14, flexShrink: 1 },
   chatButton: {
-    backgroundColor: '#2B2A29',
+    backgroundColor: '#1BB161',
     paddingHorizontal: 14,
     paddingVertical: 8,
     borderRadius: 999,

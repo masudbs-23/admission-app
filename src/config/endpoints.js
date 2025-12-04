@@ -4,9 +4,9 @@
 export const API_ENDPOINTS = {
   // Authentication endpoints
   AUTH: {
-    LOGIN: '/api/login',
-    REGISTER: '/api/auth/register',
-    VERIFY_OTP: '/api/auth/verify-otp',
+    LOGIN: '/auth/login',
+    REGISTER: '/auth/register',
+    VERIFY_OTP: '/auth/verify-otp',
     FORGOT_PASSWORD_EMAIL: '/api/auth/forgot-password/email',
     FORGOT_PASSWORD_OTP: '/api/auth/forgot-password/verify-otp',
     RESET_PASSWORD: '/api/auth/forgot-password/reset',

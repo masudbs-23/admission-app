@@ -1,5 +1,5 @@
 /**
- * Admision App
+ * BideshStudy App
  * React Native Application for Admission Management
  *
  * @format

@@ -13,7 +13,7 @@ const HomeHeader = ({ insets, navigation, profileName, onMenuPress, headerHeight
       <View style={styles.row}>
         <View style={styles.leftSection}>
           <TouchableOpacity style={styles.roundIconBtn} onPress={onMenuPress}>
-            <Icon name="menu" size={20} color="#fff" />
+            <Icon name="menu" size={20} color="#000" />
           </TouchableOpacity>
           <View>
             <Text style={styles.greeting}>Hi, {profileName}</Text>
@@ -24,7 +24,7 @@ const HomeHeader = ({ insets, navigation, profileName, onMenuPress, headerHeight
           <TouchableOpacity
             style={styles.roundIconBtn}
             onPress={() => navigation.navigate(ROUTES.MAIN.NOTIFICATIONS)}>
-            <Icon name="bell" size={18} color="#fff" />
+            <Icon name="bell" size={18} color="#000" />
             <View style={styles.badge}>
               <Text style={styles.badgeText}>3</Text>
             </View>
@@ -33,7 +33,7 @@ const HomeHeader = ({ insets, navigation, profileName, onMenuPress, headerHeight
           <TouchableOpacity
             style={[styles.roundIconBtn, { marginLeft: 10 }]}
             onPress={() => navigation.navigate(ROUTES.MAIN.ADVISER_CHAT)}>
-            <Icon name="message-circle" size={18} color="#fff" />
+            <Icon name="message-circle" size={18} color="#000" />
             <View style={styles.badge}>
               <Text style={styles.badgeText}>5</Text>
             </View>
@@ -46,10 +46,10 @@ const HomeHeader = ({ insets, navigation, profileName, onMenuPress, headerHeight
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#000',
+    backgroundColor: '#ff',
     paddingHorizontal: 20,
-    paddingBottom: 24,
-    height: 170,
+    paddingBottom: 4,
+    height: 80,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
   },
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     width: 42,
     height: 42,
     borderRadius: 21,
-    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    backgroundColor: 'rgba(0, 0, 0, 0.06)',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   greeting: { 
     fontSize: 20, 
     fontWeight: '700', 
-    color: '#fff',
+    color: '#000',
   },
   profileProgress: {
     fontSize: 12,

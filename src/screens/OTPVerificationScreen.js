@@ -9,6 +9,7 @@ import {
   ScrollView,
   Alert,
   ActivityIndicator,
+  Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'; // For back arrow
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -128,31 +129,28 @@ const OTPVerificationScreen = ({ navigation, route }) => {
         {/* Header */}
         <View style={[styles.header, { paddingTop: insets.top }]}>
           {/* Back Button */}
-          <TouchableOpacity style={styles.backBtn} disabled={loading}>
+          <TouchableOpacity
+            style={styles.backBtn}
+            disabled={loading}
+            onPress={() => !loading && navigation.goBack()}
+          >
             <Icon name="chevron-back-outline" size={24} color="#000000" />
           </TouchableOpacity>
+          <View style={{ width: 40 }} />
+        </View>
 
-          {/* Logo */}
-          <View style={styles.logoRow}>
-            <Text style={styles.logoText}>Admission</Text>
-            <View style={styles.dotWrapper}>
-              <View
-                style={[styles.dot, { backgroundColor: '#f97316', top: 0, left: 0, transform: [{ rotate: '20deg' }] }]}
-              />
-              <View
-                style={[styles.dot, { width: 10, height: 6, backgroundColor: '#fb923c', top: -2, left: 8, transform: [{ rotate: '45deg' }] }]}
-              />
-              <View
-                style={[styles.dot, { width: 8, height: 6, backgroundColor: '#dc2626', top: -4, left: 14, transform: [{ rotate: '70deg' }] }]}
-              />
-            </View>
-            <Text style={[styles.logoText, { marginLeft: 12 }]}>.ac</Text>
-          </View>
+        {/* Top logo image (same as SignIn) */}
+        <View style={styles.logoContainer}>
+          <Image
+            source={require('../assets/logo.png')}
+            style={styles.topLogo}
+            resizeMode="cover"
+          />
         </View>
 
         {/* Content */}
         <View style={styles.content}>
-          <Text style={styles.title}>{t('submit')}</Text>
+          <Text style={styles.title}>Verify OTP</Text>
           <Text style={styles.description}>
             Please enter the verification code shared to {'\n'}
             <Text style={{ fontWeight: '500', color: '#374151' }}> {email}</Text>
@@ -182,7 +180,7 @@ const OTPVerificationScreen = ({ navigation, route }) => {
               style={[styles.resendLink, (isResendActive || loading) && { color: '#c4c4c4' }]}
               onPress={() => !loading && setIsResendActive(true)}
             >
-              {t('submit')}
+              Resend
             </Text>
           </Text>
 
@@ -190,7 +188,7 @@ const OTPVerificationScreen = ({ navigation, route }) => {
           <TouchableOpacity
             style={[
               styles.submitBtn,
-              otp.every((digit) => digit !== '') && { backgroundColor: '#2B2A29' },
+              otp.every((digit) => digit !== '') && { backgroundColor: '#1BB161' },
               loading && { opacity: 0.7 },
             ]}
             disabled={!otp.every((digit) => digit !== '') || loading}
@@ -223,29 +221,21 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   backBtn: {
-    flexDirection: 'row',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#E5E7EB',
     alignItems: 'center',
+    justifyContent: 'center',
   },
-  logoRow: {
-    flexDirection: 'row',
+  logoContainer: {
     alignItems: 'center',
-    display:'none'
+    marginTop: 12,
+    marginBottom: 4,
   },
-  logoText: {
-    fontSize: 25,
-    fontWeight: '400',
-    color: '#1f2937',
-  },
-  dotWrapper: {
-    position: 'relative',
-    marginLeft: 4,
-    marginTop: -4,
-  },
-  dot: {
-    position: 'absolute',
-    width: 12,
-    height: 8,
-    borderRadius: 50,
+  topLogo: {
+    width: 140,
+    height: 140,
   },
   content: {
     paddingHorizontal: 16,
@@ -294,7 +284,7 @@ const styles = StyleSheet.create({
   submitBtn: {
     height: 56,
     borderRadius: 24,
-    backgroundColor: '#2B2A29',
+    backgroundColor: '#1BB161',
     justifyContent: 'center',
     alignItems: 'center',
   },

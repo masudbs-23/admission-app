@@ -33,7 +33,7 @@ const OnboardingScreen = ({ navigation }) => {
           <View style={styles.logoRow}>
             <Text style={styles.logoText}>Admission</Text>
             <View style={styles.dotWrapper}>
-              <View style={[styles.dot, { backgroundColor: '#2B2A29', top: 0, left: 0, transform: [{ rotate: '20deg' }] }]} />
+              <View style={[styles.dot, { backgroundColor: '#1BB161', top: 0, left: 0, transform: [{ rotate: '20deg' }] }]} />
               <View style={[styles.dot, { width: 10, height: 6, backgroundColor: '#fb923c', top: -2, left: 8, transform: [{ rotate: '45deg' }] }]} />
               <View style={[styles.dot, { width: 8, height: 6, backgroundColor: '#dc2626', top: -4, left: 14, transform: [{ rotate: '70deg' }] }]} />
             </View>
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   primaryBtn: {
     height: 56,
     borderRadius: 24,
-    backgroundColor: '#2B2A29',
+    backgroundColor: '#1BB161',
     justifyContent: 'center',
     alignItems: 'center',
   },

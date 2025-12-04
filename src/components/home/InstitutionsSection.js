@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     borderColor: '#e0e0e0',
     overflow: 'hidden',
     width: width * 0.8,
-    marginLeft: 16,
+    // marginLeft: 16,
   },
   institutionImage: { 
     width: '100%', 

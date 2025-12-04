@@ -4,7 +4,7 @@ import { API_CONFIG, STORAGE_KEYS } from '../constants';
 import { getErrorMessage } from '../utils';
 
 // Resolve base URL once
-const DEFAULT_BASE_URL = 'https://tr-cafe.onrender.com';
+const DEFAULT_BASE_URL = 'https://admission-backend-1-xsai.onrender.com/api';
 const API_BASE_URL = process.env.API_BASE_URL || DEFAULT_BASE_URL;
 
 // Create axios instance

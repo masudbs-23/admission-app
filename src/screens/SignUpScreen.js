@@ -13,6 +13,7 @@ import {
   Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '../shared';
@@ -103,10 +104,18 @@ const SignUpScreen = ({ navigation }) => {
         keyboardVerticalOffset={insets.top}
       >
         <ScrollView
-          contentContainerStyle={[styles.container, { paddingBottom: 40 + insets.bottom, paddingTop: insets.top }]}
+          contentContainerStyle={[styles.container, { paddingBottom: 40 + insets.bottom }]}
           keyboardShouldPersistTaps="handled"
           contentInsetAdjustmentBehavior="always"
           showsVerticalScrollIndicator={false}>
+
+          {/* Header with Back Button */}
+          <View style={[styles.header ]}>
+            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
+              <Ionicons name="arrow-back" size={24} color="#111" />
+            </TouchableOpacity>
+            <View style={styles.headerSpacer} />
+          </View>
 
           {/* Top Logo Image */}
           <Image
@@ -118,7 +127,7 @@ const SignUpScreen = ({ navigation }) => {
           
 
           {/* Title */}
-          <Text style={styles.title}>{t('signUp')}</Text>
+          <Text style={styles.title}>Create an account</Text>
 
           {/* Email */}
           <FloatingLabelInput
@@ -146,13 +155,6 @@ const SignUpScreen = ({ navigation }) => {
             <Text style={styles.signUpText}>{t('signUp')}</Text>
           </TouchableOpacity>
 
-          {/* Already Member */}
-          <View style={styles.signInRow}>
-            <Text style={styles.signInHint}>{t('alreadyMember')}</Text>
-            <TouchableOpacity onPress={() => navigation.navigate(ROUTES.AUTH.SIGN_IN)}>
-              <Text style={styles.signInLink}>{t('signIn')}</Text>
-            </TouchableOpacity>
-          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -171,9 +173,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 40,
   },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 0,
+    // paddingBottom: 12,
+    backgroundColor: '#fff',
+  },
+  headerBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#E5E7EB',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerSpacer: { width: 32 },
   topLogo: {
-    width: 60,
-    height: 60,
+    width: 140,
+    height: 140,
     alignSelf: 'center',
     marginBottom: 24,
   },
@@ -234,7 +253,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 56,
     borderRadius: 24,
-    backgroundColor: '#2B2A29',
+    backgroundColor: '#1BB161',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 24,
